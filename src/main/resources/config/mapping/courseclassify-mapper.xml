@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.CourseClassifyDao">
+	<resultMap id="classifyResultMap" type="com.caopan.TrainSys.model.CourseClassify">
+		<id property="classifyId" column="classifyId"/>
+		<result property="name" column="name"/>
+		<result property="level" column="level"/>
+		<result property="parentId" column="parentId"/>
+	</resultMap>
+	<insert id="insert" parameterType="com.caopan.TrainSys.model.CourseClassify" useGeneratedKeys="true"
+		keyProperty="classifyId">
+		INSERT INTO courseclassify( name, level, parentId)
+		VALUES (#{name}, #{level}, #{parentId})
+	</insert>
+
+	<update id="update" parameterType="com.caopan.TrainSys.model.CourseClassify">
+		update courseclassify set courseclassify.name=#{name},courseclassify.level=#{level},
+		courseclassify.parentId=#{parentId}
+		where courseclassify.classifyId=#{classifyId}
+	</update>
+
+	<delete id="delete" parameterType="Integer" >
+		delete from courseclassify where classifyId=#{id}
+	</delete>
+
+	<select id="getClassifyByParentId" parameterType="Integer" resultMap="classifyResultMap">
+		SELECT * FROM courseclassify WHERE parentId=#{parentId}
+	</select>
+</mapper>

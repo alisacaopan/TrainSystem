@@ -1,0 +1,34 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /TrainSys
+#  ssl:
+#    key-store: /Users/caopan1/tomcat.keystore
+#    key-store-password: 082566cP
+#    key-store-type: JKS
+#    key-alias: tomcat
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: 1ms
+  datasource:
+    url: jdbc:mysql://localhost:3306/TrainSys?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 082566cP
+mybatis:
+  type-aliases-package: com.caopan.TrainSys.model
+  mapper-locations: config/mapping/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+logging:
+  config: /Users/caopan1/IdeaProjects/TrainSysemo/src/main/resources/config/log4j2.xml

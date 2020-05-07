@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.UserDao">
+    <resultMap id="userResultMap" type="com.caopan.TrainSys.model.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="mobile" column="mobile"/>
+        <result property="idCard" column="idCard"/>
+        <result property="openId" column="openId"/>
+        <result property="role" column="role"/>
+        <result property="classId" column="classId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.caopan.TrainSys.model.User" useGeneratedKeys="true"
+            keyProperty="id">
+		INSERT INTO user (name, password, mobile, idCard,openId,role,classId)
+		VALUES (#{name}, #{password}, #{mobile}, #{idCard}, #{openId}, #{role} , #{classId})
+	</insert>
+
+    <update id="update" parameterType="com.caopan.TrainSys.model.User">
+	update user set user.name=#{name},user.password=#{password},user.mobile=#{mobile},
+	user.idCard=#{idCard},user.openId=#{openId},user.role=#{role},user.classId=#{classId}
+	where user.id=#{id}
+	</update>
+
+    <delete id="delete" parameterType="long">
+		delete from user where id=#{id}
+	</delete>
+
+    <select id="getUserByMobile" parameterType="Map" resultMap="userResultMap">
+		SELECT * FROM user WHERE mobile=#{mobile} LIMIT 1
+	</select>
+
+    <select id="getUserByIdcard" parameterType="String" resultMap="userResultMap">
+		SELECT * FROM user WHERE idCard=#{idCard} LIMIT 1
+	</select>
+    <select id="getUserByOpenId" parameterType="map" resultMap="userResultMap">
+		SELECT * FROM user WHERE openId=#{openId} LIMIT 1
+	</select>
+    <select id="getUserByClassId" parameterType="map" resultMap="userResultMap">
+		SELECT * FROM user WHERE classId=#{classId}
+	</select>
+    <update id="updateOpenId" parameterType="java.lang.String"  >
+        update user set
+        openId=#{openId}
+        where mobile=#{mobile}
+    </update>
+
+</mapper>
