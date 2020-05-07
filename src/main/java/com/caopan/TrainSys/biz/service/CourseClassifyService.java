@@ -13,15 +13,15 @@ public class CourseClassifyService {
     @Autowired
     private CourseClassifyDao classifyDao;
 
-    public int add(CourseClassify classify) {
+    public Integer add(CourseClassify classify) {
         return classifyDao.insert(classify);
     }
 
-    public int update(CourseClassify classify) {
+    public Integer update(CourseClassify classify) {
         return classifyDao.update(classify);
     }
 
-    public long delete(Integer classifyId) {
+    public Integer delete(Integer classifyId) {
         return classifyDao.delete(classifyId);
     }
 

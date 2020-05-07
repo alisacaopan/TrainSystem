@@ -15,7 +15,7 @@
 		<result property="quesId" column="quesId"/>
 	</resultMap>
 
-	<delete id="delete" parameterType="Integer">
+	<delete id="delete" parameterType="Long">
 		delete from test where testId=#{testId}
 	</delete>
 

@@ -3,11 +3,11 @@ package com.caopan.TrainSys.model;
 
 
 public class Test {
-    private long testId;
+    private long testId ;
     private Integer grade;
     private String testTime;
-    private long userId;
-    private long vCourseId;
+    private long userId ;
+    private long vCourseId ;
 
     public long getTestId() {
         return testId;

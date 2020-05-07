@@ -2,8 +2,7 @@ package com.caopan.TrainSys.controller;
 
 import com.caopan.TrainSys.biz.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,28 +12,59 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    @GetMapping(value = "/deleteTest")
-    public long delete(long id) {
-        return testService.delete(id);
+    @PostMapping(value = "/deleteTest")
+    public Integer deleteTest(@RequestParam(value = "testId") Long testId) {
+        int index = 0;
+        try {
+            if(testService.delete(testId) == 1){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            return index;
+        }
     }
 
-    @GetMapping("/getAnwser")
-    public Integer getAnwser(){
-        int[]a = {3};
-        return testService.getAnwser((long)1,a);
+    @PostMapping("/getAnwser")
+    public Integer getAnwser(@RequestParam ("quesId")Long quesId,@RequestParam("anwser") int[] anwser){
+        int index = 0;
+        try {
+            //如果答案是正确的 返回1，错误的返回0 ，异常也返回0
+            if(testService.getAnwser(quesId,anwser) == 1){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            return index;
+        }
     }
 
-    @GetMapping("/getAllAnwser")
-    public Integer getAllAnwser(){
-        List<Long> quesId = new ArrayList();
-        quesId.add((long)1);
-        quesId.add((long)2);
-        List<int[]>anwsers = new ArrayList();
-        int[] b = {3};
-        int[] c = {1};
-        anwsers.add(b);
-        anwsers.add(c);
-        return testService.getAllAnwser(quesId,anwsers);
+    @PostMapping("/getAllAnwser")
+    public Integer getAllAnwser(@RequestParam ("quesId")List<Long> quesId,@RequestParam("anwsers") List<int[]> anwsers){
+        int index = 0;
+        int Grade = 0;
+        try {
+            Grade = testService.getAllAnwser(quesId,anwsers);
+            //如果分数不是0分,返回分数
+            if(Grade > 0){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            if (index == 1){
+                return Grade;
+            } else {
+                return 0;
+            }
+
+        }
+
     }
 
 }
