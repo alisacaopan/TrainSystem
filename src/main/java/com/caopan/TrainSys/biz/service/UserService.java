@@ -2,7 +2,6 @@ package com.caopan.TrainSys.biz.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.caopan.TrainSys.constant.AuthResponseCode;
-import com.appjishu.passport.service.TokenService;
 import com.caopan.TrainSys.biz.dao.UserDao;
 import com.caopan.TrainSys.model.LoginResult;
 import com.caopan.TrainSys.model.User;
