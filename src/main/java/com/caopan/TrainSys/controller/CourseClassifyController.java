@@ -24,8 +24,8 @@ public class CourseClassifyController {
     @GetMapping(value = "/updateClassify")
     public int update(CourseClassify classify) {
         CourseClassify classify1 = new CourseClassify();
-        classify1.setClassifyId(6);
-        classify1.setName("水手");
+        classify1.setClassifyId(10);
+        classify1.setName("船舶保养");
         classify1.setLevel(1);
         classify1.setParentId(0);
         return courseclassifyService.update(classify1);
