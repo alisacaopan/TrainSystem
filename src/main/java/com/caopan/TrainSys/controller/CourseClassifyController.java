@@ -33,17 +33,16 @@ public class CourseClassifyController {
     public Integer update(@RequestBody CourseClassify classify) {
         int index = 0;
         try {
-            if(courseclassifyService.update(classify) == 1){
+            if (courseclassifyService.update(classify) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
-
     @GetMapping(value = "/deleteClassify")
     public Integer delete(@RequestParam ("classifyId") Integer classifyId) {
         int index = 0;
@@ -74,7 +73,7 @@ public class CourseClassifyController {
         }finally {
             if (index == 1)
             {
-                return classifys;
+                return courseclassifyService.getUserByParentId(id);
             } else {
                 return null;
             }
