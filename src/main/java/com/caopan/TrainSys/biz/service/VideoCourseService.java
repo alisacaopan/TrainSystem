@@ -14,13 +14,14 @@ import java.util.List;
 
 @Service
 public class VideoCourseService {
-    @Autowired private VideoCourseDao vcourseDao;
+    @Autowired
+    private VideoCourseDao vcourseDao;
 
     //名称重复贼不插入
-    public Integer insert(VideoCourse vCourse){
+    public Integer insert(VideoCourse vCourse) {
         List<VideoCourse> vcoures = vcourseDao.getvCourse();
-        for (int i = 0; i<vcoures.size(); i++){
-            if (vCourse.getName().equals(vcoures.get(i).getName())){
+        for (int i = 0; i < vcoures.size(); i++) {
+            if (vCourse.getName().equals(vcoures.get(i).getName())) {
                 return 0;
             }
         }
@@ -28,7 +29,7 @@ public class VideoCourseService {
         return 1;
     }
 
-    public Integer update(VideoCourse vCourse){
+    public Integer update(VideoCourse vCourse) {
         return vcourseDao.update(vCourse);
     }
 
@@ -39,5 +40,9 @@ public class VideoCourseService {
     //根据分级取得改分级下所有课程
     public List<VideoCourse> getvCourseByClassifyId(Integer classifyId) {
         return vcourseDao.getvCourseByClassifyId(classifyId);
+    }
+
+    public List<VideoCourse> getAllvCourses() {
+        return vcourseDao.getvCourse();
     }
 }

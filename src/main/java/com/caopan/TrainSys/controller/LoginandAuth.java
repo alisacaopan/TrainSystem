@@ -10,25 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.logging.Logger;
-
 @RestController
 public class LoginandAuth {
     @Autowired
     private UserService userService;
 
     @GetMapping("/login")
-    public LoginResult loginandAuth(@RequestParam(value = "code") String code) {
+    public LoginResult loginandAuth(@RequestParam( "code") String code) {
         String openId = userService.getOpenId(code);
         LoginResult loginResult = userService.login(openId);
         return loginResult;
     }
 
     @PostMapping("/authen")
-    public LoginResult Auth(@RequestParam String openId,
-                            @RequestParam String mobile,
-                            @RequestParam String idCard) {
-        System.out.println("进到接口了～～～～～·");
+    public LoginResult Auth(@RequestParam("openId") String openId,
+                            @RequestParam("mobile") String mobile,
+                            @RequestParam("idCard") String idCard) {
 
         System.out.println(openId);
         User user = userService.getUserByMobile(mobile);

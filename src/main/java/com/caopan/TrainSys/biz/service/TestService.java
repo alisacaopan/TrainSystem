@@ -19,8 +19,8 @@ public class TestService {
     }
 
     //随机获得x道题的题号和状态,状态默认置0
-    public List getQuestionId() {
-        List<Question> questions = testDao.getQuestionRandly();
+    public List getQuestionId(int vCourseId) {
+        List<Question> questions = testDao.getQuestionRandly(vCourseId);
         List quesAndStatus = new ArrayList();
         for (int i = 0; i < questions.size(); i++) {
             Long[] question = new Long[2];

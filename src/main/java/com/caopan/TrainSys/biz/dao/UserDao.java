@@ -23,6 +23,6 @@ public interface UserDao {
 
     List<User> getUserByClassId(@Param("classId") Integer classId);
 
-    User updateOpenId(@Param("openId") String openId, @Param("mobile") String mobile);
+    Integer updateOpenId(@Param("openId") String openId, @Param("mobile") String mobile);
 }
 

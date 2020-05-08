@@ -54,7 +54,7 @@ public class UserService {
         return openId;
     }
 
-    public User updateOpenId(String openId, String mobile) {
+    public Integer updateOpenId(String openId, String mobile) {
         return userDao.updateOpenId(openId, mobile);
     }
 

@@ -19,8 +19,8 @@
 		delete from test where testId=#{testId}
 	</delete>
 
-	<select id="getQuestionRandly" resultMap="questionResultMap">
-		SELECT * FROM question order by rand() LIMIT 5;
+	<select id="getQuestionRandly" resultMap="questionResultMap" parameterType="java.lang.Integer">
+		SELECT * FROM question where vCourseId =#{vCourseId} order by rand() LIMIT 2;
 	</select>
 
 	<select id="getQuesByquesId" parameterType="long" resultMap="questionResultMap">
