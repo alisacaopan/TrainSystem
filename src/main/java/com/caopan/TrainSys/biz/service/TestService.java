@@ -32,18 +32,17 @@ public class TestService {
         return quesAndStatus;
     }
 
-    //根据题目id获得题干和选项,String数组的第一个为题干，后面的都为选项
-    public String[] getContent(Long quesId) {
+    //根据题目id获得题干和选项,第一个为题目，后面的都为选项
+    public List<Object> getContent(Long quesId) {
         Question question = testDao.getQuesByquesId(quesId);
-        String quesContent = question.getQuesContent(); //获取题干
+        List<Object> quesAndSelc = new ArrayList<>();
         List<Selection> selections = testDao.getSelectionByquesId(question.getQuesId());
-        String[] Content = new String[selections.size() + 1];
-        Content[0] = quesContent;
+        quesAndSelc.add(question);
         //获取选项
-        for (int i = 1; i < selections.size() + 1; i++) {
-            Content[i] = selections.get(i - 1).getSelectionContent();
+        for (int i = 0; i < selections.size(); i++) {
+            quesAndSelc.add(selections.get(i));
         }
-        return Content;
+        return quesAndSelc;
     }
 
     //根据题目id得到答案,进行单个答案比较，返回值为分数

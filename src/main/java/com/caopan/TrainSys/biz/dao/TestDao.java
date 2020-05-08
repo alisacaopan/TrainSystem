@@ -14,7 +14,7 @@ public interface TestDao {
     //随机生成试卷，返回2道题的题号和题干
     List<Question> getQuestionRandly(int vCourseId);
 
-    //根据题目号找题干
+    //根据题目号找题
     Question getQuesByquesId(long quesId);
 
     //根据题目号找所有选项

@@ -74,7 +74,7 @@ public class TestController {
     }
 
     @GetMapping("/getQuesContent")
-    public String[] getQuesContent(@RequestParam("quesId") Long quesId) {
+    public List<Object> getQuesContent(@RequestParam("quesId") Long quesId) {
         return testService.getContent(quesId);
     }
 
@@ -83,5 +83,6 @@ public class TestController {
         Question question=testService.getQuestionById(quesId);
         return question.getQuesType();
     }
+
 
 }
