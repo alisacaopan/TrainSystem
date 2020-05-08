@@ -1,6 +1,8 @@
 package com.caopan.TrainSys.model;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Test {
     private long testId ;
