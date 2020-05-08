@@ -12,9 +12,10 @@ import java.util.List;
 
 @Service
 public class TestService {
-    @Autowired private TestDao testDao;
+    @Autowired
+    private TestDao testDao;
 
-    public Integer delete(Long testId){
+    public Integer delete(Long testId) {
         return testDao.delete(testId);
     }
 
@@ -36,35 +37,37 @@ public class TestService {
         Question question = testDao.getQuesByquesId(quesId);
         String quesContent = question.getQuesContent(); //获取题干
         List<Selection> selections = testDao.getSelectionByquesId(question.getQuesId());
-        String[] Content = new String[selections.size()+1];
+        String[] Content = new String[selections.size() + 1];
         Content[0] = quesContent;
         //获取选项
-        for (int i = 1; i<selections.size()+1; i++){
-            Content[i] = selections.get(i-1).getSelectionContent();
+        for (int i = 1; i < selections.size() + 1; i++) {
+            Content[i] = selections.get(i - 1).getSelectionContent();
         }
         return Content;
     }
 
     //根据题目id得到答案,进行单个答案比较，返回值为分数
-    public Integer getAnwser(Long quesId,int[] anwser) {
+    public Integer getAnwser(Long quesId, int[] anwser) {
         //答案数组
         List<Selection> selections = testDao.getSelectionByquesId(quesId);
         //查找正确答案的个数
         int length = 0;
-        for (int j = 0; j<selections.size();j++){
-            if(selections.get(j).getIsRight()==1){length = length+1;}
+        for (int j = 0; j < selections.size(); j++) {
+            if (selections.get(j).getIsRight() == 1) {
+                length = length + 1;
+            }
         }
         //获得正确答案
         int[] rightAnwser = new int[length];
         int index = 0;
-        for (int i = 0; i<selections.size(); i++) {
-            if (selections.get(i).getIsRight()==1){
-                rightAnwser[index] = i+1;
-                index ++;
+        for (int i = 0; i < selections.size(); i++) {
+            if (selections.get(i).getIsRight() == 1) {
+                rightAnwser[index] = i + 1;
+                index++;
             }
         }
         //将正确答案和传入的答案比较,答对了得一分，错了没有分
-        if (Arrays.equals(rightAnwser,anwser)){
+        if (Arrays.equals(rightAnwser, anwser)) {
             return 1;
         } else {
             return 0;
@@ -72,7 +75,7 @@ public class TestService {
     }
 
     //传入所有题目的答案，一次性比较得到分数,allQuesId每个元素为Long,AllAnwser每个元素为int数组
-    public Integer getAllAnwser(List<Long> allQuesId,List<int[]> allAnwser) {
+    public Integer getAllAnwser(List<Long> allQuesId, List<int[]> allAnwser) {
         int grade = 0;  //总分
         for (int i = 0; i < allQuesId.size(); i++) {
             List<Selection> selections = testDao.getSelectionByquesId(allQuesId.get(i));
@@ -98,5 +101,10 @@ public class TestService {
             }
         }
         return grade;
+    }
+
+    public Question getQuestionById(long quesId) {
+        return testDao.getQuesByquesId(quesId);
+
     }
 }

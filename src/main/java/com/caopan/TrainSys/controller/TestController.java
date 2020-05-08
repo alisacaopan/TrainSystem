@@ -1,6 +1,7 @@
 package com.caopan.TrainSys.controller;
 
 import com.caopan.TrainSys.biz.service.TestService;
+import com.caopan.TrainSys.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,48 +17,48 @@ public class TestController {
     public Integer deleteTest(@RequestParam(value = "testId") Long testId) {
         int index = 0;
         try {
-            if(testService.delete(testId) == 1){
+            if (testService.delete(testId) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
 
     @PostMapping("/getAnwser")
-    public Integer getAnwser(@RequestParam ("quesId")Long quesId,@RequestParam("anwser") int[] anwser){
+    public Integer getAnwser(@RequestParam("quesId") Long quesId, @RequestParam("anwser") int[] anwser) {
         int index = 0;
         try {
             //如果答案是正确的 返回1，错误的返回0 ，异常也返回0
-            if(testService.getAnwser(quesId,anwser) == 1){
+            if (testService.getAnwser(quesId, anwser) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
 
     @PostMapping("/getAllAnwser")
-    public Integer getAllAnwser(@RequestParam ("quesId")List<Long> quesId,@RequestParam("anwsers") List<int[]> anwsers){
+    public Integer getAllAnwser(@RequestParam("quesId") List<Long> quesId, @RequestParam("anwsers") List<int[]> anwsers) {
         int index = 0;
         int Grade = 0;
         try {
-            Grade = testService.getAllAnwser(quesId,anwsers);
+            Grade = testService.getAllAnwser(quesId, anwsers);
             //如果分数不是0分,返回分数
-            if(Grade > 0){
+            if (Grade > 0) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
-            if (index == 1){
+        } catch (Exception e) {
+        } finally {
+            if (index == 1) {
                 return Grade;
             } else {
                 return 0;
@@ -65,6 +66,22 @@ public class TestController {
 
         }
 
+    }
+
+    @GetMapping("/startTest")
+    public List startTest(@RequestParam("vCourseId") int vCourseId) {
+        return testService.getQuestionId(vCourseId);
+    }
+
+    @GetMapping("/getQuesContent")
+    public String[] getQuesContent(@RequestParam("quesId") Long quesId) {
+        return testService.getContent(quesId);
+    }
+
+    @GetMapping("/getQuestionType")
+    public String getQuestionType(@RequestParam("quesId") Long quesId){
+        Question question=testService.getQuestionById(quesId);
+        return question.getQuesType();
     }
 
 }
