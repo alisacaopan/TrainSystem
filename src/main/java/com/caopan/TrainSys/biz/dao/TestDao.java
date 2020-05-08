@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface TestDao {
 
-    Integer delete(long testId);  //删除测试记录
+    Integer delete(Long testId);  //删除测试记录
 
     //随机生成试卷，返回2道题的题号和题干
     List<Question> getQuestionRandly(int vCourseId);

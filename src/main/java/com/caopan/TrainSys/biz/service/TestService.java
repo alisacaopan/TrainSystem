@@ -14,7 +14,7 @@ import java.util.List;
 public class TestService {
     @Autowired private TestDao testDao;
 
-    public long delete(long testId){
+    public Integer delete(Long testId){
         return testDao.delete(testId);
     }
 

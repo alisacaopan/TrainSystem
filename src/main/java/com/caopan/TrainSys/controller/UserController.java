@@ -3,9 +3,7 @@ package com.caopan.TrainSys.controller;
 import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,45 +12,125 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/insert")
-    public int insert(User user) {
-        User user1 = new User("Tang","123","6307","1996","185","管理员",1);
-        System.out.println(user1.getClassId()+"");
-        return userService.add(user1);
+    @PostMapping(value = "/insert")
+    public Integer insert(@RequestBody User user) {
+        int index = 0;
+        try {
+            if(userService.add(user) == 1){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            return index;
+        }
     }
 
-    @GetMapping(value = "/update")
-    public int update(User user) {
-        User user1 = new User("Tang","123","6307","1996","185","管理员",1);
-        user1.setId(2);
-        return userService.update(user1);
+    @PostMapping(value = "/update")
+    public Integer update(@RequestBody User user) {
+        int index = 0;
+        try {
+            if(userService.update(user) == 1){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            return index;
+        }
     }
 
     @GetMapping(value = "/delete")
     public long delete(@RequestParam(value = "id") long id) {
-        return userService.delete(id);
+        int index = 0;
+        try {
+            if(userService.delete(id) == 1){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            return index;
+        }
     }
 
     @GetMapping(value = "/getUserByIdcard")
-    public User getUserByIdcard(String idcard) {
-        String idcard1 = "5456782037367X";
-        return userService.getUserByIdcard(idcard1);
+    public User getUserByIdcard(@RequestParam("idCard") String idcard) {
+        int index = 0;
+        try {
+            if(userService.getUserByIdcard(idcard)!=null){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            if (index == 1) {
+                return userService.getUserByIdcard(idcard);
+            } else {
+                return null;
+            }
+        }
     }
 
     @GetMapping(value = "/getUserByMobile")
-    public User getUserByMobile(String mobile) {
-        return userService.getUserByMobile("15601623391");
+    public User getUserByMobile(@RequestParam("mobile") String mobile) {
+        int index = 0;
+        try {
+            if(userService.getUserByMobile(mobile)!=null){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            if (index == 1) {
+                return userService.getUserByMobile(mobile);
+            } else {
+                return null;
+            }
+        }
     }
 
     @GetMapping(value = "/getUserByOpenId")
-    public User getUserByOpenId(String openid) {
-        return userService.getUserByOpenId(openid);
+    public User getUserByOpenId(@RequestParam("openId") String openid) {
+        int index = 0;
+        try {
+            if(userService.getUserByOpenId(openid)!=null){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            if (index == 1) {
+                return userService.getUserByOpenId(openid);
+            } else {
+                return null;
+            }
+        }
     }
 
     @GetMapping(value = "/getUserByClassId")
-    public List<User> getUserByClassId(Integer classid) {
-        Integer classid1 = 0;
-        return userService.getUserByClassId(classid1);
+    public List<User> getUserByClassId(@RequestParam("classId") Integer classid) {
+        int index = 0;
+        try {
+            if(userService.getUserByClassId(classid).size()>0){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        }catch (Exception e){
+        }finally {
+            if (index == 1) {
+                return userService.getUserByClassId(classid);
+            } else {
+                return null;
+            }
+        }
     }
 
 
