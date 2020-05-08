@@ -12,17 +12,14 @@ public class User {
     private int classId;
 
     public User() {
-
-    }
-
-    public User(String name, String password, String mobile, String idCard, String openId, String role, int classId) {
-        this.name = name;
-        this.password = password;
-        this.mobile = mobile;
-        this.idCard = idCard;
-        this.openId = openId;
-        this.role = role;
-        this.classId = classId;
+        this.id = (long)0;
+        this.name = "";
+        this.password = "";
+        this.mobile = "";
+        this.idCard = "";
+        this.openId = "";
+        this.role = "";
+        this.classId = 0;
     }
 
     public String getName() {

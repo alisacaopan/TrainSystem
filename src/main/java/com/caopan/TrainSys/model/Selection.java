@@ -8,6 +8,13 @@ public class Selection {
     private Integer isRight;
     private long quesId;
 
+    public Selection() {
+        this.selectionId = (long)0;
+        this.selectionContent = "";
+        this.isRight = 0;
+        this.quesId = (long)0;
+    }
+
     public long getSelectionId() {
         return selectionId;
     }

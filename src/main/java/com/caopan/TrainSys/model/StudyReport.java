@@ -9,6 +9,14 @@ public class StudyReport {
     private long userId;
     private long vCourseId;
 
+    public StudyReport() {
+        this.reportId = (long)0;
+        this.isFinish = 0;
+        this.studyTime = (float)0.0;
+        this.userId = (long)0;
+        this.vCourseId = (long)0;
+    }
+
     public long getReportId() {
         return reportId;
     }

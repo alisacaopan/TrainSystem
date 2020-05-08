@@ -8,6 +8,13 @@ public class Question {
     private String quesType;
     private long vCourseId;
 
+    public Question() {
+        this.quesId = (long)0;
+        this.quesContent = "";
+        this.quesType = "";
+        this.vCourseId = (long)0;
+    }
+
     public long getQuesId() {
         return quesId;
     }

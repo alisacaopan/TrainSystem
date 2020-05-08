@@ -11,6 +11,14 @@ public class Test {
     private long userId ;
     private long vCourseId ;
 
+    public Test() {
+        this.testId = (long)0;
+        this.grade = 0;
+        this.testTime = "";
+        this.userId = (long)0;
+        this.vCourseId = (long)0;
+    }
+
     public long getTestId() {
         return testId;
     }

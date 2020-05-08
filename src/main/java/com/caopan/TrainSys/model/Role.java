@@ -8,6 +8,11 @@ public class Role {
     private String role;
     private Integer authority;
 
+    public Role() {
+        this.roleId = 0;
+        this.role = "";
+        this.authority = 0;
+    }
 
     public int getRoleId() {
         return roleId;

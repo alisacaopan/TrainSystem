@@ -7,6 +7,14 @@ public class LoginResult {
     private String desc;
     private String openId;
 
+    public LoginResult() {
+        this.userId = (long)0;
+        this.username = "";
+        this.code = "";
+        this.desc = "";
+        this.openId = "";
+    }
+
     public String getOpenId() {
         return openId;
     }
