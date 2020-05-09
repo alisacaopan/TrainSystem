@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.StudyDao">
+	<resultMap id="reportResultMap" type="com.caopan.TrainSys.model.StudyReport">
+		<id property="reportId" column="reportId"/>
+		<result property="isFinish" column="isFinish"/>
+		<result property="studyTime" column="studyTime"/>
+		<result property="userId" column="userId"/>
+		<result property="vCourseId" column="vCourseId"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.caopan.TrainSys.model.StudyReport" useGeneratedKeys="true"
+			keyProperty="reportId">
+		INSERT INTO studyreport (isFinish, studyTime, userId, vCourseId)
+		VALUES (#{isFinish}, #{studyTime}, #{userId}, #{vCourseId})
+	</insert>
+
+	<delete id="delete" parameterType="Long">
+		delete from studyreport where reportId=#{reportId}
+	</delete>
+
+	<select id="getReportByuserId" parameterType="long" resultMap="reportResultMap">
+		SELECT * FROM studyreport WHERE userId=#{userId}
+	</select>
+
+</mapper>
