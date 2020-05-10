@@ -89,6 +89,13 @@ public class TestController {
         return question.getQuesType();
     }
 
+    /**
+     *
+     * @param openId
+     * @param testArray
+     * @param vCourseId
+     * @return 1表示记录成功 0表示没有记录成功
+     */
     @PostMapping("/getGradeByOpenId")
     public Integer getAllAnwser(@RequestParam("openId") String openId,
                                 @RequestParam("testArray") List<long[]> testArray,
