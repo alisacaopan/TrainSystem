@@ -18,13 +18,13 @@ public class VideoCourseController {
     public Integer insert(@RequestBody VideoCourse vCourse) {
         int index = 0;
         try {
-            if(vCourseService.insert(vCourse) == 1){
+            if (vCourseService.insert(vCourse) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
@@ -33,13 +33,13 @@ public class VideoCourseController {
     public Integer update(@RequestBody VideoCourse vCourse) {
         int index = 0;
         try {
-            if(vCourseService.update(vCourse) == 1){
+            if (vCourseService.update(vCourse) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
@@ -48,27 +48,28 @@ public class VideoCourseController {
     public Integer delete(@RequestParam("vCourseId") Long vCourseId) {
         int index = 0;
         try {
-            if(vCourseService.delete(vCourseId) == 1){
+            if (vCourseService.delete(vCourseId) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             return index;
         }
     }
+
     @GetMapping(value = "/getCourseByClassifyId")
     public List<VideoCourse> getvCourseByClassifyId(@RequestParam("classifyId") Integer classifyId) {
         int index = 0;
         try {
-            if(vCourseService.getvCourseByClassifyId(classifyId).size()>0){
+            if (vCourseService.getvCourseByClassifyId(classifyId).size() > 0) {
                 index = 1;
             } else {
                 index = 0;
             }
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             if (index == 1) {
                 return vCourseService.getvCourseByClassifyId(classifyId);
             } else {
@@ -77,5 +78,8 @@ public class VideoCourseController {
         }
     }
 
-
+    @GetMapping(value = "/getAllvCourses")
+    public List<VideoCourse> getAllvCourses() {
+        return vCourseService.getAllvCourses();
+    }
 }
