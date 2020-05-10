@@ -6,6 +6,7 @@ import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.tags.form.TextareaTag;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.List;
 public class TestService {
     @Autowired
     private TestDao testDao;
+
+    public Integer insert(Test test){ return  testDao.insert(test);}
 
     public Integer delete(Long testId) {
         return testDao.delete(testId);
