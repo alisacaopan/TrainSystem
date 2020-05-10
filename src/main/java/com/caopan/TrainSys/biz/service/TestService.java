@@ -21,6 +21,8 @@ public class TestService {
 
     public Integer insert(Test test){ return  testDao.insert(test);}
 
+    public List<Test> getTestByUserId(Long userId) { return testDao.getTestByUserId(userId);}
+
     public Integer delete(Long testId) {
         return testDao.delete(testId);
     }

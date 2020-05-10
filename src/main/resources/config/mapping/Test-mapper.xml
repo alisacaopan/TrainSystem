@@ -2,10 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- create by autoCode,v1.0.0 -->
 <mapper namespace="com.caopan.TrainSys.biz.dao.TestDao">
+	<resultMap id="testResultMap" type="com.caopan.TrainSys.model.Test">
+		<id property="testId" column="testId"/>
+		<result property="grade" column="grade"/>
+		<result property="testTime" column="testTime"/>
+		<result property="userId" column="userId"/>
+		<result property="vCourseId" column="vCourseId"/>
+	</resultMap>
 	<resultMap id="questionResultMap" type="com.caopan.TrainSys.model.Question">
 		<id property="quesId" column="quesId"/>
 		<result property="quesContent" column="quesContent"/>
-		<result property="quesType" column="quesType"/>
+		<result property="testRecord" column="testRecord"/>
+		<result property="testRecord" column="testRecord"/>
 		<result property="vCourseId" column="vCourseId"/>
 	</resultMap>
 	<resultMap id="selectionResultMap" type="com.caopan.TrainSys.model.Selection">
@@ -24,6 +32,10 @@
 	<delete id="delete" parameterType="Long">
 		delete from test where testId=#{testId}
 	</delete>
+
+	<select id="getTestByUserId" resultMap="testResultMap" parameterType="java.lang.Integer">
+		SELECT * FROM test where testId=#{testId};
+	</select>
 
 	<select id="getQuestionRandly" resultMap="questionResultMap" parameterType="java.lang.Integer">
 		SELECT * FROM question where vCourseId =#{vCourseId} order by rand() LIMIT 2;
