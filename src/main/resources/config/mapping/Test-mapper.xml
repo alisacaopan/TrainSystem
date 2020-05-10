@@ -17,8 +17,8 @@
 
 	<insert id="insert" parameterType="com.caopan.TrainSys.model.Test" useGeneratedKeys="true"
 			keyProperty="testId">
-		INSERT INTO test (grade, testTime, userId, vCourseId)
-		VALUES (#{grade}, #{testTime}, #{userId}, #{vCourseId})
+		INSERT INTO test (grade, testTime,testRecord, userId, vCourseId)
+		VALUES (#{grade}, #{testTime},#{testRecord}, #{userId}, #{vCourseId})
 	</insert>
 
 	<delete id="delete" parameterType="Long">

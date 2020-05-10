@@ -95,12 +95,15 @@ public class TestController {
                                 @RequestParam(" vCourseId") Long  vCourseId) {
         int index = 0;
         int Grade = 0;
+
         Long userId = userService.getUserByOpenId(openId).getId();
         try {
+            String testRecord = "";
             for (int i = 0; i<testArray.size(); i++ ){
                 if (testArray.get(1).equals((long)1)){
                     Grade = Grade + 1;
                 }
+                testRecord.concat(testArray.toString()+".");
             }
             Test test = new Test();
             test.setUserId(userId);
@@ -109,6 +112,7 @@ public class TestController {
             Date date = new Date();
             test.setTestTime(df.format(date));
             test.setGrade(Grade);
+            test.setTestRecord(testRecord);
             index = testService.insert(test);
             //如果分数不是0分,返回分数
             if (Grade > 0) {
