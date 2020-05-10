@@ -1,6 +1,8 @@
 package com.caopan.TrainSys.model;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Test {
     private long testId ;
@@ -8,6 +10,14 @@ public class Test {
     private String testTime;
     private long userId ;
     private long vCourseId ;
+
+    public Test() {
+        this.testId = (long)0;
+        this.grade = 0;
+        this.testTime = "";
+        this.userId = (long)0;
+        this.vCourseId = (long)0;
+    }
 
     public long getTestId() {
         return testId;

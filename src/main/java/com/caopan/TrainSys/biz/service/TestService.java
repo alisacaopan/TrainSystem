@@ -3,11 +3,14 @@ package com.caopan.TrainSys.biz.service;
 import com.caopan.TrainSys.biz.dao.TestDao;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
+import com.caopan.TrainSys.model.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -74,9 +77,9 @@ public class TestService {
     }
 
     //传入所有题目的答案，一次性比较得到分数,allQuesId每个元素为Long,AllAnwser每个元素为int数组
-    public Integer getAllAnwser(List<Long> allQuesId, List<int[]> allAnwser) {
+    public Integer getAllAnwser(List<Long> allQuesId, List<int[]> allAnwser,Long userId) {
         int grade = 0;  //总分
-        for (int i = 0; i < allQuesId.size(); i++) {
+        for (int i = 0; i < allAnwser.size(); i++) {
             List<Selection> selections = testDao.getSelectionByquesId(allQuesId.get(i));
             //查找正确答案的个数
             int length = 0;
@@ -91,6 +94,7 @@ public class TestService {
             for (int j = 0; j < selections.size(); j++) {
                 if (selections.get(j).getIsRight() == 1) {
                     rightAnwser[index] = j + 1;
+                    if(index == length-1){break;}
                     index++;
                 }
             }
@@ -99,6 +103,14 @@ public class TestService {
                 grade = grade + 1;
             }
         }
+        Test test = new Test();
+        test.setUserId(userId);
+        test.setvCourseId(testDao.getQuesByquesId(allQuesId.get(0)).getvCourseId());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Date date = new Date();
+        test.setTestTime(df.format(date));
+        test.setGrade(grade);
+        testDao.insert(test);
         return grade;
     }
 

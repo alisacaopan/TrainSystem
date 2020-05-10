@@ -8,6 +8,13 @@ public class CourseClassify {
     private Integer level;
     private Integer parentId;
 
+    public CourseClassify() {
+        this.classifyId = 0;
+        this.name = "";
+        this.level = 0;
+        this.parentId = 0;
+    }
+
     public int getClassifyId() {
         return classifyId;
     }

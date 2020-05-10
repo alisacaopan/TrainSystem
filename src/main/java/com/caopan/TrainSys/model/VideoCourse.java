@@ -9,6 +9,14 @@ public class VideoCourse {
     private String introduce;
     private Integer classifyId;
 
+    public VideoCourse() {
+        this.vCourseId = (long)0;
+        this.name = "";
+        this.address = "";
+        this.introduce = "";
+        this.classifyId = 0;
+    }
+
     public long getvCourseId() {
         return vCourseId;
     }

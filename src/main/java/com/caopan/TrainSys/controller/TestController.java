@@ -45,27 +45,27 @@ public class TestController {
     }
 
     @PostMapping("/getAllAnwser")
-    public Integer getAllAnwser(@RequestParam("quesId") List<Long> quesId, @RequestParam("anwsers") List<int[]> anwsers) {
+    public Integer getAllAnwser(@RequestParam("quesId") List<Long> quesId,
+                                @RequestParam("anwsers") List<int[]> anwsers,
+                                @RequestParam("userId") Long userId) {
         int index = 0;
         int Grade = 0;
-        try {
-            Grade = testService.getAllAnwser(quesId, anwsers);
+        //try {
+            Grade = testService.getAllAnwser(quesId, anwsers, userId);
             //如果分数不是0分,返回分数
             if (Grade > 0) {
                 index = 1;
             } else {
                 index = 0;
             }
-        } catch (Exception e) {
-        } finally {
+        //} catch (Exception e) {
+        //} finally {
             if (index == 1) {
                 return Grade;
             } else {
                 return 0;
             }
-
-        }
-
+        //}
     }
 
     @GetMapping("/startTest")

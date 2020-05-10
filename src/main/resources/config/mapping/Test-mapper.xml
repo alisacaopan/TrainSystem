@@ -15,6 +15,12 @@
 		<result property="quesId" column="quesId"/>
 	</resultMap>
 
+	<insert id="insert" parameterType="com.caopan.TrainSys.model.Test" useGeneratedKeys="true"
+			keyProperty="testId">
+		INSERT INTO test (grade, testTime, userId, vCourseId)
+		VALUES (#{grade}, #{testTime}, #{userId}, #{vCourseId})
+	</insert>
+
 	<delete id="delete" parameterType="Long">
 		delete from test where testId=#{testId}
 	</delete>

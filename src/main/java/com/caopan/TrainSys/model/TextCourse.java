@@ -9,6 +9,14 @@ public class TextCourse {
     private String introduce;
     private Integer classifyId;
 
+    public TextCourse() {
+        this.tCourseId = (long)0;
+        this.name = "";
+        this.address = "";
+        this.introduce = "";
+        this.classifyId = 0;
+    }
+
     public long getvCourseId() {
         return tCourseId;
     }
