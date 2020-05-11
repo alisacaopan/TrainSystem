@@ -23,6 +23,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 082566cP
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 mybatis:
   type-aliases-package: com.caopan.TrainSys.model
   mapper-locations: config/mapping/*.xml
