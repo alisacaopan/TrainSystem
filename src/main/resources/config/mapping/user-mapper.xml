@@ -35,7 +35,7 @@
     <select id="getUserByIdcard" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE idCard=#{idCard} LIMIT 1
 	</select>
-    <select id="getUserByOpenId" parameterType="map" resultMap="userResultMap">
+    <select id="getUserByOpenId" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE openId=#{openId} LIMIT 1
 	</select>
     <select id="getUserByClassId" parameterType="map" resultMap="userResultMap">

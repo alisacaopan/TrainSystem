@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class TestController {
     @Autowired
     private TestService testService;
+    @Autowired
     private UserService userService;
 
     @PostMapping(value = "/deleteTest")
@@ -97,20 +99,20 @@ public class TestController {
      * @return 1表示记录成功 0表示没有记录成功
      */
     @PostMapping("/testrecord")
-    public Integer testrecord(@RequestParam("openId") String openId,
-                                @RequestParam("testArray") List<long[]> testArray,
-                                @RequestParam(" vCourseId") Long  vCourseId) {
+    public Long testrecord(@RequestParam("openId") String openId,
+                                @RequestParam("testArray") long[][] testArray,
+                                @RequestParam("vCourseId") Long  vCourseId) {
         int index = 0;
         int Grade = 0;
 
         Long userId = userService.getUserByOpenId(openId).getId();
         try {
             String testRecord = "";
-            for (int i = 0; i<testArray.size(); i++ ){
-                if (testArray.get(1).equals((long)1)){
+            for (int i = 0; i<testArray.length/2; i++ ){
+                if (testArray[2*i+1][0]==(long)1){
                     Grade = Grade + 1;
                 }
-                testRecord.concat(testArray.toString()+".");
+                testRecord  = Arrays.deepToString(testArray);
             }
             Test test = new Test();
             test.setUserId(userId);
@@ -121,7 +123,6 @@ public class TestController {
             test.setGrade(Grade);
             test.setTestRecord(testRecord);
             index = testService.insert(test);
-            //如果分数不是0分,返回分数
             if (Grade > 0) {
                 index = 1;
             } else {
@@ -130,9 +131,9 @@ public class TestController {
         } catch (Exception e) {
         } finally {
             if (index == 1) {
-                return Grade;
+                return userService.getUserByOpenId(openId).getId();
             } else {
-                return 0;
+                return (long)0;
             }
         }
     }

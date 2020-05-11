@@ -97,20 +97,20 @@ public class UserController {
     }
 
     @GetMapping(value = "/getUserByOpenId")
-    public User getUserByOpenId(@RequestParam("openId") String openid) {
+    public User getUserByOpenId(@RequestParam("openId") String openId) {
         int index = 0;
         try {
-            if(userService.getUserByOpenId(openid)!=null){
+            if(userService.getUserByOpenId(openId).getId()>0){
                 index = 1;
             } else {
-                index = 0;
+               index = 0;
             }
         }catch (Exception e){
         }finally {
             if (index == 1) {
-                return userService.getUserByOpenId(openid);
+                return userService.getUserByOpenId(openId);
             } else {
-                return null;
+               return null;
             }
         }
     }
