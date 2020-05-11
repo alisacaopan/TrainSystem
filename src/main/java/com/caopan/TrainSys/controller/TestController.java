@@ -99,9 +99,14 @@ public class TestController {
     @PostMapping("/testrecord")
     public Integer testrecord(@RequestParam("openId") String openId,
                                 @RequestParam("testArray") List<long[]> testArray,
-                                @RequestParam(" vCourseId") Long  vCourseId) {
+                                @RequestParam("vCourseId") long  vCourseId) {
         int index = 0;
         int Grade = 0;
+        for (long[] item:testArray
+             ) {
+            System.out.println(item);
+        }
+
         Long userId = userService.getUserByOpenId(openId).getId();
         try {
             for (int i = 0; i<testArray.size(); i++ ){
