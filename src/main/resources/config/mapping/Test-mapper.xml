@@ -48,4 +48,8 @@
 	<select id="getSelectionByquesId" parameterType="long" resultMap="selectionResultMap">
 		SELECT * FROM selection WHERE quesId=#{quesId}
 	</select>
+
+	<select id="getTestBytestId" parameterType="long" resultMap="testResultMap">
+		SELECT * FROM test WHERE testId=#{testId}
+	</select>
 </mapper>

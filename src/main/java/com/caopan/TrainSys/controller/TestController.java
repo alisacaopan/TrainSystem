@@ -102,9 +102,8 @@ public class TestController {
     public Long testrecord(@RequestParam("openId") String openId,
                                 @RequestParam("testArray") long[][] testArray,
                                 @RequestParam("vCourseId") Long  vCourseId) {
-        int index = 0;
         int Grade = 0;
-
+        int index = 0;
         Long userId = userService.getUserByOpenId(openId).getId();
         try {
             String testRecord = "";
@@ -122,20 +121,23 @@ public class TestController {
             test.setTestTime(df.format(date));
             test.setGrade(Grade);
             test.setTestRecord(testRecord);
-            index = testService.insert(test);
-            if (Grade > 0) {
+            if(testService.insert(test)==1){
                 index = 1;
-            } else {
-                index = 0;
             }
         } catch (Exception e) {
         } finally {
-            if (index == 1) {
+            if(index == 1){
                 return userService.getUserByOpenId(openId).getId();
             } else {
                 return (long)0;
             }
+
         }
+    }
+
+    @GetMapping("/getGradeBytestId")
+    public int getGradeBytestId(@RequestParam("testId") long testId) {
+        return testService.getTestBytestId(testId).getGrade();
     }
 
 

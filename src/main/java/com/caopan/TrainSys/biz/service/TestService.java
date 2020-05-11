@@ -123,4 +123,8 @@ public class TestService {
         return testDao.getQuesByquesId(quesId);
 
     }
+
+    public Test getTestBytestId(long testId){
+        return testDao.getTestBytestId(testId);
+    }
 }
