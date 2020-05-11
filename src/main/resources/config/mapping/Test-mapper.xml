@@ -52,4 +52,5 @@
 	<select id="getTestBytestId" parameterType="long" resultMap="testResultMap">
 		SELECT * FROM test WHERE testId=#{testId}
 	</select>
+
 </mapper>

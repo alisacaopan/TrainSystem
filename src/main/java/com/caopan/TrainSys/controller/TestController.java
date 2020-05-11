@@ -104,6 +104,7 @@ public class TestController {
                                 @RequestParam("vCourseId") Long  vCourseId) {
         int Grade = 0;
         int index = 0;
+        Long testId = (long)0;
         Long userId = userService.getUserByOpenId(openId).getId();
         try {
             String testRecord = "";
@@ -124,10 +125,11 @@ public class TestController {
             if(testService.insert(test)==1){
                 index = 1;
             }
+            testId = test.getTestId();
         } catch (Exception e) {
         } finally {
             if(index == 1){
-                return userService.getUserByOpenId(openId).getId();
+                return testId;
             } else {
                 return (long)0;
             }
@@ -139,6 +141,4 @@ public class TestController {
     public int getGradeBytestId(@RequestParam("testId") long testId) {
         return testService.getTestBytestId(testId).getGrade();
     }
-
-
 }

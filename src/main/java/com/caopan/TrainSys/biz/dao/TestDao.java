@@ -26,5 +26,7 @@ public interface TestDao {
     List<Selection> getSelectionByquesId(long quesId);
 
     public Test getTestBytestId(long testId);
+
+    public void getLastTestId();
 }
 
