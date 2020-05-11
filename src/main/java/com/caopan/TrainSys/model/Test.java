@@ -8,6 +8,7 @@ public class Test {
     private long testId ;
     private Integer grade;
     private String testTime;
+    private String testRecord;
     private long userId ;
     private long vCourseId ;
 
@@ -15,6 +16,7 @@ public class Test {
         this.testId = (long)0;
         this.grade = 0;
         this.testTime = "";
+        this.testRecord = "";
         this.userId = (long)0;
         this.vCourseId = (long)0;
     }
@@ -41,6 +43,14 @@ public class Test {
 
     public void setTestTime(String testTime) {
         this.testTime = testTime;
+    }
+
+    public String getTestRecord() {
+        return testRecord;
+    }
+
+    public void setTestRecord(String testRecord) {
+        this.testRecord = testRecord;
     }
 
     public long getUserId() {

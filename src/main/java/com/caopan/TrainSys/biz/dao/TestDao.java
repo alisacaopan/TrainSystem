@@ -14,6 +14,8 @@ public interface TestDao {
 
     Integer delete(Long testId);  //删除测试记录
 
+    List<Test> getTestByUserId(Long userId);
+
     //随机生成试卷，返回2道题的题号和题干
     List<Question> getQuestionRandly(int vCourseId);
 
