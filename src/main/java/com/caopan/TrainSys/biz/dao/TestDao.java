@@ -27,6 +27,5 @@ public interface TestDao {
 
     public Test getTestBytestId(long testId);
 
-    public void getLastTestId();
 }
 

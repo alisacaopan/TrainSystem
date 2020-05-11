@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Test {
     private long testId ;
-    private Integer grade;
+    private float grade;
     private String testTime;
     private String testRecord;
     private long userId ;
@@ -29,11 +29,11 @@ public class Test {
         this.testId = testId;
     }
 
-    public int getGrade() {
+    public float getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(float grade) {
         this.grade = grade;
     }
 

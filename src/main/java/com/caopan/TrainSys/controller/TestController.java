@@ -102,7 +102,7 @@ public class TestController {
     public Long testrecord(@RequestParam("openId") String openId,
                                 @RequestParam("testArray") long[][] testArray,
                                 @RequestParam("vCourseId") Long  vCourseId) {
-        int Grade = 0;
+        float Grade = 0;
         int index = 0;
         Long testId = (long)0;
         Long userId = userService.getUserByOpenId(openId).getId();
@@ -114,6 +114,8 @@ public class TestController {
                 }
                 testRecord  = Arrays.deepToString(testArray);
             }
+            Grade = Grade / testArray.length;
+            Grade = Grade * 2;
             Test test = new Test();
             test.setUserId(userId);
             test.setvCourseId(vCourseId);
@@ -138,7 +140,7 @@ public class TestController {
     }
 
     @GetMapping("/getGradeBytestId")
-    public int getGradeBytestId(@RequestParam("testId") long testId) {
+    public float getGradeBytestId(@RequestParam("testId") long testId) {
         return testService.getTestBytestId(testId).getGrade();
     }
 }
