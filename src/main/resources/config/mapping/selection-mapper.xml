@@ -13,5 +13,7 @@
 		INSERT INTO selection (selectionContent, isRight, quesId)
 		VALUES (#{selectionContent}, #{isRight}, #{quesId})
 	</insert>
-
+    <select id="getSelectionByquesId" parameterType="long" resultMap="selectionResultMap">
+		SELECT * FROM selection WHERE quesId=#{quesId}
+	</select>
 </mapper>

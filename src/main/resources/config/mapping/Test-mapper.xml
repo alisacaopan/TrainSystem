@@ -9,19 +9,6 @@
 		<result property="userId" column="userId"/>
 		<result property="vCourseId" column="vCourseId"/>
 	</resultMap>
-	<resultMap id="questionResultMap" type="com.caopan.TrainSys.model.Question">
-		<id property="quesId" column="quesId"/>
-		<result property="quesContent" column="quesContent"/>
-		<result property="testRecord" column="testRecord"/>
-		<result property="testRecord" column="testRecord"/>
-		<result property="vCourseId" column="vCourseId"/>
-	</resultMap>
-	<resultMap id="selectionResultMap" type="com.caopan.TrainSys.model.Selection">
-		<id property="selectionId" column="selectionId"/>
-		<result property="selectionContent" column="selectionContent"/>
-		<result property="isRight" column="isRight"/>
-		<result property="quesId" column="quesId"/>
-	</resultMap>
 
 	<insert id="insert" parameterType="com.caopan.TrainSys.model.Test" useGeneratedKeys="true"
 			keyProperty="testId">
@@ -37,17 +24,9 @@
 		SELECT * FROM test where testId=#{testId};
 	</select>
 
-	<select id="getQuestionRandly" resultMap="questionResultMap" parameterType="java.lang.Integer">
-		SELECT * FROM question where vCourseId =#{vCourseId} order by rand() LIMIT 2;
-	</select>
 
-	<select id="getQuesByquesId" parameterType="long" resultMap="questionResultMap">
-		SELECT * FROM question WHERE quesId=#{quesId} LIMIT 1
-	</select>
 
-	<select id="getSelectionByquesId" parameterType="long" resultMap="selectionResultMap">
-		SELECT * FROM selection WHERE quesId=#{quesId}
-	</select>
+
 
 	<select id="getTestBytestId" parameterType="long" resultMap="testResultMap">
 		SELECT * FROM test WHERE testId=#{testId}
