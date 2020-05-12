@@ -10,4 +10,9 @@ public class AuthResponseCode {
     public static final String USER_NOT_AUTH_DESC = "用户未认证，请认证登录";
     public static final String USER_AUTH_FAILED = "1001";
     public static final String USER_AUTH_FAILED_DESC = "用户认证失败";
+    public static final String UPLOAD_SUCCECESS = "2001";
+    public static final String UPLOAD_SUCCECESS_DESC = "上传成功";
+    public static final String UPLOAD_FAILED = "2002";
+    public static final String UPLOAD_FAILED_DESC = "上传失败";
+
 }

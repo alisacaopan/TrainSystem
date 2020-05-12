@@ -86,4 +86,13 @@ public class UserService {
         return userDao.delete(id);
     }
 
+    public void insertStudentFromexcl(User user){
+        userDao.insert(user);
+    }
+
+    public List<User> findAllStudents(){
+        return userDao.findAllStudents();
+    }
+
+
 }

@@ -24,5 +24,9 @@ public interface UserDao {
     List<User> getUserByClassId(@Param("classId") Integer classId);
 
     Integer updateOpenId(@Param("openId") String openId, @Param("mobile") String mobile);
+
+    void insertStudentFromexcl(User user);
+
+    List<User> findAllStudents();
 }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.SelectionDao">
+    <resultMap id="selectionResultMap" type="com.caopan.TrainSys.model.Selection">
+        <id property="selectionId" column="selectionId"/>
+        <result property="selectionContent" column="selectionContent"/>
+        <result property="isRight" column="isRight"/>
+        <result property="quesId" column="quesId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.caopan.TrainSys.model.Selection" useGeneratedKeys="true"
+            keyProperty="selectionId">
+		INSERT INTO selection (selectionContent, isRight, quesId)
+		VALUES (#{selectionContent}, #{isRight}, #{quesId})
+	</insert>
+
+</mapper>

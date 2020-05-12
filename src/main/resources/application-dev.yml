@@ -9,15 +9,6 @@ server:
 #    key-alias: tomcat
 
 spring:
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-    jedis:
-      pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: 1ms
   datasource:
     url: jdbc:mysql://localhost:3306/TrainSys?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -35,4 +26,4 @@ mybatis:
 
 
 logging:
-  config: E:\IDEAWorkSpace\TrainSystem\src\main\resources\config\log4j2.xml
+  config: /Users/caopan1/IdeaProjects/TrainSysemo/src/main/resources/config/log4j2.xml

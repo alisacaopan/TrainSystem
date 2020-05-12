@@ -23,7 +23,7 @@ public class LoginandAuth {
     }
 
     @PostMapping("/authen")
-    public LoginResult Auth(@RequestParam("openId") String openId,
+    public LoginResult authen(@RequestParam("openId") String openId,
                             @RequestParam("mobile") String mobile,
                             @RequestParam("idCard") String idCard) {
 
@@ -37,6 +37,13 @@ public class LoginandAuth {
             loginResult.setCode(AuthResponseCode.USER_AUTH_FAILED);
             loginResult.setDesc(AuthResponseCode.USER_AUTH_FAILED_DESC);
         }
+
+        return loginResult;
+    }
+
+    @GetMapping("/loginq")
+    public LoginResult login() {
+        LoginResult loginResult = userService.login(4567 + "");
 
         return loginResult;
     }

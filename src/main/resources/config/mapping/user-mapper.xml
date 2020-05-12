@@ -47,4 +47,8 @@
         where mobile=#{mobile}
     </update>
 
+    <select id="findAllStudents" parameterType="map" resultMap="userResultMap">
+		SELECT * FROM user WHERE role = '1'
+	</select>
+
 </mapper>
