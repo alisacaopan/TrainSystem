@@ -276,7 +276,8 @@ public class VideoCourseController {
         System.out.printf("--------------开始--------------");
         String ip = "http://localhost:8443/";
         String filePath = vCourseService.getOneCourse(vCourseId).getAddress();
-
+        String relativePath = filePath.replace(root,"");
+        relativePath = relativePath.replace("\\\\","/");
         String path = ip + filePath;
         return path;
     }

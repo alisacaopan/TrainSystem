@@ -60,27 +60,21 @@ public class TestService {
     }
 
     //根据题目id得到答案,进行单个答案比较，返回值为分数
-    public Integer getAnwser(Long quesId, int[] anwser) {
-        //答案数组
+    public Integer getAnwser(Long quesId,Long[] anwser) {
         List<Selection> selections = selectionDao.getSelectionByquesId(quesId);
-        //查找正确答案的个数
-        int length = 0;
-        for (int j = 0; j < selections.size(); j++) {
-            if (selections.get(j).getIsRight() == 1) {
-                length = length + 1;
-            }
-        }
-        //获得正确答案
-        int[] rightAnwser = new int[length];
+        Long[] rightNum = new Long[anwser.length];
         int index = 0;
-        for (int i = 0; i < selections.size(); i++) {
-            if (selections.get(i).getIsRight() == 1) {
-                rightAnwser[index] = i + 1;
-                index++;
+        System.out.printf("---0000000000000000000+++"  + Integer.toString(selections.size()));
+        for (int i = 0; i<selections.size(); i++){
+            if (selections.get(i).getIsRight()==1){
+                rightNum[index] = selections.get(i).getSelectionId();
+                index ++;
+                System.out.printf("---+++");
             }
         }
-        //将正确答案和传入的答案比较,答对了得一分，错了没有分
-        if (Arrays.equals(rightAnwser, anwser)) {
+        Arrays.sort(rightNum);
+        Arrays.sort(anwser);
+        if(Arrays.equals(rightNum,anwser)){
             return 1;
         } else {
             return 0;
