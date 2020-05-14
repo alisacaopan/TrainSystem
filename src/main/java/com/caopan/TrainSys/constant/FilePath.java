@@ -1,7 +1,7 @@
 package com.caopan.TrainSys.constant;
 
 public class FilePath {
-    public  String root=System.getProperty("user.dir");
+
 
     public static final String STUDENT_FOLDER = "list1/student/";
     public static final String TEST_FOLDER = "list1/tests/";

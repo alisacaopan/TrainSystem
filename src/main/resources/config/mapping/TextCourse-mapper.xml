@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.TextCourseDao">
+	<resultMap id="textCourseMap" type="com.caopan.TrainSys.model.TextCourse">
+		<id property="tCourseId" column="tCourseId"/>
+		<result property="name" column="name"/>
+		<result property="address" column="address"/>
+		<result property="introduce" column="introduce"/>
+		<result property="classifyId" column="classifyId"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.caopan.TrainSys.model.TextCourse" useGeneratedKeys="true"
+			keyProperty="vCourseId">
+		INSERT INTO TextCourse (name, address, introduce, classifyId)
+		VALUES (#{name}, #{address}, #{introduce}, #{classifyId})
+	</insert>
+
+	<update id="update" parameterType="com.caopan.TrainSys.model.TextCourse">
+		update TextCourse set TextCourse.name=#{name},TextCourse.address=#{address},TextCourse.introduce=#{introduce},
+		TextCourse.classifyId=#{classifyId}
+		where TextCourse.tCourseId=#{tCourseId}
+	</update>
+
+	<delete id="delete" parameterType="Long">
+		delete from TextCourse where tCourseId=#{tCourseId}
+	</delete>
+
+	<select id="getTextCourse" resultMap="TextCourse">
+		SELECT * FROM TextCourse
+	</select>
+
+	<select id="getTextCourseByClassifyId" parameterType="Integer" resultMap="textCourseMap">
+		SELECT * FROM TextCourse WHERE classifyId=#{classifyId}
+	</select>
+</mapper>
