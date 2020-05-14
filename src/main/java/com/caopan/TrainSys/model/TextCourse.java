@@ -17,12 +17,16 @@ public class TextCourse {
         this.classifyId = 0;
     }
 
-    public long getvCourseId() {
+    public long gettCourseId() {
         return tCourseId;
     }
 
-    public void setvCourseId(long vCourseId) {
-        this.tCourseId = vCourseId;
+    public void settCourseId(long tCourseId) {
+        this.tCourseId = tCourseId;
+    }
+
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
     }
 
     public String getName() {
