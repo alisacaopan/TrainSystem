@@ -26,6 +26,10 @@
 		delete from videocourse where vCourseId=#{vCourseId}
 	</delete>
 
+	<select id="getOneCourse" resultMap="videoCourseMap">
+		SELECT * FROM videocourse where vCourseId=#{vCourseId} LIMIT 1
+	</select>
+
 	<select id="getvCourse" resultMap="videoCourseMap">
 		SELECT * FROM videocourse
 	</select>

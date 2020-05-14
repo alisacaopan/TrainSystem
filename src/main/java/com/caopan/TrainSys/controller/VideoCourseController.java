@@ -1,6 +1,5 @@
 package com.caopan.TrainSys.controller;
 
-import com.caopan.TrainSys.biz.service.TestService;
 import com.caopan.TrainSys.biz.service.VideoCourseService;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.VideoCourse;
@@ -13,10 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.io.File;
 
 
 
@@ -24,6 +26,8 @@ import java.util.List;
 public class VideoCourseController {
     @Autowired
     private VideoCourseService vCourseService;
+
+    private  String root=System.getProperty("user.dir")+File.separator+"src"+File.separator;
 
     @PostMapping(value = "/insertvCourse")
     public Integer insert(@RequestBody VideoCourse vCourse) {
@@ -101,8 +105,8 @@ public class VideoCourseController {
 
         if (file.getSize() != 0) {
             //上传的多格式的视频文件-作为临时路径保存，转码以后删除-路径不能写//
-            String path = FilePath.VIDEO_FOLDER;
-            String Mp4path1 = FilePath.TARGET_FOLDER;
+            String path = root + FilePath.VIDEO_FOLDER;
+            String Mp4path1 = root + FilePath.TARGET_FOLDER;
             File TempFile = new File(path);
             if (TempFile.exists()) {
                 if (TempFile.isDirectory()) {
@@ -129,7 +133,7 @@ public class VideoCourseController {
             System.out.println("视频名为:" + filename2);
 
             //源视频地址+重命名后的视频名+视频后缀
-            String yuanPATH = (path + filename);
+            String yuanPATH = (path + File.separator + filename);
 
             System.out.println("视频的完整文件名1:" + filename);
             System.out.println("源视频路径为:" + yuanPATH);
@@ -201,9 +205,9 @@ public class VideoCourseController {
             }
 
             //获取转码后的mp4文件名
-            String Mp4path = FilePath.TARGET_FOLDER;
+            String Mp4path = root+FilePath.TARGET_FOLDER;
             filename2 = filename2 + ".mp4";
-            String NewVideopath = Mp4path + filename2;
+            String NewVideopath = Mp4path + File.separator + filename2;
             System.out.println("新视频的url:" + NewVideopath);
 
             //删除临时文件
@@ -231,8 +235,8 @@ public class VideoCourseController {
 
             HashMap<String, String> dto = new HashMap<String, String>();
             dto.put("ffmpeg_path", FilePath.FFMPEG_PATH);//必填
-            dto.put("input_path", Mp4path + filename2);//必填
-            dto.put("video_converted_path", FilePath.TARGET_FOLDER_MARK + filename2);//必填
+            dto.put("input_path", Mp4path+ File.separator + filename2);//必填
+            dto.put("video_converted_path",root+ FilePath.TARGET_FOLDER_MARK+ File.separator  + filename2);//必填
             dto.put("logo", FilePath.MARK_IMAGE);//可选(注意windows下面的logo地址前面要写4个反斜杠,如果用浏览器里面调用servlet并传参只用两个,如 d:\\:/ffmpeg/input/logo.png)
             FFMPEG secondsString = new FFMPEG();
             secondsString.videoTransfer(dto);
@@ -264,8 +268,18 @@ public class VideoCourseController {
                                 + "&grade=-1&state=-1&subclass=" + subclass);
           }*/
         }
-
         return null;
+    }
+
+    @GetMapping(value = "/getOnevCoursesURL")
+    public String getvCoursePath(@RequestParam("vCourseId") Long vCourseId){
+        System.out.printf("--------------开始--------------");
+        String ip = "http://localhost:8443/";
+        String filePath = vCourseService.getOneCourse(vCourseId).getAddress();
+        String relativePath = filePath.replace(root,"");
+        relativePath = relativePath.replace("\\\\","/");
+        String path = ip + filePath;
+        return path;
     }
 
 }

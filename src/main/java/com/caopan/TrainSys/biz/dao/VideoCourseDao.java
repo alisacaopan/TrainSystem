@@ -16,15 +16,16 @@ public interface VideoCourseDao {
 
     Integer delete(Long vCourseId);
 
+    // 取得一门课程
+    VideoCourse getOneCourse(Long vCourseId);
+
+    //取得所有课程
     /**
      * /取得所有课程
      * @return
      */
     List<VideoCourse> getvCourse();
 
-    /**
-     * /查询此分类所有课程
-     */
-    List<VideoCourse> getvCourseByClassifyId(@Param("classifyId") Integer classifyId);
+    List<VideoCourse> getvCourseByClassifyId(@Param("classifyId") Integer classifyId); //查询此分类所有课程
 }
 

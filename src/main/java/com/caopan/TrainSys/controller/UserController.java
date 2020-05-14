@@ -4,6 +4,7 @@ import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.model.upLoadResult;
+import net.sf.json.JSONArray;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -234,10 +236,17 @@ public class UserController {
         return upLoadResult;
     }
 
-    @GetMapping("/getAllStudents")
-    public List<User> getAllStudents() {
-        List<User> students = userService.findAllStudents();
-        return students;
+    @GetMapping(value = "/getAllStudents")
+    public void  getAllStudents(HttpServletResponse resp) {
+        try {
+            List<User> students = userService.findAllStudents();
+            JSONArray data = JSONArray.fromObject(students);
+            resp.setCharacterEncoding("utf-8");
+            PrintWriter respWritter = resp.getWriter();
+            respWritter.append(data.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

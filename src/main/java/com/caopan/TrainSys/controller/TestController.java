@@ -51,7 +51,7 @@ public class TestController {
     }
 
     @PostMapping("/getAnwser")
-    public Integer getAnwser(@RequestParam("quesId") Long quesId, @RequestParam("anwser") int[] anwser) {
+    public Integer getAnwser(@RequestParam("quesId") Long quesId, @RequestParam("anwser") Long[] anwser) {
         int index = 0;
         //try {
             //如果答案是正确的 返回1，错误的返回0 ，异常也返回0
@@ -60,7 +60,7 @@ public class TestController {
             } else {
                 index = 0;
             }
-       // } catch (Exception e) {
+        //} catch (Exception e) {
         //} finally {
             return index;
         //}
