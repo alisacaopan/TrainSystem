@@ -1,5 +1,7 @@
 package com.caopan.TrainSys.biz.service;
 
+import com.caopan.TrainSys.biz.dao.QuestionDao;
+import com.caopan.TrainSys.biz.dao.SelectionDao;
 import com.caopan.TrainSys.biz.dao.TestDao;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
@@ -18,6 +20,10 @@ import java.util.List;
 public class TestService {
     @Autowired
     private TestDao testDao;
+    @Autowired
+    private QuestionDao questionDao;
+    @Autowired
+    private SelectionDao selectionDao;
 
     public Integer insert(Test test){ return  testDao.insert(test);}
 
