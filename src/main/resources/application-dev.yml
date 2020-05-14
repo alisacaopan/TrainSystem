@@ -26,4 +26,4 @@ mybatis:
 
 
 logging:
-  config: /Users/caopan1/IdeaProjects/TrainSysemo/src/main/resources/config/log4j2.xml
+  config: E:\IDEAWorkSpace\TrainSystem\src\main\resources\config\log4j2.xml
