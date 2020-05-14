@@ -20,6 +20,10 @@ public interface VideoCourseDao {
     VideoCourse getOneCourse(Long vCourseId);
 
     //取得所有课程
+    /**
+     * /取得所有课程
+     * @return
+     */
     List<VideoCourse> getvCourse();
 
     List<VideoCourse> getvCourseByClassifyId(@Param("classifyId") Integer classifyId); //查询此分类所有课程
