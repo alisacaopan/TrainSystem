@@ -23,7 +23,7 @@ public interface TestDao {
     Question getQuesByquesId(long quesId);
 
     //根据题目号找所有选项
-    //
+    List<Selection> getSelectionByquesId(long quesId);
 
     public Test getTestBytestId(long testId);
 
