@@ -26,7 +26,7 @@
 		delete from TextCourse where tCourseId=#{tCourseId}
 	</delete>
 
-	<select id="getTextCourse" resultMap="TextCourse">
+	<select id="getTextCourse" resultMap="textCourseMap">
 		SELECT * FROM TextCourse
 	</select>
 
