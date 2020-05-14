@@ -1,5 +1,7 @@
 package com.caopan.TrainSys.biz.service;
 
+import com.caopan.TrainSys.biz.dao.QuestionDao;
+import com.caopan.TrainSys.biz.dao.SelectionDao;
 import com.caopan.TrainSys.biz.dao.TestDao;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
@@ -18,6 +20,10 @@ import java.util.List;
 public class TestService {
     @Autowired
     private TestDao testDao;
+    @Autowired
+    private QuestionDao questionDao;
+    @Autowired
+    private SelectionDao selectionDao;
 
     public Integer insert(Test test){ return  testDao.insert(test);}
 
@@ -29,7 +35,7 @@ public class TestService {
 
     //随机获得x道题的题号和状态,状态默认置0
     public List getQuestionId(int vCourseId) {
-        List<Question> questions = testDao.getQuestionRandly(vCourseId);
+        List<Question> questions = questionDao.getQuestionRandly(vCourseId);
         List quesAndStatus = new ArrayList();
         for (int i = 0; i < questions.size(); i++) {
             Long[] question = new Long[2];
@@ -42,9 +48,9 @@ public class TestService {
 
     //根据题目id获得题干和选项,第一个为题目，后面的都为选项
     public List<Object> getContent(Long quesId) {
-        Question question = testDao.getQuesByquesId(quesId);
+        Question question = questionDao.getQuesByquesId(quesId);
         List<Object> quesAndSelc = new ArrayList<>();
-        List<Selection> selections = testDao.getSelectionByquesId(question.getQuesId());
+        List<Selection> selections = selectionDao.getSelectionByquesId(question.getQuesId());
         quesAndSelc.add(question);
         //获取选项
         for (int i = 0; i < selections.size(); i++) {
@@ -56,7 +62,7 @@ public class TestService {
     //根据题目id得到答案,进行单个答案比较，返回值为分数
     public Integer getAnwser(Long quesId, int[] anwser) {
         //答案数组
-        List<Selection> selections = testDao.getSelectionByquesId(quesId);
+        List<Selection> selections = selectionDao.getSelectionByquesId(quesId);
         //查找正确答案的个数
         int length = 0;
         for (int j = 0; j < selections.size(); j++) {
@@ -85,7 +91,7 @@ public class TestService {
     public Integer getAllAnwser(List<Long> allQuesId, List<int[]> allAnwser,Long userId) {
         int grade = 0;  //总分
         for (int i = 0; i < allAnwser.size(); i++) {
-            List<Selection> selections = testDao.getSelectionByquesId(allQuesId.get(i));
+            List<Selection> selections = selectionDao.getSelectionByquesId(allQuesId.get(i));
             //查找正确答案的个数
             int length = 0;
             for (int j = 0; j < selections.size(); j++) {
@@ -110,7 +116,7 @@ public class TestService {
         }
         Test test = new Test();
         test.setUserId(userId);
-        test.setvCourseId(testDao.getQuesByquesId(allQuesId.get(0)).getvCourseId());
+        test.setvCourseId(questionDao.getQuesByquesId(allQuesId.get(0)).getvCourseId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         Date date = new Date();
         test.setTestTime(df.format(date));
@@ -120,7 +126,7 @@ public class TestService {
     }
 
     public Question getQuestionById(long quesId) {
-        return testDao.getQuesByquesId(quesId);
+        return questionDao.getQuesByquesId(quesId);
 
     }
 

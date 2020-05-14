@@ -234,7 +234,7 @@ public class UserController {
         return upLoadResult;
     }
 
-    @GetMapping(value = "/getAllStudents")
+    @GetMapping("/getAllStudents")
     public List<User> getAllStudents() {
         List<User> students = userService.findAllStudents();
         return students;
