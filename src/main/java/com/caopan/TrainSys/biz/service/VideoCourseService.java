@@ -45,4 +45,7 @@ public class VideoCourseService {
     public List<VideoCourse> getAllvCourses() {
         return vcourseDao.getvCourse();
     }
+
+    //获得单个视频
+    public  VideoCourse getOneCourse(Long vCourseId){return vcourseDao.getOneCourse(vCourseId);}
 }

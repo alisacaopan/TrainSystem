@@ -16,6 +16,9 @@ public interface VideoCourseDao {
 
     Integer delete(Long vCourseId);
 
+    // 取得一门课程
+    VideoCourse getOneCourse(Long vCourseId);
+
     //取得所有课程
     List<VideoCourse> getvCourse();
 
