@@ -12,7 +12,7 @@ public class TextCoursesController {
     @Autowired
     private TextCourseService textCourseService;
 
-    @GetMapping("/getAllTestCourses")
+    @GetMapping("/getAllTextCourses")
     public List<TextCourse> getAllTestCourses() {
         return textCourseService.getTextCourses();
     }

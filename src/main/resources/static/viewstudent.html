@@ -116,8 +116,8 @@
                                 <strong class="card-title">学生信息表</strong>
                             </div>
                             <div class="card-body">
-                                <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
-                                    <thead>
+                                <table  class="table table-bordered">
+                                    <thead class="thead-dark">
                                     <tr>
                                         <th>姓名</th>
                                         <th>电话</th>
@@ -145,13 +145,9 @@
 
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
-
-    <script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
-
+    <script src="vendors/jquery-validation-unobtrusive/src/jquery.validate.unobtrusive.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
-
 
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
@@ -172,23 +168,22 @@
     <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
     <script>
         //全局商品信息数组
-        var allStudents=[];
         jQuery(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8090/TrainSys/getAllStudents",
+                url: "http://localhost:8443/TrainSys/getAllStudents",
                 xhrFields: {withCredentials: true},
                 success: function (data) {
-                    allStudents=data;
-                        reloadDom();
-
+                    var allStudents=data;
+                        reloadDom(allStudents);
                 },
-                error: function (data) {
+                error: function () {
                     alert("获取学生信息失败")
                 }
             });
         });
-        function reloadDom() {
+        function reloadDom(allStudents) {
+            $("#container").empty();
             for(var i=0;i<allStudents.length;i++){
                 var student=allStudents[i];
                 var dom="<tr data-id='"+student.id+"' id='studentId"+student.id+"'>" +
@@ -200,7 +195,6 @@
                     +"<td>111</td>"
                     +"</tr>"
                 $("#container").append($(dom));
-
             }
         }
     </script>
