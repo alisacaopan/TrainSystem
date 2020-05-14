@@ -136,7 +136,7 @@ public class TestController {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             Date date = new Date();
             test.setTestTime(df.format(date));
-            test.setGrade(Grade);
+            test.setGrade(Grade*100);
             test.setTestRecord(testRecord);
             if (testService.insert(test) == 1) {
                 index = 1;
