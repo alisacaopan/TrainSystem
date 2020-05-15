@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -101,7 +102,7 @@ public class VideoCourseController {
     }
 
 
-    @PostMapping("/uploadVideo")
+    @PostMapping("/uploadVide")
     public upLoadResult uploadVideo(@RequestParam("videoName") String name,
                                     @RequestParam("videoIntroduce") String introduce,
                                     @RequestParam("file-input") MultipartFile file,
