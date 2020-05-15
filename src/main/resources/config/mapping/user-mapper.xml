@@ -19,8 +19,15 @@
 	</insert>
 
     <update id="update" parameterType="com.caopan.TrainSys.model.User">
-	update user set user.name=#{name},user.password=#{password},user.mobile=#{mobile},
-	user.idCard=#{idCard},user.openId=#{openId},user.role=#{role},user.classId=#{classId}
+	update user <set>
+        <if test="name!=null">user.name=#{name}</if>,
+        <if test="name!=null">user.password=#{password}</if>,
+        <if test="name!=null">user.mobile=#{mobile}</if>,
+        <if test="name!=null">user.idCard=#{idCard}</if>,
+        <if test="name!=null">user.openId=#{openId}</if>,
+        <if test="name!=null">user.role=#{role}</if>,
+        <if test="name!=null">user.classId=#{classId}</if>,
+    </set>
 	where user.id=#{id}
 	</update>
 

@@ -39,11 +39,65 @@ public class UserController {
         } finally {
             return index;
         }
+    }
+
+    @PostMapping(value = "/insertByWeChat")
+    public Integer insertByWeChat(@RequestParam Long id,
+                          @RequestParam String name,
+                          @RequestParam String mobile,
+                          @RequestParam String idCard,
+                          @RequestParam String openId,
+                          @RequestParam int classId) {
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        user.setMobile(mobile);
+        user.setIdCard(idCard);
+        user.setOpenId(openId);
+        user.setClassId(classId);
+        int index = 0;
+        try {
+            if (userService.add(user) == 1) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            return index;
+        }
 
     }
 
     @PostMapping(value = "/update")
-    public Integer update(@RequestBody User user) {
+    public Integer update(@RequestParam Long id,
+                          @RequestParam String name,
+                          @RequestParam String mobile,
+                          @RequestParam String idCard,
+                          @RequestParam String openId,
+                          @RequestParam int classId) {
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        user.setMobile(mobile);
+        user.setIdCard(idCard);
+        user.setOpenId(openId);
+        user.setClassId(classId);
+        int index = 0;
+        try {
+            if (userService.update(user) == 1) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            return index;
+        }
+    }
+
+    @PostMapping(value = "/updateByWeChat")
+    public Integer updateByWeChat(@RequestBody User user) {
         int index = 0;
         try {
             if (userService.update(user) == 1) {
