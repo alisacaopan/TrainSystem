@@ -71,13 +71,12 @@ public class TextCourseService {
 
     /**
      *
-     * @param bos输出文件的位置
+     * @param
      * @param input
      *            原PDF位置
      * @param waterMarkName
      *            页脚添加水印
-     * @param permission
-     *            权限码
+     * @param
      * @throws DocumentException
      * @throws IOException
      */

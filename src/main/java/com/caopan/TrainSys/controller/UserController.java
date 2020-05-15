@@ -43,11 +43,11 @@ public class UserController {
 
     @PostMapping(value = "/insertByWeChat")
     public Integer insertByWeChat(@RequestParam Long id,
-                          @RequestParam String name,
-                          @RequestParam String mobile,
-                          @RequestParam String idCard,
-                          @RequestParam String openId,
-                          @RequestParam int classId) {
+                                  @RequestParam String name,
+                                  @RequestParam String mobile,
+                                  @RequestParam String idCard,
+                                  @RequestParam String openId,
+                                  @RequestParam int classId) {
         User user = new User();
         user.setId(id);
         user.setName(name);
@@ -292,6 +292,6 @@ public class UserController {
 
     @GetMapping(value = "/getAllStudents")
     public List getAllStudents() {
-            return userService.findAllStudents();
+        return userService.findAllStudents();
     }
-    }
+}
