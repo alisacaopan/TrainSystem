@@ -102,7 +102,10 @@ public class VideoCourseController {
 
 
     @PostMapping("/uploadVideo")
-    public upLoadResult uploadVideo(@RequestParam("file-input") MultipartFile file, HttpServletRequest req) throws IOException {
+    public upLoadResult uploadVideo(@RequestParam("videoName") String name,
+                                    @RequestParam("videoIntroduce") String introduce,
+                                    @RequestParam("file-input") MultipartFile file,
+                                    HttpServletRequest req) throws IOException {
         System.out.println("进入addVideo视频上传控制层");
         if (file.getSize() != 0) {
             //上传的多格式的视频文件-作为临时路径保存，转码以后删除-路径不能写//
@@ -139,57 +142,7 @@ public class VideoCourseController {
             System.out.println("视频的完整文件名1:" + filename);
             System.out.println("源视频路径为:" + yuanPATH);
 
-            if (filename_extension.equals("mp4")) {
-                //上传到本地磁盘/服务器
-                try {
-                    System.out.println("写入本地磁盘/服务器");
-                    InputStream is = file.getInputStream();
-                    OutputStream os = new FileOutputStream(new File(Mp4path1, filename));
-                    int len = 0;
-                    byte[] buffer = new byte[2048];
-
-                    while ((len = is.read(buffer)) != -1) {
-                        os.write(buffer, 0, len);
-                    }
-                    os.close();
-                    os.flush();
-                    is.close();
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } else if (filename_extension.equals("avi") || filename_extension.equals("rm")
-                    || filename_extension.equals("rmvb") || filename_extension.equals("wmv")
-                    || filename_extension.equals("3gp") || filename_extension.equals("mov")
-                    || filename_extension.equals("flv") || filename_extension.equals("ogg")
-            ) {
-                try {
-                    System.out.println("写入本地磁盘/服务器");
-                    InputStream is = file.getInputStream();
-                    OutputStream os = new FileOutputStream(new File(path, filename));
-                    int len = 0;
-                    byte[] buffer = new byte[2048];
-
-                    while ((len = is.read(buffer)) != -1) {
-                        os.write(buffer, 0, len);
-                    }
-                    os.close();
-                    os.flush();
-                    is.close();
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-
-            System.out.println("========上传完成，开始调用转码工具类=======");
+            vCourseService.VideoSubmit(filename_extension,file,filename,path,Mp4path1);
 
             // 对视频进行转码
             // 测试用
@@ -235,6 +188,7 @@ public class VideoCourseController {
             System.out.println(root + FilePath.FFMPEG_PATH);
             System.out.println(root+FilePath.TARGET_FOLDER +File.separator+ filename2);
             System.out.println(root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);
+
             System.out.println(FilePath.MARK_IMAGE);
             HashMap<String, String> dto = new HashMap<String, String>();
             dto.put("ffmpeg_path", root + FilePath.FFMPEG_PATH);//必填
@@ -245,31 +199,12 @@ public class VideoCourseController {
             secondsString.videoTransfer(dto);
             System.out.println("所有视频文件水印添加成功");
             // 保存到数据库
-            /*String finalpath = targetfolder2 + filename2;
-            VideoCourse videoCourse = new VideoCourse();
-            VideoCourseService videoCourseService = new VideoCourseService();
-
-
-            videoCourse.setName(videoname);
-            //videoCourse.setvCourseId(filename);
-            videoCourse.setAddress(finalpath);
-            videoCourse.setIntroduce(context);
-            videoCourse.setClassifyId(0);
-            //已转码后的视频存放地址
-            videoCourseService.uplaodvideo(videoCourse);*/
-            /*// 实现对数据的更新
-            int n = 0;
-            n = videoCourseService.uplaodvideo(videoCourse);
-
-            if (n != 0) {
-                return new ModelAndView("back/public/success").addObject(
-                        "notice", "resourceList?uid=" + uid
-                                + "&grade=-1&state=-1&subclass=" + subclass);
-            } else {
-                return new ModelAndView("back/public/fail").addObject("notice",
-                        "resourceList?uid=" + uid
-                                + "&grade=-1&state=-1&subclass=" + subclass);
-          }*/
+            VideoCourse vCourse = new VideoCourse();
+            vCourse.setName(name);
+            vCourse.setIntroduce(introduce);
+            vCourse.setAddress(root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);
+            vCourse.setClassifyId(1);
+            vCourseService.insert(vCourse);
         }
         return null;
     }
@@ -277,7 +212,7 @@ public class VideoCourseController {
     @GetMapping(value = "/getOnevCoursesURL")
     public String getvCoursePath(@RequestParam("vCourseId") Long vCourseId){
 
-        String ip = "http://localhost:8443/TrainSys/";
+        String ip = "http://172.20.52.104:8443/TrainSys/";
         ip = ip.replace("\\","/");
         String filePath = vCourseService.getOneCourse(vCourseId).getAddress();
         String relativePath = filePath.replace(root,"");
