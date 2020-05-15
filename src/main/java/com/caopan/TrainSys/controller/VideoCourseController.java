@@ -102,7 +102,7 @@ public class VideoCourseController {
     }
 
 
-    @PostMapping("/uploadVide")
+    @PostMapping("/uploadVideo")
     public upLoadResult uploadVideo(@RequestParam("videoName") String name,
                                     @RequestParam("videoIntroduce") String introduce,
                                     @RequestParam("file-input") MultipartFile file,

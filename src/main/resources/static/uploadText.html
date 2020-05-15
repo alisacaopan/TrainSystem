@@ -44,15 +44,16 @@
                     aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href=""><img src="images/logo.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href=""><img src="images/logo2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
         </div>
+
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
                 <h3 class="menu-title">系统功能</h3><!-- /.menu-title -->
                 <li>
-                    <a href="uploadVideo.html"> <i class="menu-icon ti-email"></i>上传视频课程 </a>
+                    <a href="uploadVideo.html"> <i class="menu-icon ti-email"></i>上传视频 </a>
                 </li>
                 <li>
                     <a href="uploadtest.html"> <i class="menu-icon fa fa-laptop"></i>上传试题 </a>
@@ -66,6 +67,8 @@
                 <li>
                     <a href="viewstudent.html"> <i class="menu-icon fa fa-heart"></i>查看学生列表 </a>
                 </li>
+
+
                 <h3 class="menu-title">其他</h3><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -94,6 +97,46 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>图文课程上传选项</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form action="/TrainSys/uploadText" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static">Username</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="textName"  class=" form-control-label">图文课程名称</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="textName" name="textName" placeholder="请输入视频名称..." class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="textIntroduce" class=" form-control-label">图文课程简介</label></div>
+                            <div class="col-12 col-md-9"><textarea name="textIntroduce" id="textIntroduce" rows="9" placeholder="请输入..." class="form-control"></textarea></div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">选择上传的文件</label></div>
+                            <div class="col-12 col-md-9"><input type="file" id="file-input" name="file-input" class="form-control-file"></div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Submit
+                            </button>
+                            <!--<button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>-->
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
     </header>
 </div>
 
@@ -108,3 +151,4 @@
 <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
+

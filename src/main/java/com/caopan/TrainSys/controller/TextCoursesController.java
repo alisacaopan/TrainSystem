@@ -39,7 +39,7 @@ public class TextCoursesController {
         return textCourseService.getTextCourses();
     }
 
-    @PostMapping("/uploadVideo")
+    @PostMapping("/uploadText")
     public upLoadResult uploadVideo(@RequestParam("file-input") MultipartFile file,
                                     HttpServletRequest req) throws IOException {
         System.out.println("进入图文课程上传控制层");
