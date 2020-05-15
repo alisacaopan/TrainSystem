@@ -53,17 +53,17 @@ public class TestController {
     @PostMapping("/getAnwser")
     public Integer getAnwser(@RequestParam("quesId") Long quesId, @RequestParam("anwser") Long[] anwser) {
         int index = 0;
-        //try {
+        try {
             //如果答案是正确的 返回1，错误的返回0 ，异常也返回0
             if (testService.getAnwser(quesId, anwser) == 1) {
                 index = 1;
             } else {
                 index = 0;
             }
-        //} catch (Exception e) {
-        //} finally {
+        } catch (Exception e) {
+        } finally {
             return index;
-        //}
+        }
     }
 
     @PostMapping("/getAllAnwser")

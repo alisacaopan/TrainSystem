@@ -27,7 +27,9 @@ public class VideoCourseController {
     @Autowired
     private VideoCourseService vCourseService;
 
-    private  String root=System.getProperty("user.dir")+File.separator+"src"+File.separator;
+    private  String root=System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+
+            File.separator+"resources"+File.separator+"static"+File.separator;
+
 
     @PostMapping(value = "/insertvCourse")
     public Integer insert(@RequestBody VideoCourse vCourse) {
@@ -102,7 +104,6 @@ public class VideoCourseController {
     @PostMapping("/uploadVideo")
     public upLoadResult uploadVideo(@RequestParam("file-input") MultipartFile file, HttpServletRequest req) throws IOException {
         System.out.println("进入addVideo视频上传控制层");
-
         if (file.getSize() != 0) {
             //上传的多格式的视频文件-作为临时路径保存，转码以后删除-路径不能写//
             String path = root + FilePath.VIDEO_FOLDER;
@@ -133,7 +134,7 @@ public class VideoCourseController {
             System.out.println("视频名为:" + filename2);
 
             //源视频地址+重命名后的视频名+视频后缀
-            String yuanPATH = (path + File.separator + filename);
+            String yuanPATH = (path +File.separator+ filename);
 
             System.out.println("视频的完整文件名1:" + filename);
             System.out.println("源视频路径为:" + yuanPATH);
@@ -231,13 +232,15 @@ public class VideoCourseController {
                 }
             }
             System.out.println("所有的临时视频文件删除成功");
-
-
+            System.out.println(root + FilePath.FFMPEG_PATH);
+            System.out.println(root+FilePath.TARGET_FOLDER +File.separator+ filename2);
+            System.out.println(root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);
+            System.out.println(FilePath.MARK_IMAGE);
             HashMap<String, String> dto = new HashMap<String, String>();
-            dto.put("ffmpeg_path", FilePath.FFMPEG_PATH);//必填
-            dto.put("input_path", Mp4path+ File.separator + filename2);//必填
-            dto.put("video_converted_path",root+ FilePath.TARGET_FOLDER_MARK+ File.separator  + filename2);//必填
-            dto.put("logo", FilePath.MARK_IMAGE);//可选(注意windows下面的logo地址前面要写4个反斜杠,如果用浏览器里面调用servlet并传参只用两个,如 d:\\:/ffmpeg/input/logo.png)
+            dto.put("ffmpeg_path", root + FilePath.FFMPEG_PATH);//必填
+            dto.put("input_path", root+FilePath.TARGET_FOLDER +File.separator+ filename2);//必填
+            dto.put("video_converted_path",root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);//必填
+            dto.put("logo",FilePath.MARK_IMAGE);//可选(注意windows下面的logo地址前面要写4个反斜杠,如果用浏览器里面调用servlet并传参只用两个,如 d:\\:/ffmpeg/input/logo.png)
             FFMPEG secondsString = new FFMPEG();
             secondsString.videoTransfer(dto);
             System.out.println("所有视频文件水印添加成功");
@@ -273,12 +276,14 @@ public class VideoCourseController {
 
     @GetMapping(value = "/getOnevCoursesURL")
     public String getvCoursePath(@RequestParam("vCourseId") Long vCourseId){
-        System.out.printf("--------------开始--------------");
-        String ip = "http://localhost:8443/";
+
+        String ip = "http://localhost:8443/TrainSys/";
+        ip = ip.replace("\\","/");
         String filePath = vCourseService.getOneCourse(vCourseId).getAddress();
         String relativePath = filePath.replace(root,"");
-        relativePath = relativePath.replace("\\\\","/");
-        String path = ip + filePath;
+        //relativePath = relativePath.replace("\\\\","/");
+        String path = ip + relativePath;
+        path = path.replace("\\","/");
         return path;
     }
 
