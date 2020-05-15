@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/insert")
+    @PostMapping( "/insert")
     public Integer insert(@RequestBody User user) {
         int index = 0;
         try {
@@ -42,7 +41,7 @@ public class UserController {
 
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping("/update")
     public Integer update(@RequestBody User user) {
         int index = 0;
         try {
