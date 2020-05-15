@@ -33,4 +33,8 @@
 	<select id="getTextCourseByClassifyId" parameterType="Integer" resultMap="textCourseMap">
 		SELECT * FROM TextCourse WHERE classifyId=#{classifyId}
 	</select>
+
+	<select id="getOnetCourse" parameterType="Long" resultMap="textCourseMap">
+		SELECT * FROM TextCourse WHERE tCourseId=#{tCourseId} LIMIT 1
+	</select>
 </mapper>

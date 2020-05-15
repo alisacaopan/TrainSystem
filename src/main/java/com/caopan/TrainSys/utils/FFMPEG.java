@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class FFMPEG {
 
+
     public static String dealString( String str ){
         Matcher m= Pattern.compile("^frame=.*" ).matcher(str);
         String msg="";

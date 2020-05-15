@@ -145,9 +145,13 @@
 
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
-    <script src="vendors/jquery-validation-unobtrusive/src/jquery.validate.unobtrusive.js"></script>
+
+    <script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
+
 
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
@@ -168,22 +172,23 @@
     <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
     <script>
         //全局商品信息数组
+        var allStudents=[];
         jQuery(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8443/TrainSys/getAllStudents",
+                url: "http://localhost:8090/TrainSys/getAllStudents",
                 xhrFields: {withCredentials: true},
                 success: function (data) {
-                    var allStudents=data;
-                        reloadDom(allStudents);
+                    allStudents=data;
+                        reloadDom();
+
                 },
-                error: function () {
+                error: function (data) {
                     alert("获取学生信息失败")
                 }
             });
         });
-        function reloadDom(allStudents) {
-            $("#container").empty();
+        function reloadDom() {
             for(var i=0;i<allStudents.length;i++){
                 var student=allStudents[i];
                 var dom="<tr data-id='"+student.id+"' id='studentId"+student.id+"'>" +
@@ -195,6 +200,7 @@
                     +"<td>111</td>"
                     +"</tr>"
                 $("#container").append($(dom));
+
             }
         }
     </script>
