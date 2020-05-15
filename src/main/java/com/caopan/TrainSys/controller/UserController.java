@@ -4,6 +4,7 @@ import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.model.upLoadResult;
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -235,17 +236,8 @@ public class UserController {
         return upLoadResult;
     }
 
-//    @GetMapping(value = "/getAllStudents")
-//    public void  getAllStudents(HttpServletResponse resp) {
-//        try {
-//            List<User> students = userService.findAllStudents();
-//            JSONArray data = JSONArray.fromObject(students);
-//            resp.setCharacterEncoding("utf-8");
-//            PrintWriter respWritter = resp.getWriter();
-//            respWritter.append(data.toString());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-}
+    @GetMapping(value = "/getAllStudents")
+    public List getAllStudents() {
+            return userService.findAllStudents();
+    }
+    }
