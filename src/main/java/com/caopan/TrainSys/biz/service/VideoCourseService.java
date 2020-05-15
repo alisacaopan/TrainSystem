@@ -7,7 +7,9 @@ import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.VideoCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,4 +50,61 @@ public class VideoCourseService {
 
     //获得单个视频
     public  VideoCourse getOneCourse(Long vCourseId){return vcourseDao.getOneCourse(vCourseId);}
+
+    //文件上传  参数分别是：后缀名，文件，文件名，临时保存路径,目标路径
+    public Integer VideoSubmit(String filename_extension, MultipartFile file,
+                               String filename,String path,String Mp4path1){
+        if (filename_extension.equals("mp4")) {
+            //上传到本地磁盘/服务器
+            try {
+                System.out.println("写入本地磁盘/服务器");
+                InputStream is = file.getInputStream();
+                OutputStream os = new FileOutputStream(new File(Mp4path1, filename));
+                int len = 0;
+                byte[] buffer = new byte[2048];
+
+                while ((len = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, len);
+                }
+                os.close();
+                os.flush();
+                is.close();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else if (filename_extension.equals("avi") || filename_extension.equals("rm")
+                || filename_extension.equals("rmvb") || filename_extension.equals("wmv")
+                || filename_extension.equals("3gp") || filename_extension.equals("mov")
+                || filename_extension.equals("flv") || filename_extension.equals("ogg")
+        ) {
+            try {
+                System.out.println("写入本地磁盘/服务器");
+                InputStream is = file.getInputStream();
+                OutputStream os = new FileOutputStream(new File(path, filename));
+                int len = 0;
+                byte[] buffer = new byte[2048];
+
+                while ((len = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, len);
+                }
+                os.close();
+                os.flush();
+                is.close();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+        System.out.println("========上传完成，开始调用转码工具类=======");
+        return 1;
+    }
+
 }
