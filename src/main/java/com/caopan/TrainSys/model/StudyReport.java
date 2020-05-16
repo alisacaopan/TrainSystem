@@ -9,6 +9,14 @@ public class StudyReport {
     private long userId;
     private long vCourseId;
 
+    public void setIsFinish(Integer isFinish) {
+        this.isFinish = isFinish;
+    }
+
+    public Integer getIsFinish() {
+        return isFinish;
+    }
+
     public StudyReport() {
         this.reportId = (long)0;
         this.isFinish = 0;
@@ -23,14 +31,6 @@ public class StudyReport {
 
     public void setReportId(long reportId) {
         this.reportId = reportId;
-    }
-
-    public int getIsFinish() {
-        return isFinish;
-    }
-
-    public void setIsFinish(int isFinish) {
-        this.isFinish = isFinish;
     }
 
     public float getStudyTime() {

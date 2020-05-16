@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.StudyDao">
+	<resultMap id="studyReportResultMap" type="com.caopan.TrainSys.model.StudyReport">
+		<id property="reportId" column="reportId"/>
+		<result property="isFinish" column="isFinish"/>
+		<result property="studyTime" column="studyTime"/>
+		<result property="userId" column="userId"/>
+		<result property="vCourseId" column="vCourseId"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.caopan.TrainSys.model.StudyReport" useGeneratedKeys="true"
+			keyProperty="testId">
+		INSERT INTO StudyReport (isFinish, studyTime, userId, vCourseId)
+		VALUES (#{isFinish}, #{studyTime}, #{userId}, #{vCourseId})
+	</insert>
+
+	<delete id="delete" parameterType="Long">
+		delete from StudyReport where reportId=#{reportId}
+	</delete>
+
+	<select id="getTestByUserId" resultMap="studyReportResultMap" parameterType="java.lang.Integer">
+		SELECT * FROM StudyReport where testId=#{testId};
+	</select>
+
+
+	<select id="getReport" parameterType="long" resultMap="studyReportResultMap">
+		SELECT * FROM test WHERE testId=#{testId} and vCourseId=#{vCourseId} limit 1;
+	</select>
+
+</mapper>

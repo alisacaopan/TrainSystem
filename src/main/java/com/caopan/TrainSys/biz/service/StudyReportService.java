@@ -20,7 +20,7 @@ public class StudyReportService {
     @Autowired
     private StudyDao studydao;
 
-    public Integer insert(StudyReport studyReport){
+    public Integer insert(StudyReport studyReport) {
         return studydao.insert(studyReport);
     }
 
@@ -32,6 +32,16 @@ public class StudyReportService {
     public List<StudyReport> getStudyReport(Long userId) {
         List<StudyReport> reports = studydao.getReportByuserId(userId);
         return reports;
+    }
+
+    public StudyReport getReport(long userId, long vCourseId) {
+        try {
+            StudyReport studyReport=studydao.getReport(userId, vCourseId);
+            return studyReport;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

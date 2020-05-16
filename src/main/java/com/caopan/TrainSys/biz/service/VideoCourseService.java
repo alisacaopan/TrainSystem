@@ -5,6 +5,8 @@ import com.caopan.TrainSys.biz.dao.VideoCourseDao;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.VideoCourse;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +107,17 @@ public class VideoCourseService {
         }
         System.out.println("========上传完成，开始调用转码工具类=======");
         return 1;
+    }
+
+    public long getVideoDuration(String Mp4path1){
+        try {
+            Encoder encoder=new Encoder();
+            long duration=encoder.getInfo(new File(Mp4path1)).getDuration();
+            return duration;
+        }catch (EncoderException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
