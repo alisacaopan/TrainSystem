@@ -79,6 +79,7 @@
                     <li>
                         <a href="classify.html"> <i class="menu-icon fa fa-heart"></i>查看课程分类 </a>
                     </li>
+
                 <h3 class="menu-title">其他</h3><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -101,7 +102,7 @@
         <div class="col-sm-4">
             <div class="page-header float-left">
                 <div class="page-title">
-                    <h1>欢迎查看学生信息</h1>
+                    <h1>欢迎查看课程信息</h1>
                 </div>
             </div>
         </div>
@@ -119,18 +120,13 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">学生信息表</strong>
+                            <strong class="card-title">分级目录表</strong>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th>姓名</th>
-                                    <th>电话</th>
-                                    <th>身份证号码</th>
-                                    <th>微信唯一表示</th>
-                                    <th>班级</th>
-                                    <th>操作</th>
+                                    <th>课程名</th> <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="container">
@@ -149,37 +145,50 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="largeModalLabel">学生信息</h5>
+                <h5 class="modal-title" id="largeModalLabel">分类表格</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <input id="id" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false" hidden="hidden">
-                    <label for="name" class="control-label mb-1">姓 名</label>
-                    <input id="name" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                    <label for="mobile" class="control-label mb-1">电 话</label>
-                    <input id="mobile" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                    <label for="idCard" class="control-label mb-1">身份证号</label>
-                    <input id="idCard" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                    <label for="openId" class="control-label mb-1">微信唯一标识</label>
-                    <input id="openId" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                    <label for="classId" class="control-label mb-1">所属班级</label>
-                    <input id="classId" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                </div>
-                <div>
-                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block"
-                            onclick="updedateSubmit()">
-                        <span id="payment-button-amount">确认修改</span>
-                        <span id="payment-button-sending" style="display:none;">Sending…</span>
-                    </button>
+                <div class="card">
+                    <div class="card-header">
+                        <strong>视频上传选项</strong>
+                    </div>
+                    <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">Username</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                            <input type="text" id="classifyId" name="classifyId"  aria-required="true"
+                               aria-invalid="false" hidden="hidden">
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="videoName"  class=" form-control-label">视频名称</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="videoName" name="videoName" placeholder="请输入视频名称..." class="form-control"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="videoIntroduce" class=" form-control-label">视频简介</label></div>
+                                <div class="col-12 col-md-9"><textarea name="videoIntroduce" id="videoIntroduce" rows="9" placeholder="请输入..." class="form-control"></textarea></div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="file_input" class=" form-control-label">选择上传的文件</label></div>
+                                <div class="col-12 col-md-9"><input type="file" id="file_input" name="file_input" class="form-control-file"></div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-sm" onclick="submitVideo()">
+                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                </button>
+                                <!--<button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>-->
+                            </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -212,105 +221,120 @@
     jQuery(document).ready(function () {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/getAllStudents",
+            url: "http://localhost:8443/TrainSys/getSubclassify?parentId=0",
             xhrFields: {withCredentials: true},
             success: function (data) {
-                var allStudents = data;
-                reloadDom(allStudents);
+                var allCourse = data;
+                reloadDom(allCourse);
             },
             error: function () {
-                alert("获取学生信息失败")
+                alert("获取课程信息失败")
             }
         });
     });
 
-    function reloadDom(allStudents) {
+    function reloadDom(allCourse) {
         $("#container").empty();
-        for (var i = 0; i < allStudents.length; i++) {
-            var student = allStudents[i];
-            var dom = "<tr data-sid=" + student.id + ">" +
-                "<td>" + student.name + "</td>"
-                + "<td>" + student.mobile + "</td>"
-                + "<td>" + student.idCard + "</td>"
-                + "<td>" + student.openId + "</td>"
-                + "<td>" + student.classId + "</td>"
-                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button></td>"
+        for (var i = 0; i < allCourse.length; i++) {
+            var course = allCourse[i];
+            var dom = "<tr data-cid=" + course.classifyId + ">" +
+                "<td ><button type=\"text\" onclick='loadCourse(this)'>" + course.name + "</td>"
+                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='loadVideo(this)' data-toggle=\"modal\" data-target=\"#largeModal\">上传视频</button>" +
+                "<button type=\"button\" class=\"btn btn-danger\" onclick='loadPDF(this)'>上传PDF</button></td>"
+                "<button type=\"button\" class=\"btn btn-danger\" onclick='selcVideo(this)'>查看视频</button></td>"
                 + "</tr>"
             $("#container").append($(dom));
         }
     };
-
-    function dele(obj) {
-        var studentId = $(obj).parents("tr").data('sid');
-        var studentName = $(obj).parents("tr").find("td:eq(0)").text();
+    
+    function loadCourse(obj) {
+        var parentId =  $(obj).parents("tr").data('cid');
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/delete?id=" + studentId,
+            url: "http://localhost:8443/TrainSys/getSubclassify?parentId=" + parentId,
             success: function (data) {
-                if (data == '1') {
-                    alert("成功删除学生：" + studentName);
-                    window.location.reload();
+                if (data != null) {
+                    var allCourse = data;
+                    reloadDom(allCourse)
                 } else
-                    alert("未能成功删除学生：" + studentName);
+                    alert("获取失败");
             },
             error: function () {
-                alert("网络出错了")
+                alert("未能找到下级目录")
             }
         });
-
     };
 
-    function updt(obj) {
-        var studentId = $(obj).parents("tr").data("sid");
-        $("#id").val(studentId);
-        var studentName = $(obj).parents("tr").find("td:eq(0)").text();
-        $("#name").val(studentName);
-        var mobile = $(obj).parents("tr").find("td:eq(1)").text();
-        $("#mobile").val(mobile);
-        var idCard = $(obj).parents("tr").find("td:eq(2)").text();
-        $("#idCard").val(idCard);
-        var openId = $(obj).parents("tr").find("td:eq(3)").text();
-        $("#openId").val(openId);
-        var classId = $(obj).parents("tr").find("td:eq(4)").text();
-        $("#classId").val(classId);
-    }
+    function loadVideo(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId").val(cId);
+    };
 
-    function updedateSubmit() {
-        var studentId = $("#id").val();
-        console.log(studentId);
-        var studentName = $("#name").val();
-        console.log(studentName);
-        var mobile = $("#mobile").val();
-        console.log(mobile);
-        var idCard = $("#idCard").val();
-        console.log(idCard);
-        var openId = $("#openId").val();
-        console.log(openId);
-        var classId = $("#classId").val();
-        console.log(classId);
+    function reloadVideo(allVideo) {
+        $("#container").empty();
+        for (var i = 0; i < allVideo.length; i++) {
+            var video = allVideo[i];
+            var dom = "<tr data-vid=" + video.vCourseId + ">" +
+                "<td >" + video.name + "</td>"
+                + "</tr>"
+            $("#container").append($(dom));
+        }
+    };
+    function selcVideo(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
         $.ajax({
-            type: "POST",
-            url: "http://localhost:8443/TrainSys/update",
-            data: {
-                id: studentId,
-                name: studentName,
-                mobile: mobile,
-                idCard: idCard,
-                openId: openId,
-                classId: classId
-            },
+            type: "GET",
+            url: "http://localhost:8443/TrainSys/getCourseByClassifyId?classifyId=" + cId,
             success: function (data) {
-                if (data == '1') {
-                    alert("修改成功");
-                    window.location.reload();
+                if (data != null) {
+                    var allVideo = data;
+                    reloadVideo(allVideo)
                 } else
-                    alert("修改失败");
+                    alert("获取失败");
             },
             error: function () {
-                alert("网络出错了")
+                alert("未能找到下级目录")
+            }
+        });
+    };
+
+    function submitVideo(){
+        var classifyId = $("#classifyId").val();
+        console.log(classifyId);
+        var videoName = $("#videoName").val();
+        console.log(videoName);
+        var videoIntroduce = $("#videoIntroduce").val();
+        console.log(videoIntroduce);
+
+        console.log(file_input);
+        var formData = new FormData();
+        formData.append("classifyId",classifyId);
+        formData.append("videoName",videoName);
+        formData.append("videoIntroduce",videoIntroduce);
+        formData.append("fileinput",$("#file_input")[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8443/TrainSys/uploadVideo",
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+
+            data:formData,
+            success: function (data) {
+                if (data != null) {
+                    alert("123456789")
+                } else
+                    alert("获取失败");
+            },
+            error: function () {
+                alert("未能找到下级目录")
             }
         });
     }
+
+
 
 </script>
 

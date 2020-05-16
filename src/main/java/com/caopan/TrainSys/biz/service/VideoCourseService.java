@@ -5,16 +5,21 @@ import com.caopan.TrainSys.biz.dao.VideoCourseDao;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.VideoCourse;
+import com.caopan.TrainSys.utils.FFMPEG;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
+@EnableAsync
 public class VideoCourseService {
     @Autowired
     private VideoCourseDao vcourseDao;
@@ -107,4 +112,12 @@ public class VideoCourseService {
         return 1;
     }
 
+    //异步执行加水印方法
+    @Async
+    public Integer setWatermark(HashMap<String, String> dto){
+        FFMPEG secondsString = new FFMPEG();
+        secondsString.videoTransfer(dto);
+        System.out.println("所有视频文件水印添加成功");
+        return 1;
+    }
 }
