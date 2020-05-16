@@ -16,17 +16,27 @@
 		VALUES (#{isFinish}, #{studyTime}, #{userId}, #{vCourseId})
 	</insert>
 
+	<update id="update" parameterType="com.caopan.TrainSys.model.StudyReport">
+		update studyreport <set>
+		<if test="isFinish!=null">studyreport.isFinish=#{isFinish}</if>,
+		<if test="studyTime!=null">studyreport.studyTime=#{studyTime}</if>,
+		<if test="userId!=null">studyreport.userId=#{userId}</if>,
+		<if test="vCourseId!=null">studyreport.vCourseId=#{vCourseId}</if>
+	</set>
+		where studyreport.reportId=#{reportId}
+	</update>
+
 	<delete id="delete" parameterType="Long">
 		delete from StudyReport where reportId=#{reportId}
 	</delete>
 
-	<select id="getTestByUserId" resultMap="studyReportResultMap" parameterType="java.lang.Integer">
-		SELECT * FROM StudyReport where testId=#{testId};
+	<select id="getReportByuserId" resultMap="studyReportResultMap" parameterType="Long">
+		SELECT * FROM StudyReport where userId=#{userId};
 	</select>
 
 
 	<select id="getReport" parameterType="long" resultMap="studyReportResultMap">
-		SELECT * FROM test WHERE testId=#{testId} and vCourseId=#{vCourseId} limit 1;
+		SELECT * FROM StudyReport WHERE userId=#{userId} and vCourseId=#{vCourseId} limit 1;
 	</select>
 
 </mapper>

@@ -40,7 +40,8 @@ public class TextCoursesController {
     }
 
     @PostMapping("/uploadText")
-    public upLoadResult uploadVideo(@RequestParam("file-input") MultipartFile file,
+    public String uploadVideo(@RequestParam("classifyId")Integer classifyId,
+                                    @RequestParam("fileInput") MultipartFile file,
                                     HttpServletRequest req) throws IOException {
         System.out.println("进入图文课程上传控制层");
         if (file.getSize() != 0) {
@@ -103,7 +104,7 @@ public class TextCoursesController {
             tCourse.setClassifyId(1);
             textCourseService.insert(tCourse);
         }
-        return null;
+        return "uploadText";
     }
 
     @GetMapping(value = "/getOnetCoursesURL")

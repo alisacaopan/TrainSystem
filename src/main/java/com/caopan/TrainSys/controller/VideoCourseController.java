@@ -97,9 +97,10 @@ public class VideoCourseController {
 
 
     @PostMapping("/uploadVideo")
-    public upLoadResult uploadVideo(@RequestParam("videoName") String name,
+    public upLoadResult uploadVideo(@RequestParam("classifyId")Integer classifyId,
+                                    @RequestParam("videoName") String name,
                                     @RequestParam("videoIntroduce") String introduce,
-                                    @RequestParam("file-input") MultipartFile file,
+                                    @RequestParam("fileinput") MultipartFile file,
                                     HttpServletRequest req) throws IOException {
         if (file.getSize() != 0) {
 
@@ -139,6 +140,9 @@ public class VideoCourseController {
 
             vCourseService.VideoSubmit(filename_extension,file,filename,path,Mp4path1);
 
+
+
+
             // 对视频进行转码
             // 测试用
             if (filename_extension.equals("avi") || filename_extension.equals("rm")
@@ -158,7 +162,7 @@ public class VideoCourseController {
             filename2 = filename2 + ".mp4";
             String NewVideopath = Mp4path + File.separator + filename2;
             System.out.println("新视频的url:" + NewVideopath);
-
+            float totalTime=vCourseService.getVideoDuration(NewVideopath);
             //删除临时文件
             File file2 = new File(path);
             if (!file2.exists()) {
@@ -198,7 +202,8 @@ public class VideoCourseController {
             vCourse.setName(name);
             vCourse.setIntroduce(introduce);
             vCourse.setAddress(root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);
-            vCourse.setClassifyId(1);
+            vCourse.setClassifyId(classifyId);
+            vCourse.setTotalTime(totalTime);
             vCourseService.insert(vCourse);
         }
         return null;

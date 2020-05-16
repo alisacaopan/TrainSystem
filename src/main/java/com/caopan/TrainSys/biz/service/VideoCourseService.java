@@ -122,11 +122,12 @@ public class VideoCourseService {
         System.out.println("所有视频文件水印添加成功");
         return 1;
     }
-    public long getVideoDuration(String Mp4path1){
+
+    public float getVideoDuration(String Mp4path1){
         try {
             Encoder encoder=new Encoder();
             long duration=encoder.getInfo(new File(Mp4path1)).getDuration();
-            return duration;
+            return (float)(duration/1000);
         }catch (EncoderException e){
             e.printStackTrace();
         }

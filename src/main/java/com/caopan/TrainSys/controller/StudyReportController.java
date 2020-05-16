@@ -6,10 +6,7 @@ import com.caopan.TrainSys.biz.service.VideoCourseService;
 import com.caopan.TrainSys.constant.StudyReportStatus;
 import com.caopan.TrainSys.model.StudyReport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +34,21 @@ public class StudyReportController {
         }
     }
 
+    @PostMapping(value = "/updateStudyReport")
+    public Integer update(@RequestBody StudyReport report) {
+        int index = 0;
+        try {
+            if (studyService.update(report) == 1) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            return index;
+        }
+    }
+
     @PostMapping(value = "/deleteStudyReport")
     public Integer deleteTest(@RequestParam(value = "reportId") Long reportId) {
         int index = 0;
@@ -52,8 +64,9 @@ public class StudyReportController {
         }
     }
 
-    @PostMapping("/getStudyReport")
-    public List<StudyReport> getAnwser(@RequestParam("userId") Long userId) {
+    @GetMapping("/getStudyReport")
+    public List<StudyReport> getAnwser(@RequestParam("openId") String openId) {
+        long userId = userDao.getUserByOpenId(openId).getId();
         int index = 0;
         try {
             if (studyService.getStudyReport(userId).size() > 0) {
@@ -66,9 +79,8 @@ public class StudyReportController {
             if (index == 1) {
                 return studyService.getStudyReport(userId);
             } else {
-                return null;
+               return null;
             }
-
         }
     }
 
@@ -76,7 +88,7 @@ public class StudyReportController {
     @PostMapping("/recordStudy")
     public int recordStudy(@RequestParam("openId") String openId,
                            @RequestParam("vCourseId") Long vCourseId,
-                           @RequestParam("duration") Long duration) {
+                           @RequestParam("duration") Float duration) {
         long usrId=userDao.getUserByOpenId(openId).getId();
         try {
             StudyReport studyReport=studyService.getReport(usrId,vCourseId);
@@ -86,17 +98,22 @@ public class StudyReportController {
                 studyReportn.setUserId(usrId);
                 studyReportn.setvCourseId(vCourseId);
                 studyReportn.setStudyTime(duration);
+                float totalTime=videoCourseService.getOneCourse(vCourseId).getTotalTime();
+                if (studyReportn.getStudyTime()>=totalTime)
+                    studyReportn.setIsFinish(StudyReportStatus.FINISHED);
                 return insert(studyReportn);
             }
             else if (studyReport.getIsFinish()==StudyReportStatus.FINISHED){
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
                 studyReport.setStudyTime(studyReport.getStudyTime()+duration);
-                return insert(studyReport);
+                return update(studyReport);
             }else {
+                System.out.println("..............................");
                 studyReport.setStudyTime(studyReport.getStudyTime()+duration);
                 float totalTime=videoCourseService.getOneCourse(studyReport.getvCourseId()).getTotalTime();
                 if (studyReport.getStudyTime()>=totalTime)
                     studyReport.setIsFinish(StudyReportStatus.FINISHED);
-                return insert(studyReport);
+                return update(studyReport);
             }
         }catch (Exception e){
             e.printStackTrace();

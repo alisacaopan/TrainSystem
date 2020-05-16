@@ -147,9 +147,9 @@
                                 </div>
                                 <!-- 加载bootstraptable的表格，ID名称必须为bootstrap-table -->
                                 <table id="bootstrap-table">
-                                    <<thead>
+                                    <thead>
                                     <tr>
-
+                                        <th data-field="id" data-sortable="true">ID</th>
                                         <th data-field="name" data-sortable="true">姓名</th>
                                         <th data-field="mobile" data-sortable="true">手机号码</th>
                                         <th data-field="idCard">身份证号码</th>
@@ -195,9 +195,6 @@
                            aria-invalid="false">
                     <label for="idCard" class="control-label mb-1">身份证号</label>
                     <input id="idCard" name="cc-payment" type="text" class="form-control" aria-required="true"
-                           aria-invalid="false">
-                    <label for="openId" class="control-label mb-1">微信唯一标识</label>
-                    <input id="openId" name="cc-payment" type="text" class="form-control" aria-required="true"
                            aria-invalid="false">
                     <label for="classId" class="control-label mb-1">所属班级</label>
                     <input id="classId" name="cc-payment" type="text" class="form-control" aria-required="true"
@@ -325,7 +322,7 @@
     }
 
 
-    function actionFormatter(value,row,index) {
+    function actionFormatter() {
         return[
            "<button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button>"
         ].join("")
@@ -364,8 +361,8 @@
      };*/
 
     function dele(obj) {
-        var studentId = $(obj).parents("tr").data('sid');
-        var studentName = $(obj).parents("tr").find("td:eq(0)").text();
+        var studentId = $(obj).parents("tr").find("td:eq(0)").text();
+        var studentName = $(obj).parents("tr").find("td:eq(1)").text();
         $.ajax({
             type: "GET",
             url: "http://localhost:8443/TrainSys/delete?id=" + studentId,
@@ -384,16 +381,14 @@
     };
 
     function updt(obj) {
-        var studentId = $(obj).parents("tr").data("sid");
+        var studentId = $(obj).parents("tr").find("td:eq(0)").text();
         $("#id").val(studentId);
-        var studentName = $(obj).parents("tr").find("td:eq(0)").text();
+        var studentName = $(obj).parents("tr").find("td:eq(1)").text();
         $("#name").val(studentName);
-        var mobile = $(obj).parents("tr").find("td:eq(1)").text();
+        var mobile = $(obj).parents("tr").find("td:eq(2)").text();
         $("#mobile").val(mobile);
-        var idCard = $(obj).parents("tr").find("td:eq(2)").text();
+        var idCard = $(obj).parents("tr").find("td:eq(3)").text();
         $("#idCard").val(idCard);
-        var openId = $(obj).parents("tr").find("td:eq(3)").text();
-        $("#openId").val(openId);
         var classId = $(obj).parents("tr").find("td:eq(4)").text();
         $("#classId").val(classId);
     }
@@ -407,8 +402,6 @@
         console.log(mobile);
         var idCard = $("#idCard").val();
         console.log(idCard);
-        var openId = $("#openId").val();
-        console.log(openId);
         var classId = $("#classId").val();
         console.log(classId);
 
@@ -422,7 +415,6 @@
                 name: studentName,
                 mobile: mobile,
                 idCard: idCard,
-                openId: openId,
                 classId: classId
             },
             success: function (data) {

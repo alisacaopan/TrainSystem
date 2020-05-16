@@ -24,6 +24,8 @@ public class StudyReportService {
         return studydao.insert(studyReport);
     }
 
+    public Integer update(StudyReport studyReport) { return  studydao.update(studyReport);}
+
     public Integer delete(Long reportId) {
         return studydao.delete(reportId);
     }

@@ -13,6 +13,8 @@ public interface StudyDao {
 
     Integer insert(StudyReport studyReport);
 
+    Integer update(StudyReport studyReport);
+
     Integer delete(Long reportId);  //删除学习记录
 
     //根据学生ID找学习报告

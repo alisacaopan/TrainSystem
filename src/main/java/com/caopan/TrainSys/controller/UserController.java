@@ -1,10 +1,13 @@
 package com.caopan.TrainSys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.model.upLoadResult;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,18 +73,16 @@ public class UserController {
     }
 
     @PostMapping(value = "/update")
-    public Integer update(@RequestParam Long id,
-                          @RequestParam String name,
-                          @RequestParam String mobile,
-                          @RequestParam String idCard,
-                          @RequestParam String openId,
-                          @RequestParam int classId) {
+    public Integer update(@RequestParam("id") Long id,
+                          @RequestParam("name") String name,
+                          @RequestParam ("mobile") String mobile,
+                          @RequestParam ("idCard")String idCard,
+                          @RequestParam ("classId")int classId) {
         User user = new User();
         user.setId(id);
         user.setName(name);
         user.setMobile(mobile);
         user.setIdCard(idCard);
-        user.setOpenId(openId);
         user.setClassId(classId);
         int index = 0;
         try {
@@ -290,8 +291,27 @@ public class UserController {
         return upLoadResult;
     }
 
-    @GetMapping(value = "/getAllStudents")
-    public List getAllStudents() {
-        return userService.findAllStudents();
-    }
+
+    @ResponseBody
+    @RequestMapping(value="pageInfo",produces="html/text;charset=UTF-8")
+    public  String pageInfo(@RequestParam int pageNumber, int pageSize, HttpServletResponse response) {
+        response.setContentType("text/json");
+        System.out.println(pageNumber+"===="+pageSize);
+        response.setCharacterEncoding("utf-8");
+
+        //userList查询要放到startPage下面
+        PageHelper.startPage(pageNumber,pageSize);
+        List<User> userList=userService.findAllStudents();
+        PageInfo<User> page=new PageInfo<>(userList);
+        //取出查询结果
+        List<User> rows = page.getList();
+        int total = (int) page.getTotal();
+        //转换为json数据
+        JSONObject result = new JSONObject();
+        result.put("rows",rows);
+        result.put("total",total);
+        System.out.println(result.toJSONString());
+        return result.toJSONString();
+        }
+
 }
