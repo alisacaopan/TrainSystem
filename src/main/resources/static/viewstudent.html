@@ -21,13 +21,6 @@
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
 
-    <script src="">
-
-    </script>
-
-    <link rel="stylesheet" href="vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
-
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
@@ -35,6 +28,25 @@
     <link rel="stylesheet" href="vendors/selectFX/css/cs-skin-elastic.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
+
+
+
+
+    <!-- 引入bootstrap-table样式 -->
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+    <!-- <link href="bootstrap-table-master/dist/bootstrap-table.min.css" rel="stylesheet">-->
+
+
+
+    <!-- 引入中文语言包 -->
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF/jspdf.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/extensions/editable/bootstrap-table-editable.js"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -96,50 +108,68 @@
 <!-- right Panel -->
 <div id="right-panel" class="right-panel">
 
-    <div class="breadcrumbs">
-        <div class="col-sm-4">
-            <div class="page-header float-left">
-                <div class="page-title">
-                    <h1>欢迎查看学生信息</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="page-header float-right">
 
-            </div>
-        </div>
-    </div>
 
-    <div class="content mt-3">
-        <div class="animated fadeIn">
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">学生信息表</strong>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th>姓名</th>
-                                    <th>电话</th>
-                                    <th>身份证号码</th>
-                                    <th>微信唯一表示</th>
-                                    <th>班级</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody id="container">
-                                </tbody>
-                            </table>
-                        </div>
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>欢迎查看学生信息</h1>
                     </div>
                 </div>
             </div>
-        </div><!-- .animated -->
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">学生信息表</strong>
+                            </div>
+                            <div class="container">
+                                <!-- 如果有条件，查询表单ID名必须为condition-form -->
+                                <form id="condition-form">
+                                    手机号码<input name="mobile" value=""> 身份证号码<input name="idCard" value=""> <input type="button" value="搜索">
+                                </form>
+
+                                <div id="toolbar">
+                                    <button id="add" class="btn btn-primary">
+                                        <i class="glyphicon glyphicon-ok">添加学生</i>
+                                    </button>
+                                </div>
+                                <!-- 加载bootstraptable的表格，ID名称必须为bootstrap-table -->
+                                <table id="bootstrap-table">
+                                    <<thead>
+                                    <tr>
+
+                                        <th data-field="name" data-sortable="true">姓名</th>
+                                        <th data-field="mobile" data-sortable="true">手机号码</th>
+                                        <th data-field="idCard">身份证号码</th>
+                                        <th data-field="classId">班级号</th>
+                                        <th class="col-xs-2" data-field="action" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div>
+
     </div>
 
 </div>
@@ -186,14 +216,13 @@
 </div>
 
 
-<script src="vendors/jquery/dist/jquery.min.js"></script>
+<!--<script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
 <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
-<script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -206,38 +235,133 @@
 <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
 <script src="vendors/datatables.net-buttons/js/buttons.colVis.min.js"></script>
 <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+
+    <script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    &lt;!&ndash; jquery及bootstrapjs &ndash;&gt;
+
+    &lt;!&ndash; bootstrap-table.min.js &ndash;&gt;
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>-->
+
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+
+    <script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+
+    <!--<script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <script src="assets/js/main.js"></script>
+    <!-- jquery及bootstrapjs -->
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- bootstrap-table.min.js -->
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script>
-    //获取学生信息
+    $("input[type='button']").click(function() {
+        $("#bootstrap-table").bootstrapTable("refresh")
+    });
+    //bootstrap-table初始化
+    $("#bootstrap-table").bootstrapTable({
+        url : "pageInfo", //请求后台的URL（*）
+        dataType:"json",
+// 此间是与client不一样的地方=======================开始
+        contentType : "application/x-www-form-urlencoded",
+        sidePagination : "server", //分页方式：client客户端分页，server服务端分页（*）
+//修改请求参数，不设置则有默认值 ，返回值必须是一个对象
+        method : 'POST', //请求方式（*）
+        toolbar : '#toolbar', //工具按钮用哪个容器
+        search : false, //是否显示表格搜索
+        showFooter : false, //显示底部，默认不显示
+        sortName : 'name',
+        sortOrder : "asc", //排序方式
+// 此间是与client不一样的地方=======================结束
+
+        striped : true, //是否显示行间隔色
+        cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        pagination : true, //是否显示分页（*）
+        showPaginationSwitch : true, //显示切换分页
+
+        showFullscreen : false, //显示全屏
+        showHeader : true, //显示头部，默认显示
+        showExport : true, //显示导出
+        showColumns : true, //是否显示所有的列（选择显示的列）
+        showRefresh : true, //是否显示刷新按钮
+        sortable : true, //是否启用排序
+        pageNumber : 1, //初始化加载第一页，默认第一页,并记录
+        pageSize : 10, //每页的记录行数（*）
+        pageList : [ 10, 20, 50 ], //可供选择的每页的行数（*）
+        queryParams:queryParam,
+        strictSearch : true,
+        minimumCountColumns : 2, //最少允许的列数
+        clickToSelect : true, //是否启用点击选中行
+        uniqueId : "id", //每一行的唯一标识，一般为主键列
+        showToggle : true, //是否显示详细视图和列表视图的切换按钮
+        cardView : false, //是否显示详细视图
+        detailView : false, //是否显示父子表
+
+    });
+    function queryParam(params){
+        var param = {
+            limit : this.limit, // 页面大小
+            offset : this.offset, // 页码
+            pageNumber : this.pageNumber,
+            pageSize : this.pageSize
+        };
+        return param;
+    }
+
+
+    function actionFormatter(value,row,index) {
+        return[
+           "<button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button>"
+        ].join("")
+    }
+
+    /*//获取学生信息
     jQuery(document).ready(function () {
-        $.ajax({
+         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/getAllStudents",
+           url: "pageInfo",
             xhrFields: {withCredentials: true},
             success: function (data) {
-                var allStudents = data;
+                 var allStudents = data;
                 reloadDom(allStudents);
-            },
-            error: function () {
-                alert("获取学生信息失败")
+           },
+             error: function () {
+                 alert("获取学生信息失败")
             }
         });
-    });
+     });
 
-    function reloadDom(allStudents) {
-        $("#container").empty();
-        for (var i = 0; i < allStudents.length; i++) {
-            var student = allStudents[i];
-            var dom = "<tr data-sid=" + student.id + ">" +
-                "<td>" + student.name + "</td>"
-                + "<td>" + student.mobile + "</td>"
-                + "<td>" + student.idCard + "</td>"
-                + "<td>" + student.openId + "</td>"
-                + "<td>" + student.classId + "</td>"
-                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button></td>"
+     function reloadDom(allStudents) {
+         $("#container").empty();
+         for (var i = 0; i < allStudents.length; i++) {
+             var student = allStudents[i];
+             var dom = "<tr data-sid=" + student.id + ">" +
+                 "<td>" +   "</td>"
+                 + "<td>" +   "</td>"
+                 + "<td>" +  "</td>"
+                + "<td>" +   "</td>"
+                 + "<td>" +  "</td>"
+                 + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button></td>"
                 + "</tr>"
-            $("#container").append($(dom));
-        }
-    };
+             $("#container").append($(dom));
+         }
+     };*/
 
     function dele(obj) {
         var studentId = $(obj).parents("tr").data('sid');

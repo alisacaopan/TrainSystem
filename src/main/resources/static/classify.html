@@ -194,6 +194,52 @@
         </div>
     </div>
 </div>
+    <div class="modal fade" id="PDFModal" tabindex="-1" role="dialog" aria-labelledby="PDFModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="PDFModalLabel">分类表格</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>视频上传选项</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">Username</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <input type="text" id="classifyId2" name="classifyId2"  aria-required="true"
+                                       aria-invalid="false" hidden="hidden">
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="fileInput" class=" form-control-label">选择上传的文件</label></div>
+                                <div class="col-12 col-md-9"><input type="file" id="fileInput" name="fileInput" class="form-control-file"></div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-sm" onclick="submitPDF()">
+                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                </button>
+                                <!--<button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <script src="vendors/jquery/dist/jquery.min.js"></script>
@@ -239,9 +285,9 @@
             var course = allCourse[i];
             var dom = "<tr data-cid=" + course.classifyId + ">" +
                 "<td ><button type=\"text\" onclick='loadCourse(this)'>" + course.name + "</td>"
-                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='loadVideo(this)' data-toggle=\"modal\" data-target=\"#largeModal\">上传视频</button>" +
-                "<button type=\"button\" class=\"btn btn-danger\" onclick='loadPDF(this)'>上传PDF</button></td>"
-                "<button type=\"button\" class=\"btn btn-danger\" onclick='selcVideo(this)'>查看视频</button></td>"
+                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='loadVideo(this)' data-toggle=\"modal\" data-target=\"#largeModal\">上传视频</button>"
+                +"<button type=\"button\" class=\"btn btn-danger\" onclick='loadPDF(this)' data-toggle=\"modal\" data-target=\"#PDFModal\">上传PDF</button>"
+                +"<button type=\"button\" class=\"btn btn-primary\" onclick='selcVideo(this)'>查看视频</button></td>"
                 + "</tr>"
             $("#container").append($(dom));
         }
@@ -334,23 +380,20 @@
         });
     }
 
-    function submitVideo() {
-        var classifyId = $("#classifyId").val();
-        console.log(classifyId);
-        var videoName = $("#videoName").val();
-        console.log(videoName);
-        var videoIntroduce = $("#videoIntroduce").val();
-        console.log(videoIntroduce);
+    function loadPDF(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId2").val(cId);
+    };
 
-        console.log(file_input);
+    function submitPDF() {
+        var classifyId = $("#classifyId2").val();
+        console.log(classifyId);
         var formData = new FormData();
         formData.append("classifyId", classifyId);
-        formData.append("videoName", videoName);
-        formData.append("videoIntroduce", videoIntroduce);
-        formData.append("fileinput", $("#file_input")[0].files[0]);
+        formData.append("fileInput", $("#fileInput")[0].files[0]);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8443/TrainSys/uploadVideo",
+            url: "http://localhost:8443/TrainSys/uploadText",
             // header: {
             //     "Content-Type": "multipart/form-data"
             // },
