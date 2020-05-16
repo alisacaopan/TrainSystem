@@ -8,17 +8,18 @@
 		<result property="address" column="address"/>
 		<result property="introduce" column="introduce"/>
 		<result property="classifyId" column="classifyId"/>
+		<result property="totalTime" column="totalTime"/>
 	</resultMap>
 
 	<insert id="insert" parameterType="com.caopan.TrainSys.model.VideoCourse" useGeneratedKeys="true"
 			keyProperty="vCourseId">
-		INSERT INTO videocourse (name, address, introduce, classifyId)
-		VALUES (#{name}, #{address}, #{introduce}, #{classifyId})
+		INSERT INTO videocourse (name, address, introduce, classifyId,totalTime)
+		VALUES (#{name}, #{address}, #{introduce}, #{classifyId}, #{totalTime})
 	</insert>
 
 	<update id="update" parameterType="com.caopan.TrainSys.model.VideoCourse">
 		update videocourse set videocourse.name=#{name},videocourse.address=#{address},videocourse.introduce=#{introduce},
-		videocourse.classifyId=#{classifyId}
+		videocourse.classifyId=#{classifyId},videocourse.totalTime=#{totalTime}
 		where videocourse.vCourseId=#{vCourseId}
 	</update>
 

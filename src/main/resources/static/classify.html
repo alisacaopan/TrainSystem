@@ -334,6 +334,42 @@
         });
     }
 
+    function submitVideo() {
+        var classifyId = $("#classifyId").val();
+        console.log(classifyId);
+        var videoName = $("#videoName").val();
+        console.log(videoName);
+        var videoIntroduce = $("#videoIntroduce").val();
+        console.log(videoIntroduce);
+
+        console.log(file_input);
+        var formData = new FormData();
+        formData.append("classifyId", classifyId);
+        formData.append("videoName", videoName);
+        formData.append("videoIntroduce", videoIntroduce);
+        formData.append("fileinput", $("#file_input")[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8443/TrainSys/uploadVideo",
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+
+            data: formData,
+            success: function (data) {
+                if (data != null) {
+                    alert("123456789")
+                } else
+                    alert("获取失败");
+            },
+            error: function () {
+                alert("未能找到下级目录")
+            }
+        });
+    }
+
 
 
 </script>

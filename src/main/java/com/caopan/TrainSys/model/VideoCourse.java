@@ -1,16 +1,25 @@
 package com.caopan.TrainSys.model;
 
 
-
 public class VideoCourse {
     private long vCourseId;
     private String name;
     private String address;
     private String introduce;
     private Integer classifyId;
+    private float totalTime;
+
+
+    public float getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(float totalTime) {
+        this.totalTime = totalTime;
+    }
 
     public VideoCourse() {
-        this.vCourseId = (long)0;
+        this.vCourseId = (long) 0;
         this.name = "";
         this.address = "";
         this.introduce = "";
@@ -56,4 +65,9 @@ public class VideoCourse {
     public void setClassifyId(int classifyId) {
         this.classifyId = classifyId;
     }
+
+    public void setClassifyId(Integer classifyId) {
+        this.classifyId = classifyId;
+    }
+
 }

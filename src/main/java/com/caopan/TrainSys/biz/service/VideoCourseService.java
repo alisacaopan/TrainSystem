@@ -6,6 +6,8 @@ import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.VideoCourse;
 import com.caopan.TrainSys.utils.FFMPEG;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -120,4 +122,15 @@ public class VideoCourseService {
         System.out.println("所有视频文件水印添加成功");
         return 1;
     }
+    public long getVideoDuration(String Mp4path1){
+        try {
+            Encoder encoder=new Encoder();
+            long duration=encoder.getInfo(new File(Mp4path1)).getDuration();
+            return duration;
+        }catch (EncoderException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

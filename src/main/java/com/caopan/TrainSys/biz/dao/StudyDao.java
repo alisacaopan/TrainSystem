@@ -17,6 +17,8 @@ public interface StudyDao {
 
     //根据学生ID找学习报告
     List<StudyReport> getReportByuserId(long userId);
+    //根据学生ID和课程号找学习报告
+    StudyReport getReport(long userId,long vCourseId);
 
 }
 

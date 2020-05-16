@@ -9,18 +9,12 @@ import com.caopan.TrainSys.utils.VideoConverTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.io.File;
-
 
 
 @RestController
@@ -28,8 +22,8 @@ public class VideoCourseController {
     @Autowired
     private VideoCourseService vCourseService;
 
-    private  String root=System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+
-            File.separator+"resources"+File.separator+"static"+File.separator;
+    private String root = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
+            File.separator + "resources" + File.separator + "static" + File.separator;
 
 
     @PostMapping(value = "/insertvCourse")
@@ -103,13 +97,12 @@ public class VideoCourseController {
 
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam("classifyId") Integer classifyId,
-                                    @RequestParam("videoName") String name,
+    public upLoadResult uploadVideo(@RequestParam("videoName") String name,
                                     @RequestParam("videoIntroduce") String introduce,
-                                    @RequestParam("fileinput") MultipartFile file,
+                                    @RequestParam("file-input") MultipartFile file,
                                     HttpServletRequest req) throws IOException {
-        System.out.println("进入addVideo视频上传控制层");
         if (file.getSize() != 0) {
+
             //上传的多格式的视频文件-作为临时路径保存，转码以后删除-路径不能写//
             String path = root + FilePath.VIDEO_FOLDER;
             String Mp4path1 = root + FilePath.TARGET_FOLDER;
@@ -197,18 +190,18 @@ public class VideoCourseController {
             dto.put("input_path", root+FilePath.TARGET_FOLDER +File.separator+ filename2);//必填
             dto.put("video_converted_path",root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);//必填
             dto.put("logo",FilePath.MARK_IMAGE);//可选(注意windows下面的logo地址前面要写4个反斜杠,如果用浏览器里面调用servlet并传参只用两个,如 d:\\:/ffmpeg/input/logo.png)
-
-            vCourseService.setWatermark(dto);
-
+            FFMPEG secondsString = new FFMPEG();
+            secondsString.videoTransfer(dto);
+            System.out.println("所有视频文件水印添加成功");
             // 保存到数据库
             VideoCourse vCourse = new VideoCourse();
             vCourse.setName(name);
             vCourse.setIntroduce(introduce);
             vCourse.setAddress(root+ FilePath.TARGET_FOLDER_MARK + File.separator + filename2);
-            vCourse.setClassifyId(classifyId);
+            vCourse.setClassifyId(1);
             vCourseService.insert(vCourse);
         }
-        return "uploadVideo";
+        return null;
     }
 
     @GetMapping(value = "/getOnevCoursesURL")
