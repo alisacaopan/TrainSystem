@@ -8,18 +8,15 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
 <!--<![endif]-->
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>欢迎使用本系统</title>
-    <meta name="description" content="船员培训系统后台管理">
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
-
-
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
@@ -33,77 +30,78 @@
 
 </head>
 
-<body>
-<!-- Left Panel -->
+<body class="bg-dark">
 
-<aside id="left-panel" class="left-panel">
-    <nav class="navbar navbar-expand-sm navbar-default">
 
-        <div class="navbar-header">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu"
-                    aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href=""><img src="images/logo.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href=""><img src="images/logo2.png" alt="Logo"></a>
-        </div>
-        <div id="main-menu" class="main-menu collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+<div class="sufee-login d-flex align-content-center flex-wrap">
+    <div class="container">
+        <div class="login-content">
+            <div class="login-logo">
+                <a href="index1.html">
+                    <img class="align-content" src="images/logo.png" alt="">
+                </a>
+            </div>
+            <div class="login-form">
 
-                <h3 class="menu-title">系统功能</h3><!-- /.menu-title -->
-                <li>
-                    <a href="uploadVideo.html"> <i class="menu-icon ti-email"></i>上传视频课程 </a>
-                </li>
-                <li>
-                    <a href="uploadtest.html"> <i class="menu-icon fa fa-laptop"></i>上传试题 </a>
-                </li>
-                <li>
-                    <a href="uploadText.html"> <i class="menu-icon fa fa-laptop"></i>上传图文教程 </a>
-                </li>
-                <li>
-                    <a href="addstudent.html"> <i class="menu-icon fa fa-bar-chart"></i>添加学生 </a>
-                </li>
-                <li>
-                    <a href="viewstudent.html"> <i class="menu-icon fa fa-heart"></i>查看学生列表 </a>
-                </li>
-                <li>
-                    <a href="classify.html"> <i class="menu-icon fa fa-heart"></i>查看课程分类 </a>
-                </li>
-                <h3 class="menu-title">其他</h3><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>操作</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">登录</a></li>
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">注册</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">找回密码</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </nav>
-</aside><!-- /#left-panel -->
-
-<!-- right Panel -->
-
-<div id="right-panel" class="right-panel">
-    <header id="header" class="header">
-        <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>欢迎使用本系统</h1>
-                    </div>
+                <div class="form-group">
+                    <label>请输入手机号码</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="手机号码">
                 </div>
+                <div class="form-group">
+                    <label>请输入身份证号</label>
+                    <input type="text" id="idcard" name="idcard" class="form-control" placeholder="身份证号">
+                </div>
+                <div class="form-group">
+                    <label>请输入密码</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码">
+                </div>
+                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" onclick="login()">登录</button>
+
             </div>
         </div>
-    </header>
+    </div>
 </div>
 
 <script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
-<script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script>
+    // window.onload = function () {
+    //     if (document.getElementById("judge").value == "false") {
+    //         alert("登录失败，请检查用户名/密码/职位是否正确");
+    //     }
+    // }
+    var URL = "http://localhost:8443/TrainSys/"
+
+
+    function login() {
+        jQuery.ajax({
+            type: "POST",
+            url: URL+ "managerLogin",
+            data: {
+                mobile: document.getElementById("mobile").value,
+                idCard: document.getElementById("idcard").value,
+                password: document.getElementById("password").value
+            },
+            success: function (data) {
+                if (data == '1') {
+                    alert("登录成功");
+                    window.location.href = URL + "index-111.html";
+                } else
+                    alert(data);
+            },
+            error: function () {
+                alert("网络出错了")
+            }
+        })
+
+
+    }
+
+</script>
+
+
 </body>
+
+</html>

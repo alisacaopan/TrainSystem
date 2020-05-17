@@ -5,7 +5,6 @@ import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.model.upLoadResult;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -91,9 +90,9 @@ public class UserController {
     @PostMapping(value = "/update")
     public Integer update(@RequestParam("id") Long id,
                           @RequestParam("name") String name,
-                          @RequestParam ("mobile") String mobile,
-                          @RequestParam ("idCard")String idCard,
-                          @RequestParam ("classId")int classId) {
+                          @RequestParam("mobile") String mobile,
+                          @RequestParam("idCard") String idCard,
+                          @RequestParam("classId") int classId) {
         User user = new User();
         user.setId(id);
         user.setName(name);
@@ -329,30 +328,53 @@ public class UserController {
 
 
     @ResponseBody
-    @RequestMapping(value="pageInfo",produces="html/text;charset=UTF-8")
-    public  String pageInfo(@RequestParam int pageNumber, int pageSize, HttpServletResponse response) {
+    @RequestMapping(value = "pageInfo", produces = "html/text;charset=UTF-8")
+    public String pageInfo(@RequestParam int pageNumber, int pageSize, HttpServletResponse response) {
         response.setContentType("text/json");
-        System.out.println(pageNumber+"===="+pageSize);
+        System.out.println(pageNumber + "====" + pageSize);
         response.setCharacterEncoding("utf-8");
 
         //userList查询要放到startPage下面
-        PageHelper.startPage(pageNumber,pageSize);
-        List<User> userList=userService.findAllStudents();
-        PageInfo<User> page=new PageInfo<>(userList);
+        PageHelper.startPage(pageNumber, pageSize);
+        List<User> userList = userService.findAllStudents();
+        PageInfo<User> page = new PageInfo<>(userList);
         //取出查询结果
         List<User> rows = page.getList();
         int total = (int) page.getTotal();
         //转换为json数据
         JSONObject result = new JSONObject();
-        result.put("rows",rows);
-        result.put("total",total);
+        result.put("rows", rows);
+        result.put("total", total);
         System.out.println(result.toJSONString());
         return result.toJSONString();
+    }
+
+
+    @PostMapping("/managerLogin")
+    public String loginUser(@RequestParam("mobile") String mobile,
+                            @RequestParam("idCard") String idCard,
+                            @RequestParam("password") String password) {
+
+
+        User user = userService.getUserByMobile(mobile);
+        if (user == null) {
+            return "手机号输入错误";
+        } else {
+            if (!user.getIdCard().equals(idCard)) {
+                return "身份证输入错误";
+            } else {
+                if (!user.getPassword().equals(password)) {
+                    return "密码输入错误";
+                }
+            }
         }
+
+        return "1";
+    }
+
 
     @GetMapping("/getAllStudents")
     public List<User> getAllStudents() {
         return userService.findAllStudents();
     }
-
 }

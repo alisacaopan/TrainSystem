@@ -1,9 +1,11 @@
 package com.caopan.TrainSys.biz.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.caopan.TrainSys.biz.dao.SignInDao;
 import com.caopan.TrainSys.constant.AuthResponseCode;
 import com.caopan.TrainSys.biz.dao.UserDao;
 import com.caopan.TrainSys.model.LoginResult;
+import com.caopan.TrainSys.model.SignIn;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.utils.CodeAndOpenId;
 import com.caopan.TrainSys.utils.HttpUtil;
@@ -16,6 +18,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private SignInDao signInDao;
 
 //    @Autowired
 //    private TokenService tokenService;
@@ -75,14 +79,16 @@ public class UserService {
         return  userDao.getUserByOpenId(openid);
     }
     public int add(User user) {
-        return userDao.insert(user);
+        return userDao.add(user);
     }
 
     public int update(User user) {
         return userDao.update(user);
     }
 
-    public long delete(long id) {
+    public int delete(long id) {
+      //  删除学生需要删除签到表
+        signInDao.deleteByUserId(id);
         return userDao.delete(id);
     }
 
@@ -95,5 +101,18 @@ public class UserService {
     }
 
     public List<User> getUserByMobileAndIdCard(String mobile,String idCard){return userDao.getUserByMobileAndIdCard(mobile,idCard);}
+
+    public User getUserById(long id){
+        return userDao.getUserById(id);
+    }
+
+
+    public int insert(User user) {
+        long userId= userDao.update(user);
+        SignIn signIn=new SignIn();
+        signIn.setUserId(userId);
+        signIn.setSignStatus("0");
+        return signInDao.insert(signIn);
+    }
 
 }

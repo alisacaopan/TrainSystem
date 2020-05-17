@@ -94,8 +94,8 @@ public class TestController {
     }
 
     @GetMapping("/startTest")
-    public List startTest(@RequestParam("vCourseId") int vCourseId) {
-        return testService.getQuestionId(vCourseId);
+    public List startTest(@RequestParam("classifyId") int classifyId) {
+        return testService.getQuestionId(classifyId);
     }
 
     @GetMapping("/getQuesContent")

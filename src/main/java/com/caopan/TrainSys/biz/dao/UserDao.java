@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public interface UserDao {
-    Integer insert(User user);
+    Long insert(User user);
 
     User getUserByIdcard(@Param("idCard") String idCard);
 
@@ -18,6 +18,8 @@ public interface UserDao {
     User getUserByOpenId(@Param("openId") String openId);
 
     Integer update(User user);
+
+    Integer add(User user);
 
     Integer delete(long id);
 
@@ -29,6 +31,11 @@ public interface UserDao {
 
     List<User> findAllStudents();
 
-    List<User> getUserByMobileAndIdCard(String mobile,String idCard);
+    List<User> getUserByMobileAndIdCard(String mobile, String idCard);
+
+
+    User getUserById(@Param("id") long id);
+
+
 }
 

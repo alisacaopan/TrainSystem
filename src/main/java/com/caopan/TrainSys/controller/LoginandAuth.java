@@ -41,10 +41,4 @@ public class LoginandAuth {
         return loginResult;
     }
 
-    @GetMapping("/loginq")
-    public LoginResult login() {
-        LoginResult loginResult = userService.login(4567 + "");
-
-        return loginResult;
-    }
 }

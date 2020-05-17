@@ -10,7 +10,8 @@ public class Test {
     private String testTime;
     private String testRecord;
     private long userId ;
-    private int classifyId ;
+    private long classifyId ;
+
 
     public Test() {
         this.testId = (long)0;
@@ -18,7 +19,7 @@ public class Test {
         this.testTime = "";
         this.testRecord = "";
         this.userId = (long)0;
-        this.classifyId = 0;
+        this.classifyId = (long)0;
     }
 
     public long getTestId() {
@@ -61,11 +62,11 @@ public class Test {
         this.userId = userId;
     }
 
-    public int getClassifyId() {
+    public long getClassifyId() {
         return classifyId;
     }
 
-    public void setClassifyId(int classifyId) {
+    public void setClassifyId(long classifyId) {
         this.classifyId = classifyId;
     }
 }
