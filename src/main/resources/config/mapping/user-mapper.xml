@@ -12,8 +12,16 @@
         <result property="role" column="role"/>
         <result property="classId" column="classId"/>
     </resultMap>
-    <insert id="insert" parameterType="com.caopan.TrainSys.model.User" useGeneratedKeys="true"
+
+<!--    不返回主键-->
+    <insert id="add" parameterType="com.caopan.TrainSys.model.User" useGeneratedKeys="true"
             keyProperty="id">
+		INSERT INTO user (name, password, mobile, idCard,openId,role,classId)
+		VALUES (#{name}, #{password}, #{mobile}, #{idCard}, #{openId}, #{role} , #{classId})
+	</insert>
+<!--    返回主键-->
+    <insert id="insert" parameterType="com.caopan.TrainSys.model.User" useGeneratedKeys="true"
+            keyProperty="id"  keyColumn="id">
 		INSERT INTO user (name, password, mobile, idCard,openId,role,classId)
 		VALUES (#{name}, #{password}, #{mobile}, #{idCard}, #{openId}, #{role} , #{classId})
 	</insert>
@@ -42,11 +50,6 @@
     <select id="getUserByIdcard" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE idCard=#{idCard} LIMIT 1
 	</select>
-
-    <select id="getUserByMobileAndIdCard" parameterType="Map" resultMap="userResultMap">
-		SELECT * FROM user WHERE user.mobile like CONCAT('%',#{mobile},'%') and user.idCard in (select idCard FROM user where idCard like CONCAT('%',#{idCard},'%'))
-	</select>
-
     <select id="getUserByOpenId" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE openId=#{openId} LIMIT 1
 	</select>
@@ -61,6 +64,9 @@
 
     <select id="findAllStudents" parameterType="map" resultMap="userResultMap">
 		SELECT * FROM user where role = "1"
+	</select>
+    <select id="getUserById" parameterType="map" resultMap="userResultMap">
+		SELECT * FROM user WHERE id=#{id}
 	</select>
 
 </mapper>

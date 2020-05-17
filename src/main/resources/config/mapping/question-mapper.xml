@@ -6,12 +6,12 @@
 		<id property="quesId" column="quesId"/>
 		<result property="quesContent" column="quesContent"/>
 		<result property="quesType" column="quesType"/>
-		<result property="vCourseId" column="vCourseId"/>
+		<result property="classifyId" column="classifyId"/>
 	</resultMap>
 	<insert id="insert" parameterType="com.caopan.TrainSys.model.Question" useGeneratedKeys="true"
 			keyProperty="quesId">
-		INSERT INTO question (quesContent, quesType, vCourseId)
-		VALUES (#{quesContent}, #{quesType}, #{vCourseId})
+		INSERT INTO question (quesContent, quesType, classifyId)
+		VALUES (#{quesContent}, #{quesType}, #{classifyId})
 	</insert>
 	<select id="getQuestionRandly" resultMap="questionResultMap" parameterType="java.lang.Integer">
 		SELECT * FROM question where vCourseId =#{vCourseId} order by rand() LIMIT 2;

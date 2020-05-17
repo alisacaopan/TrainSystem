@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- create by autoCode,v1.0.0 -->
+<mapper namespace="com.caopan.TrainSys.biz.dao.SignInDao">
+    <resultMap id="signInrResultMap" type="com.caopan.TrainSys.model.SignIn">
+        <id property="signInId" column="signInId"/>
+        <result property="signInTime" column="signInTime"/>
+        <result property="signStatus" column="signStatus"/>
+        <result property="userId" column="userId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.caopan.TrainSys.model.SignIn" useGeneratedKeys="true"
+            keyProperty="id">
+		INSERT INTO SignIn (signInId, signInTime, signStatus, userId)
+		VALUES (#{signInId}, #{signInTime}, #{signStatus}, #{userId});
+	</insert>
+    <select id="getAllRecored" parameterType="map" resultMap="signInrResultMap">
+		SELECT * FROM SignIn;
+	</select>
+    <select id="getAllSigIn" parameterType="map" resultMap="signInrResultMap">
+		SELECT * FROM SignIn where signStatus = "1"
+	</select>
+    <select id="getAllNotSign" parameterType="map" resultMap="signInrResultMap">
+		SELECT * FROM SignIn where signStatus = "0"
+	</select>
+
+    <update id="updateByuserId">
+        update SignIn <set>
+        <if test ="signStatus!=null">signStatus=#{signStatus}</if>,
+    </set>
+        where userId=#{userId}
+    </update>
+
+</mapper>
