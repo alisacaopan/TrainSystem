@@ -42,6 +42,11 @@
     <select id="getUserByIdcard" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE idCard=#{idCard} LIMIT 1
 	</select>
+
+    <select id="getUserByMobileAndIdCard" parameterType="Map" resultMap="userResultMap">
+		SELECT * FROM user WHERE user.mobile like CONCAT('%',#{mobile},'%') and user.idCard in (select idCard FROM user where idCard like CONCAT('%',#{idCard},'%'))
+	</select>
+
     <select id="getUserByOpenId" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM user WHERE openId=#{openId} LIMIT 1
 	</select>
@@ -55,7 +60,7 @@
     </update>
 
     <select id="findAllStudents" parameterType="map" resultMap="userResultMap">
-		SELECT * FROM user
+		SELECT * FROM user where role = "1"
 	</select>
 
 </mapper>

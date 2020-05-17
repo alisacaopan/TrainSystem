@@ -5,9 +5,11 @@ import com.caopan.TrainSys.biz.service.StudyReportService;
 import com.caopan.TrainSys.biz.service.VideoCourseService;
 import com.caopan.TrainSys.constant.StudyReportStatus;
 import com.caopan.TrainSys.model.StudyReport;
+import com.caopan.TrainSys.model.StudyReportDisplay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,7 +67,7 @@ public class StudyReportController {
     }
 
     @GetMapping("/getStudyReport")
-    public List<StudyReport> getAnwser(@RequestParam("openId") String openId) {
+    public List<StudyReport> getStudyReport(@RequestParam("openId") String openId) {
         long userId = userDao.getUserByOpenId(openId).getId();
         int index = 0;
         try {
@@ -80,6 +82,38 @@ public class StudyReportController {
                 return studyService.getStudyReport(userId);
             } else {
                return null;
+            }
+        }
+    }
+
+    @GetMapping("/getStudyReportDisplay")
+    public List<StudyReportDisplay> getStudyReportDisplay(@RequestParam("openId") String openId) {
+        List<StudyReportDisplay> studyReportDisplayList = new ArrayList<>();
+        long userId = userDao.getUserByOpenId(openId).getId();
+        try {
+            List<StudyReport> studyReport = studyService.getStudyReport(userId);
+            if(studyReport!=null){
+                for (int i = 0; i< studyReport.size(); i++){
+                    StudyReportDisplay studyReportDisplay=new StudyReportDisplay();
+                    studyReportDisplay.setReportId(studyReport.get(i).getReportId());
+                    studyReportDisplay.setIsFinish(studyReport.get(i).getIsFinish());
+                    studyReportDisplay.setStudyTime(studyReport.get(i).getStudyTime()/(float)60+1);
+                    studyReportDisplay.setUserId(studyReport.get(i).getUserId());
+                    studyReportDisplay.setvCourseName(videoCourseService.getOneCourse(studyReport.get(i).getvCourseId()).getName());
+                    studyReportDisplay.setvCourseId(studyReport.get(i).getvCourseId());
+                    studyReportDisplayList.add(studyReportDisplay);
+                    System.out.printf("+_____"+studyReportDisplayList.size());
+                }
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+        }finally {
+            if (studyReportDisplayList != null){
+                return studyReportDisplayList;
+            } else {
+                return null;
             }
         }
     }

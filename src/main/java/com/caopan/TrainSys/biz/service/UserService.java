@@ -94,5 +94,6 @@ public class UserService {
         return userDao.findAllStudents();
     }
 
+    public List<User> getUserByMobileAndIdCard(String mobile,String idCard){return userDao.getUserByMobileAndIdCard(mobile,idCard);}
 
 }

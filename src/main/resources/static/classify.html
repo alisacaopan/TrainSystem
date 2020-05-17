@@ -263,11 +263,13 @@
 <script src="vendors/datatables.net-buttons/js/buttons.colVis.min.js"></script>
 <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
 <script>
+
+    URLT="http://localhost:8443/TrainSys/"
     //获取学生信息
     jQuery(document).ready(function () {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/getSubclassify?parentId=0",
+            url: URLT + "getSubclassify?parentId=0",
             xhrFields: {withCredentials: true},
             success: function (data) {
                 var allCourse = data;
@@ -297,7 +299,7 @@
         var parentId =  $(obj).parents("tr").data('cid');
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/getSubclassify?parentId=" + parentId,
+            url: URLT + "getSubclassify?parentId=" + parentId,
             success: function (data) {
                 if (data != null) {
                     var allCourse = data;
@@ -330,7 +332,7 @@
         var cId =  $(obj).parents("tr").data('cid');
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/getCourseByClassifyId?classifyId=" + cId,
+            url: URLT + "getCourseByClassifyId?classifyId=" + cId,
             success: function (data) {
                 if (data != null) {
                     var allVideo = data;
@@ -360,7 +362,7 @@
         formData.append("fileinput",$("#file_input")[0].files[0]);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8443/TrainSys/uploadVideo",
+            url: URLT + "uploadVideo",
             // header: {
             //     "Content-Type": "multipart/form-data"
             // },
@@ -393,7 +395,7 @@
         formData.append("fileInput", $("#fileInput")[0].files[0]);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8443/TrainSys/uploadText",
+            url: URLT+"uploadText",
             // header: {
             //     "Content-Type": "multipart/form-data"
             // },
