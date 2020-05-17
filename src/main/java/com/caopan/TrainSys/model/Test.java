@@ -10,7 +10,7 @@ public class Test {
     private String testTime;
     private String testRecord;
     private long userId ;
-    private long vCourseId ;
+    private int classifyId ;
 
     public Test() {
         this.testId = (long)0;
@@ -18,7 +18,7 @@ public class Test {
         this.testTime = "";
         this.testRecord = "";
         this.userId = (long)0;
-        this.vCourseId = (long)0;
+        this.classifyId = 0;
     }
 
     public long getTestId() {
@@ -61,11 +61,11 @@ public class Test {
         this.userId = userId;
     }
 
-    public long getvCourseId() {
-        return vCourseId;
+    public int getClassifyId() {
+        return classifyId;
     }
 
-    public void setvCourseId(long vCourseId) {
-        this.vCourseId = vCourseId;
+    public void setClassifyId(int classifyId) {
+        this.classifyId = classifyId;
     }
 }

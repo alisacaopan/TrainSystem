@@ -97,7 +97,7 @@ public class StudyReportController {
                     StudyReportDisplay studyReportDisplay=new StudyReportDisplay();
                     studyReportDisplay.setReportId(studyReport.get(i).getReportId());
                     studyReportDisplay.setIsFinish(studyReport.get(i).getIsFinish());
-                    studyReportDisplay.setStudyTime(studyReport.get(i).getStudyTime()/(float)60+1);
+                    studyReportDisplay.setStudyTime((int)(studyReport.get(i).getStudyTime()/60)+1);
                     studyReportDisplay.setUserId(studyReport.get(i).getUserId());
                     studyReportDisplay.setvCourseName(videoCourseService.getOneCourse(studyReport.get(i).getvCourseId()).getName());
                     studyReportDisplay.setvCourseId(studyReport.get(i).getvCourseId());

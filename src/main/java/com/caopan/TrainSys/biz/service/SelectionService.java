@@ -10,10 +10,13 @@ public class SelectionService {
     @Autowired
     private SelectionDao selectionDao;
 
+    public Integer insertSelection(Selection selection){return selectionDao.insert(selection);}
+
     public Integer addSelectionfromexcl(Selection selection){
 
         return selectionDao.insert(selection);
     }
+
 
 
 }

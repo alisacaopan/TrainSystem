@@ -7,13 +7,13 @@
 		<result property="grade" column="grade"/>
 		<result property="testTime" column="testTime"/>
 		<result property="userId" column="userId"/>
-		<result property="vCourseId" column="vCourseId"/>
+		<result property="classifyId" column="classifyId"/>
 	</resultMap>
 
 	<insert id="insert" parameterType="com.caopan.TrainSys.model.Test" useGeneratedKeys="true"
 			keyProperty="testId">
-		INSERT INTO test (grade, testTime,testRecord, userId, vCourseId)
-		VALUES (#{grade}, #{testTime},#{testRecord}, #{userId}, #{vCourseId})
+		INSERT INTO test (grade, testTime,testRecord, userId, classifyId)
+		VALUES (#{grade}, #{testTime},#{testRecord}, #{userId}, #{classifyId})
 	</insert>
 
 	<delete id="delete" parameterType="Long">

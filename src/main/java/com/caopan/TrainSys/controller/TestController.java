@@ -35,6 +35,9 @@ public class TestController {
     @Autowired
     private SelectionService selectionService;
 
+    private String root = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
+            File.separator + "resources" + File.separator + "static" + File.separator;
+
     @PostMapping(value = "/deleteTest")
     public Integer deleteTest(@RequestParam(value = "testId") Long testId) {
         int index = 0;
@@ -109,13 +112,13 @@ public class TestController {
     /**
      * @param openId
      * @param testArray
-     * @param vCourseId
+
      * @return 1表示记录成功 0表示没有记录成功
      */
     @PostMapping("/testrecord")
     public Long testrecord(@RequestParam("openId") String openId,
                            @RequestParam("testArray") long[][] testArray,
-                           @RequestParam("vCourseId") Long vCourseId) {
+                           @RequestParam("classifyId") Integer classifyId) {
         float Grade = 0;
         int index = 0;
         Long testId = (long) 0;
@@ -132,7 +135,7 @@ public class TestController {
             Grade = Grade * 2;
             Test test = new Test();
             test.setUserId(userId);
-            test.setvCourseId(vCourseId);
+            test.setClassifyId(classifyId);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             Date date = new Date();
             test.setTestTime(df.format(date));
@@ -160,11 +163,12 @@ public class TestController {
 
 
     @PostMapping("/uploadTest")
-    public upLoadResult uploadTest(@RequestParam("file-input") MultipartFile file, HttpServletRequest req) throws IOException, InvalidFormatException {
+    public upLoadResult uploadTest(@RequestParam("classifyId") Integer classifyId
+            ,@RequestParam("testFileInput") MultipartFile file, HttpServletRequest req) throws IOException, InvalidFormatException {
 
         System.out.println("进入addtests控制层");
 upLoadResult upLoadResult=new upLoadResult();
-        String path = FilePath.TEST_FOLDER;
+        String path = root+FilePath.TEST_FOLDER+File.separator;
         // 获取上传时候的文件名
         String filename = file.getOriginalFilename();
 
@@ -221,19 +225,93 @@ upLoadResult upLoadResult=new upLoadResult();
             String[] str = new String[row.getLastCellNum()];
             for (int j = 0; j < row.getLastCellNum(); j++) {
                 Cell cell = row.getCell(j);//取得第j列数据
-                cell.setCellType(CellType.STRING);
-                str[j] = cell.getStringCellValue().trim();
+                if (cell!=null){
+                    cell.setCellType(CellType.STRING);
+                    str[j] = cell.getStringCellValue().trim();
+                }
             }
-            //question.setQuesId(str[0]);
-            question.setQuesContent(str[1]);
-            question.setQuesType(str[2]);
-            //question.setvCourseId(str[3]);
-            //selection.setSelectionId(str[0]);
-            selection.setSelectionContent(str[1]);
-            selection.setIsRight(Integer.parseInt(str[2]));
-            //selection.setQuesId(str[3]);
-            questions.add(question);
-            selections.add(selection);
+            if (str[0].equals("1")){
+                String anwser = str[6];
+                char a[]=anwser.toCharArray();//转换成字符数组
+                List<Character> b = new ArrayList<>();
+
+                //处理字符串只保留abcd和ABCD
+                for(int j=0; j<a.length;j++)
+                {
+                    if((a[j]>='a'&&a[j]<='d')|| (a[j]>='A'&& a[j]<='D')){
+                       b.add(a[j]);
+                    }
+                }
+                System.out.printf(b.toString());
+                System.out.printf(b.toString());
+                System.out.printf(b.toString());
+
+                Question question1 =  new Question();
+                question1.setQuesContent(str[1]);
+                if (b.size()>1) {
+                    question1.setQuesType("0");
+                } else {
+                    question1.setQuesType("1");
+                }
+                question1.setClassifyId(classifyId);
+                Long quesId = questionService.insertQuestion(question1);
+                Selection selection1 = new Selection();
+                Selection selection2 = new Selection();
+                Selection selection3 = new Selection();
+                Selection selection4 = new Selection();
+                selection1.setSelectionContent(str[2]);
+                selection2.setSelectionContent(str[3]);
+                selection3.setSelectionContent(str[4]);
+                selection4.setSelectionContent(str[5]);
+                selection1.setQuesId(quesId);
+                selection2.setQuesId(quesId);
+                selection3.setQuesId(quesId);
+                selection4.setQuesId(quesId);
+                for (int j = 0; j<b.size(); j++){
+                    if (b.get(j) =='A' || b.get(j)=='a'){ selection1.setIsRight(1); }
+                    if (b.get(j) =='B' || b.get(j)=='b'){ selection2.setIsRight(1);}
+                    if (b.get(j) =='C' || b.get(j)=='c'){ selection3.setIsRight(1);}
+                    if (b.get(j) =='D' || b.get(j)=='d'){ selection4.setIsRight(1);}
+                }
+                selectionService.insertSelection(selection1);
+                selectionService.insertSelection(selection2);
+                selectionService.insertSelection(selection3);
+                selectionService.insertSelection(selection4);
+            } else if(str[0].equals("2")){
+                String anwser = str[6];
+                Question question1 =  new Question();
+                question1.setQuesContent(str[1]);
+                question1.setQuesType("1");
+                question1.setClassifyId(classifyId);
+                Long quesId = questionService.insertQuestion(question1);
+                Selection selection1 = new Selection();
+                Selection selection2 = new Selection();
+                selection1.setSelectionContent("对");
+                selection2.setSelectionContent("错");
+                if (anwser.equals("是")||anwser.equals("对")){
+                    selection1.setIsRight(1);
+                    selection2.setIsRight(0);
+                } else {
+                    selection1.setIsRight(0);
+                    selection2.setIsRight(1);
+                }
+                selection1.setQuesId(quesId);
+                selection2.setQuesId(quesId);
+                selectionService.insertSelection(selection1);
+                selectionService.insertSelection(selection2);
+            } else {
+                System.out.printf("上传失败");
+            }
+//            //question.setQuesId(str[0]);
+//            question.setQuesContent(str[1]);
+//            question.setQuesType(str[2]);
+//            //question.setvCourseId(str[3]);
+//            //selection.setSelectionId(str[0]);
+//            selection.setSelectionContent(str[1]);
+//            selection.setIsRight(Integer.parseInt(str[2]));
+//            //selection.setQuesId(str[3]);
+//            questions.add(question);
+//            selections.add(selection);
         }
         /*for(Question question:questions){
             System.out.println(question.getQuesContent());
@@ -241,12 +319,12 @@ upLoadResult upLoadResult=new upLoadResult();
         for(Selection selection:selections){
             System.out.println(selection.getIsRight());
         }*/
-        for (Question question : questions) {
-            questionService.addQuestionfromexcl(question);
-        }
-        for (Selection selection : selections) {
-            selectionService.addSelectionfromexcl(selection);
-        }
+//        for (Question question : questions) {
+//            questionService.addQuestionfromexcl(question);
+//        }
+//        for (Selection selection : selections) {
+//            selectionService.addSelectionfromexcl(selection);
+//        }
         return upLoadResult;
     }
 

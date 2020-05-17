@@ -6,13 +6,13 @@ public class Question {
     private long quesId;
     private String quesContent;
     private String quesType;
-    private long vCourseId;
+    private int classifyId;
 
     public Question() {
         this.quesId = (long)0;
         this.quesContent = "";
         this.quesType = "";
-        this.vCourseId = (long)0;
+        this.classifyId = 0;
     }
 
     public long getQuesId() {
@@ -39,11 +39,11 @@ public class Question {
         this.quesType = quesType;
     }
 
-    public long getvCourseId() {
-        return vCourseId;
+    public int getClassifyId() {
+        return classifyId;
     }
 
-    public void setvCourseId(long vCourseId) {
-        this.vCourseId = vCourseId;
+    public void setClassifyId(int classifyId) {
+        this.classifyId = classifyId;
     }
 }

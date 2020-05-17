@@ -10,6 +10,7 @@ import java.util.List;
 public interface QuestionDao {
 
     Integer insert(Question question);
+
     //随机生成试卷，返回2道题的题号和题干
     List<Question> getQuestionRandly(int vCourseId);
     //根据题目号找题

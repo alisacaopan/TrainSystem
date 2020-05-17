@@ -110,7 +110,7 @@ public class TestService {
         }
         Test test = new Test();
         test.setUserId(userId);
-        test.setvCourseId(questionDao.getQuesByquesId(allQuesId.get(0)).getvCourseId());
+        test.setClassifyId(questionDao.getQuesByquesId(allQuesId.get(0)).getClassifyId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         Date date = new Date();
         test.setTestTime(df.format(date));

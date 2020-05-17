@@ -11,6 +11,10 @@ public class QuestionService {
     @Autowired
     private QuestionDao questionDao;
 
+    public Long insertQuestion(Question question){
+        questionDao.insert(question);
+        return question.getQuesId();
+    };
 
     public Integer addQuestionfromexcl(Question question) {
         return questionDao.insert(question);

@@ -29,6 +29,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private String root = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
+            File.separator + "resources" + File.separator + "static" + File.separator;
+
     @PostMapping(value = "/insert")
     public Integer insert(@RequestParam("name") String name,
                           @RequestParam ("mobile") String mobile,
@@ -241,7 +244,7 @@ public class UserController {
 
         System.out.println("进入addstudent控制层");
         upLoadResult upLoadResult = new upLoadResult();
-        String path = FilePath.STUDENT_FOLDER;
+        String path = root + FilePath.STUDENT_FOLDER;
         // 获取上传时候的文件名
         String filename = file.getOriginalFilename();
 
@@ -302,12 +305,12 @@ public class UserController {
             }
             //user.setId(2);
             user.setName(str[0]);
-            user.setPassword(str[1]);
-            user.setMobile(str[2]);
-            user.setIdCard(str[3]);
+            user.setPassword("123456");
+            user.setMobile(str[1]);
+            user.setIdCard(str[2]);
 //            user.setOpenId(str[4]);
-            user.setRole(str[5]);
-            user.setClassId(2);
+            user.setRole("1");
+            user.setClassId(Integer.parseInt(str[3]));
             list.add(user);
         }
         for (User user : list) {
