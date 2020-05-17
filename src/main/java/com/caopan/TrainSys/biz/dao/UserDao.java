@@ -28,5 +28,7 @@ public interface UserDao {
     void insertStudentFromexcl(User user);
 
     List<User> findAllStudents();
+
+    List<User> getUserByMobileAndIdCard(String mobile,String idCard);
 }
 

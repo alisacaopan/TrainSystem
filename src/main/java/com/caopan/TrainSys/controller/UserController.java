@@ -30,7 +30,20 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/insert")
-    public Integer insert(@RequestBody User user) {
+    public Integer insert(@RequestParam("name") String name,
+                          @RequestParam ("mobile") String mobile,
+                          @RequestParam("openId") String openId,
+                          @RequestParam ("idCard")String idCard,
+                          @RequestParam ("classId")int classId,
+                          @RequestParam("role")String role){
+        User user = new User();
+        user.setName(name);
+        user.setMobile(mobile);
+        user.setIdCard(idCard);
+        user.setOpenId(openId);
+        user.setClassId(classId);
+        user.setRole(role);
+
         int index = 0;
         try {
             if (userService.add(user) == 1) {
@@ -140,6 +153,26 @@ public class UserController {
         } finally {
             if (index == 1) {
                 return userService.getUserByIdcard(idcard);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    @GetMapping(value = "/getUserByMobileAndIdCard")
+    public List<User> getUserByMobileAndIdCard(@RequestParam("mobile") String mobile,
+                                         @RequestParam("idCard")String idCard) {
+        int index = 0;
+        try {
+            if (userService.getUserByMobileAndIdCard(mobile,idCard) != null) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if (index == 1) {
+                return userService.getUserByMobileAndIdCard(mobile,idCard);
             } else {
                 return null;
             }
@@ -313,5 +346,10 @@ public class UserController {
         System.out.println(result.toJSONString());
         return result.toJSONString();
         }
+
+    @GetMapping("/getAllStudents")
+    public List<User> getAllStudents() {
+        return userService.findAllStudents();
+    }
 
 }

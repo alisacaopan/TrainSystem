@@ -128,7 +128,6 @@
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
@@ -137,26 +136,30 @@
                             <div class="container">
                                 <!-- 如果有条件，查询表单ID名必须为condition-form -->
                                 <form id="condition-form">
-                                    手机号码<input name="mobile" value=""> 身份证号码<input name="idCard" value=""> <input type="button" value="搜索">
+                                    手机号码<input id="searchMobile" value=""> 身份证号码<input id="searchIdCard" value=""> <button type="button" onclick="search()" value="搜索">搜索</button>
                                 </form>
 
                                 <div id="toolbar">
-                                    <button id="add" class="btn btn-primary">
-                                        <i class="glyphicon glyphicon-ok">添加学生</i>
+                                    <button id="add" class="btn btn-primary" onclick="addUser" data-toggle="modal" data-target="#AddUserModal">
+                                        <i class="glyphicon glyphicon-ok">添加用户</i>
                                     </button>
                                 </div>
                                 <!-- 加载bootstraptable的表格，ID名称必须为bootstrap-table -->
                                 <table id="bootstrap-table">
                                     <thead>
                                     <tr>
-                                        <th data-field="id" data-sortable="true">ID</th>
+                                        <th data-field="id" data-sortable="true" hidden="hidden">ID</th>
                                         <th data-field="name" data-sortable="true">姓名</th>
                                         <th data-field="mobile" data-sortable="true">手机号码</th>
                                         <th data-field="idCard">身份证号码</th>
+                                        <th data-field="openId">微信号码</th>
                                         <th data-field="classId">班级号</th>
                                         <th class="col-xs-2" data-field="action" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
                                     </tr>
                                     </thead>
+
+<tbody id="container"></tbody>
+
                                 </table>
                             </div>
 
@@ -213,6 +216,54 @@
 </div>
 
 
+    </div>
+    <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddUserModalLabel">学生信息</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="userId" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false" hidden="hidden">
+                        <label for="name" class="control-label mb-1">姓 名</label>
+                        <input id="userName" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                        <label for="mobile" class="control-label mb-1">电 话</label>
+                        <input id="userMobile" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                        <label for="idCard" class="control-label mb-1">身份证号</label>
+                        <input id="userIdCard" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                        <label for="userOpenId" class="control-label mb-1">微信号</label>
+                        <input id="userOpenId" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                        <label for="classId" class="control-label mb-1">所属班级</label>
+                        <input id="userClassId" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                        <label for="roleSelect" class="control-label mb-1">角色 </label>
+                        <select id="roleSelect">
+                            <option value = "1">学生</option>
+                            <option value = "2">监督员</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button id="load-button" type="submit" class="btn btn-lg btn-info btn-block"
+                                onclick="addUserSubmit()">
+                            <span id="load-button-amount">确认上传</span>
+                            <span id="load-button-sending" style="display:none;">Sending…</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!--<script src="vendors/jquery/dist/jquery.min.js"></script>
 <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
 <script src="vendors/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
@@ -268,9 +319,12 @@
     <!-- bootstrap-table.min.js -->
     <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script>
+
+    URLT="http://localhost:8443/TrainSys/"
     $("input[type='button']").click(function() {
         $("#bootstrap-table").bootstrapTable("refresh")
     });
+
     //bootstrap-table初始化
     $("#bootstrap-table").bootstrapTable({
         url : "pageInfo", //请求后台的URL（*）
@@ -311,6 +365,9 @@
         detailView : false, //是否显示父子表
 
     });
+
+
+
     function queryParam(params){
         var param = {
             limit : this.limit, // 页面大小
@@ -342,30 +399,31 @@
                  alert("获取学生信息失败")
             }
         });
-     });
+     });*/
 
      function reloadDom(allStudents) {
          $("#container").empty();
          for (var i = 0; i < allStudents.length; i++) {
              var student = allStudents[i];
-             var dom = "<tr data-sid=" + student.id + ">" +
-                 "<td>" +   "</td>"
-                 + "<td>" +   "</td>"
-                 + "<td>" +  "</td>"
-                + "<td>" +   "</td>"
-                 + "<td>" +  "</td>"
+             var dom = "<tr>"
+                 + "<td>" +  student.id +"</td>"
+                + "<td>" +  student.name +"</td>"
+                 + "<td>" +  student.mobile +"</td>"
+                + "<td>" +  student.idCard + "</td>"
+                 + "<td>"+  student.openId +"</td>"
+                 + "<td>"+  student.classId +"</td>"
                  + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='updt(this)' data-toggle=\"modal\" data-target=\"#largeModal\">修改</button><button type=\"button\" class=\"btn btn-danger\" onclick='dele(this)'>删除</button></td>"
                 + "</tr>"
              $("#container").append($(dom));
          }
-     };*/
+     };
 
     function dele(obj) {
         var studentId = $(obj).parents("tr").find("td:eq(0)").text();
         var studentName = $(obj).parents("tr").find("td:eq(1)").text();
         $.ajax({
             type: "GET",
-            url: "http://localhost:8443/TrainSys/delete?id=" + studentId,
+            url: URLT+"delete?id=" + studentId,
             success: function (data) {
                 if (data == '1') {
                     alert("成功删除学生：" + studentName);
@@ -404,11 +462,9 @@
         console.log(idCard);
         var classId = $("#classId").val();
         console.log(classId);
-
         $.ajax({
-
             type: "POST",
-            url: "http://localhost:8443/TrainSys/update",
+            url: URLT+"update",
 
             data: {
                 id: studentId,
@@ -426,6 +482,58 @@
             },
             error: function () {
                 alert("网络出错了")
+            }
+        });
+    }
+    
+    function addUserSubmit() {
+        var userName = $("#userName").val();
+        console.log(userName);
+        var userMobile = $("#userMobile").val();
+        console.log(userMobile);
+        var userIdCard = $("#userIdCard").val();
+        console.log(userIdCard);
+        var userOpenId = $("#userOpenId").val();
+        console.log(userOpenId);
+        var userClassId = $("#userClassId").val();
+        console.log(userClassId);
+        var role = document.getElementById("roleSelect");
+        $.ajax({
+            type: "POST",
+                url: URLT+"insert",
+            data: {
+                name: userName,
+                mobile: userMobile,
+                openId: userOpenId,
+                idCard: userIdCard,
+                classId: userClassId,
+                role : role.options[role.selectedIndex].value
+            },
+            success: function (data) {
+                if (data == '1') {
+                    alert("添加成功");
+                    window.location.reload();
+                } else
+                    alert("添加失败");
+            },
+            error: function () {
+                alert("网络出错了")
+            }
+        });
+    }
+    
+    function search() {
+        var mobile = $("#searchMobile").val();
+        var idCard = $("#searchIdCard").val();
+        $.ajax({
+            type: "GET",
+            url: URLT+"getUserByMobileAndIdCard?mobile="+mobile+"&idCard="+idCard,
+            success: function (data) {
+                var allStudents = data;
+                reloadDom(allStudents);
+            },
+            error: function () {
+                alert("获取学生信息失败")
             }
         });
     }
