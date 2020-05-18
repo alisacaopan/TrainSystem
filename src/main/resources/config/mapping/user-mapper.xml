@@ -28,13 +28,13 @@
 
     <update id="update" parameterType="com.caopan.TrainSys.model.User">
 	update user <set>
-        <if test="name!=null">user.name=#{name}</if>,
-        <if test="password!=null">user.password=#{password}</if>,
-        <if test="mobile!=null">user.mobile=#{mobile}</if>,
-        <if test="idCard!=null">user.idCard=#{idCard}</if>,
-        <if test="openId!=null">user.openId=#{openId}</if>,
-        <if test="role!=null">user.role=#{role}</if>,
-        <if test="classId!=null">user.classId=#{classId}</if>,
+        <if test="name!=null">user.name=#{name},</if>
+        <if test="password!=null">user.password=#{password},</if>
+        <if test="mobile!=null">user.mobile=#{mobile},</if>
+        <if test="idCard!=null">user.idCard=#{idCard},</if>
+        <if test="openId!=null">user.openId=#{openId},</if>
+        <if test="role!=null">user.role=#{role},</if>
+        <if test="classId!=null">user.classId=#{classId},</if>
     </set>
 	where user.id=#{id}
 	</update>

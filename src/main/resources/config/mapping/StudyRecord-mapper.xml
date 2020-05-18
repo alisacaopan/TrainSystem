@@ -18,10 +18,10 @@
 
 	<update id="update" parameterType="com.caopan.TrainSys.model.StudyReport">
 		update studyreport <set>
-		<if test="isFinish!=null">studyreport.isFinish=#{isFinish}</if>,
-		<if test="studyTime!=null">studyreport.studyTime=#{studyTime}</if>,
-		<if test="userId!=null">studyreport.userId=#{userId}</if>,
-		<if test="vCourseId!=null">studyreport.vCourseId=#{vCourseId}</if>
+		<if test="isFinish!=null">studyreport.isFinish=#{isFinish},</if>
+		<if test="studyTime!=null">studyreport.studyTime=#{studyTime},</if>
+		<if test="userId!=null">studyreport.userId=#{userId},</if>
+		<if test="vCourseId!=null">studyreport.vCourseId=#{vCourseId},</if>
 	</set>
 		where studyreport.reportId=#{reportId}
 	</update>

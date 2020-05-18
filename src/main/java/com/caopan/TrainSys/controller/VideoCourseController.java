@@ -8,6 +8,7 @@ import com.caopan.TrainSys.model.VideoCourse;
 import com.caopan.TrainSys.model.upLoadResult;
 import com.caopan.TrainSys.utils.FFMPEG;
 import com.caopan.TrainSys.utils.FileUtil;
+import com.caopan.TrainSys.utils.TimeStamp;
 import com.caopan.TrainSys.utils.VideoConverTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -140,8 +141,8 @@ public class VideoCourseController {
                 System.out.println("视频的后缀名:" + filename_extension);
 
                 //时间戳做新的文件名，避免中文乱码-重新生成filename
-                long filename1 = new Date().getTime();
-                filename = Long.toString(filename1) + "." + filename_extension;
+
+                filename = TimeStamp.TimeStamp(filename);
                 //去掉后缀的文件名
                 String filename2 = filename.substring(0, filename.lastIndexOf("."));
                 System.out.println("视频名为:" + filename2);
@@ -227,7 +228,7 @@ public class VideoCourseController {
         return upLoadResult;
     }
 
-    @GetMapping(value = "/getOnevCoursesURL")
+    @GetMapping("/getOnevCoursesURL")
     public String getvCoursePath(@RequestParam("vCourseId") Long vCourseId){
 
         String ip = URL.URL;

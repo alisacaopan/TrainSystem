@@ -7,6 +7,7 @@ import com.caopan.TrainSys.model.VideoCourse;
 import com.caopan.TrainSys.model.upLoadResult;
 import com.caopan.TrainSys.utils.FFMPEG;
 import com.caopan.TrainSys.utils.FileUtil;
+import com.caopan.TrainSys.utils.TimeStamp;
 import com.caopan.TrainSys.utils.VideoConverTest;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,14 +106,16 @@ public class TextCoursesController {
             if (FileUtil.fileIsEx(path) && FileUtil.fileIsEx(targetPath)) {
                 // 获取上传时候的文件名
                 String filename = file.getOriginalFilename();
+                String filename3 =  filename;
+                //TimeStamp.TimeStamp(filename);
                 // 获取文件后缀名
                 String filename_extension = filename.substring(filename
                         .lastIndexOf(".") + 1);
                 System.out.println("图文课程的后缀名:" + filename_extension);
 
                 //时间戳做新的文件名，避免中文乱码-重新生成filename
-                //long filename1 = new Date().getTime();
-                //filename = Long.toString(filename1) + "." + filename_extension;
+                long filename1 = new Date().getTime();
+                filename = Long.toString(filename1) + "." + filename_extension;
                 //去掉后缀的文件名
                 String filename2 = filename.substring(0, filename.lastIndexOf("."));
                 System.out.println("图文课程名为:" + filename2);
@@ -146,7 +149,7 @@ public class TextCoursesController {
                 // 保存到数据库
                 TextCourse tCourse = new TextCourse();
                 tCourse.setAddress(root + FilePath.TARGET_FOLDER_PDF + File.separator + filename2);
-                tCourse.setName(filename2);
+                tCourse.setName(filename3);
                 tCourse.setClassifyId(1);
                 textCourseService.insert(tCourse);
             }
@@ -156,7 +159,7 @@ public class TextCoursesController {
         }
     }
 
-    @GetMapping(value = "/getOnetCoursesURL")
+    @GetMapping("/getOnetCoursesURL")
     public String getvCoursePath(@RequestParam("tCourseId") Long tCourseId){
 
         String ip = URL.URL;

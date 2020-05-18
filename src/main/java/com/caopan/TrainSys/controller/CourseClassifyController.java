@@ -100,8 +100,10 @@ public class CourseClassifyController {
         }
     }
 
-
-
+    @GetMapping("/getAllClassify")
+    public List<CourseClassify> getAllClassify(){
+        return courseclassifyService.getAllClassify();
+    }
 
 
 }

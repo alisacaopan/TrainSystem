@@ -96,7 +96,6 @@
     <div class="content mt-3">
         <div class="animated fadeIn">
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
@@ -375,6 +374,8 @@
 
     URLT="http://172.20.52.129:8443/TrainSys/"
     //获取学生信息
+
+
     jQuery(document).ready(function () {
         $.ajax({
             type: "GET",
@@ -686,40 +687,6 @@
         });
     }
 
-    function submitTest() {
-        var classifyId = $("#classifyId2").val();
-        console.log(classifyId);
-        var formData = new FormData();
-        formData.append("classifyId", classifyId);
-        formData.append("fileInput", $("#fileInput")[0].files[0]);
-        $.ajax({
-            type: "POST",
-            url: URLT+"uploadText",
-            // header: {
-            //     "Content-Type": "multipart/form-data"
-            // },
-            processData: false, //因为data值是FormData对象，不需要对数据做处理。
-            contentType: false,
-
-            data: formData,
-            success: function (data) {
-                if (data != null) {
-                    alert("上传成功")
-                    $("#PDFModal").hide();
-                    window.location.reload();
-                } else {
-                    alert("上传失败");
-                    $("#PDFModal").hide();
-                    window.location.reload();
-                }
-            },
-            error: function () {
-                alert("未能找到下级目录")
-                $("#PDFModal").hide();
-                window.location.reload();
-            }
-        });
-    }
 
     function delVideo(obj) {
         var vCourseId = $(obj).parents("tr").data('vid');

@@ -5,11 +5,13 @@ import com.caopan.TrainSys.biz.service.SelectionService;
 import com.caopan.TrainSys.biz.service.TestService;
 import com.caopan.TrainSys.biz.service.UserService;
 import com.caopan.TrainSys.constant.FilePath;
+import com.caopan.TrainSys.constant.URL;
 import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.Test;
 import com.caopan.TrainSys.model.upLoadResult;
 import com.caopan.TrainSys.utils.FileUtil;
+import com.caopan.TrainSys.utils.TimeStamp;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class TestController {
     private String root = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
             File.separator + "resources" + File.separator + "static" + File.separator;
 
-    @PostMapping(value = "/deleteTest")
+    @PostMapping("/deleteTest")
     public Integer deleteTest(@RequestParam(value = "testId") Long testId) {
         int index = 0;
         try {
@@ -182,7 +184,7 @@ public class TestController {
             ,@RequestParam("testFileInput") MultipartFile file, HttpServletRequest req) throws IOException, InvalidFormatException {
 
         System.out.println("进入addtests控制层");
-upLoadResult upLoadResult=new upLoadResult();
+        upLoadResult upLoadResult=new upLoadResult();
         String path = root+FilePath.TEST_FOLDER+File.separator;
         FileUtil.fileIsEx(path);
         // 获取上传时候的文件名
@@ -194,8 +196,8 @@ upLoadResult upLoadResult=new upLoadResult();
         System.out.println("excl的后缀名:" + filename_extension);
 
         //时间戳做新的文件名，避免中文乱码-重新生成filename
-        long filename1 = new Date().getTime();
-        filename = Long.toString(filename1) + "." + filename_extension;
+
+        filename = TimeStamp.TimeStamp(filename);
 
         //去掉后缀的文件名
         String filename2 = filename.substring(0, filename.lastIndexOf("."));

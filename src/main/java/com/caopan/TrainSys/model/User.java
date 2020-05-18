@@ -13,12 +13,12 @@ public class User {
 
     public User() {
         this.id = (long)0;
-        this.name = "";
-        this.password = "";
-        this.mobile = "";
-        this.idCard = "";
-        this.openId = "";
-        this.role = "";
+        this.name = null;
+        this.password = null;
+        this.mobile = null;
+        this.idCard = null;
+        this.openId = null;
+        this.role = null;
         this.classId = 0;
     }
 
