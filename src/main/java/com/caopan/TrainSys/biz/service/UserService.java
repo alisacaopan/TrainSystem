@@ -93,7 +93,7 @@ public class UserService {
     }
 
     public void insertStudentFromexcl(User user){
-        userDao.insert(user);
+        insert(user);
     }
 
     public List<User> findAllStudents(){

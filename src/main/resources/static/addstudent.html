@@ -83,10 +83,9 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <strong>视频上传选项</strong>
+                    <strong>学生表格上传选项</strong>
                 </div>
                 <div class="card-body card-block">
-                    <form action="/TrainSys/addstudent" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
                             <div class="col-12 col-md-9">
@@ -94,20 +93,13 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col col-md-3"><label for="file-input" class=" form-control-label">选择上传的学生名单</label></div>
-                            <div class="col-12 col-md-9"><input type="file" id="file-input" name="file-input" class="form-control-file"></div>
+                            <div class="col col-md-3"><label for="file_input" class=" form-control-label">选择上传的学生名单</label></div>
+                            <div class="col-12 col-md-9"><input type="file" id="file_input" name="file_input" class="form-control-file"></div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Submit
-                            </button>
-                            <!--<button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button>-->
+                            <input type="button" onclick="submitStudents()" value="提交" />
                         </div>
-                    </form>
                 </div>
-
             </div>
 
         </div>
@@ -124,5 +116,35 @@
 
                     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
                     <script src="assets/js/main.js"></script>
+<script>
+    URLT = "http://localhost:8443/TrainSys/"
+    function submitStudents(){
+        var formData = new FormData();
+        formData.append("file_input",document.getElementsByName("file_input")[0].files[0]);
+jQuery.ajax({
+    type: "POST",
+    url: URLT + "addstudent",
+    // header: {
+    //     "Content-Type": "multipart/form-data"
+    // },
+    processData: false, //因为data值是FormData对象，不需要对数据做处理。
+    contentType: false,
+    data:formData,
+    success: function (data) {
+        if (data != null) {
+            alert("提交成功")
+            window.location.reload();
+        } else {
+            alert("提交失败");
+            window.location.reload();
+        }
+    },
+    error: function () {
+        alert("网络出错了");
+        window.location.reload();
+    }
+})
+    }
+</script>
 </body>
 

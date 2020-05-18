@@ -492,13 +492,8 @@
 
     function submitVideo(){
         var classifyId = $("#classifyId").val();
-        console.log(classifyId);
         var videoName = $("#videoName").val();
-        console.log(videoName);
         var videoIntroduce = $("#videoIntroduce").val();
-        console.log(videoIntroduce);
-
-        console.log(file_input);
         var formData = new FormData();
         formData.append("classifyId",classifyId);
         formData.append("videoName",videoName);

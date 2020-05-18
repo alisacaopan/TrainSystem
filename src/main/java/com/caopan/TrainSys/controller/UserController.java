@@ -2,9 +2,11 @@ package com.caopan.TrainSys.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.caopan.TrainSys.biz.service.UserService;
+import com.caopan.TrainSys.constant.AuthResponseCode;
 import com.caopan.TrainSys.constant.FilePath;
 import com.caopan.TrainSys.model.User;
 import com.caopan.TrainSys.model.upLoadResult;
+import com.caopan.TrainSys.utils.FileUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -241,11 +243,12 @@ public class UserController {
     }
 
     @PostMapping("/addstudent")
-    public upLoadResult addstudents(@RequestParam("file-input") MultipartFile file, HttpServletRequest req) throws IOException, InvalidFormatException {
+    public upLoadResult addstudents(@RequestParam("file_input") MultipartFile file) throws IOException, InvalidFormatException {
 
         System.out.println("进入addstudent控制层");
         upLoadResult upLoadResult = new upLoadResult();
         String path = root + FilePath.STUDENT_FOLDER + File.separator;
+        FileUtil.fileIsEx(path);
         // 获取上传时候的文件名
         String filename = file.getOriginalFilename();
 
@@ -306,7 +309,7 @@ public class UserController {
             }
             //user.setId(2);
             user.setName(str[0]);
-            user.setPassword("123456");
+            user.setPassword("asdfghjkrtyuio23456789");
             user.setMobile(str[1]);
             user.setIdCard(str[2]);
 //            user.setOpenId(str[4]);
@@ -325,6 +328,8 @@ public class UserController {
                 userService.insertStudentFromexcl(user);
             }
         }
+        upLoadResult.setCode(AuthResponseCode.UPLOAD_SUCCECESS);
+        upLoadResult.setDesription(AuthResponseCode.UPLOAD_SUCCECESS_DESC);
         return upLoadResult;
     }
 
