@@ -19,4 +19,5 @@ public interface CourseClassifyDao {
 
     List<CourseClassify> getClassifyByParentId(@Param("parentId") Integer parentId); //查询此分级下所有子类
 
+    List<CourseClassify> getAllClassify();
 }
