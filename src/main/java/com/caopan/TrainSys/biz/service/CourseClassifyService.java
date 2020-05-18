@@ -25,6 +25,8 @@ public class CourseClassifyService {
         return classifyDao.delete(classifyId);
     }
 
+    public CourseClassify getCourClassify(Integer classifyId){return classifyDao.getCourClassify(classifyId);}
+
     //查询分级下的所有子类
     public List<CourseClassify> getUserByParentId(Integer parentId) {
         return classifyDao.getClassifyByParentId(parentId);

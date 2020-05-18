@@ -15,6 +15,8 @@ public interface CourseClassifyDao {
 
     Integer delete(Integer classifyId);
 
+    CourseClassify getCourClassify(Integer classifyId);
+
     List<CourseClassify> getClassifyByParentId(@Param("parentId") Integer parentId); //查询此分级下所有子类
 
 }

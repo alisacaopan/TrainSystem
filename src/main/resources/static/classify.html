@@ -62,15 +62,6 @@
 
                 <h3 class="menu-title">系统功能</h3><!-- /.menu-title -->
                 <li>
-                    <a href="uploadVideo.html"> <i class="menu-icon ti-email"></i>上传视频 </a>
-                </li>
-                <li>
-                    <a href="uploadtest.html"> <i class="menu-icon fa fa-laptop"></i>上传试题 </a>
-                </li>
-                <li>
-                    <a href="uploadText.html"> <i class="menu-icon fa fa-laptop"></i>上传图文教程 </a>
-                </li>
-                <li>
                     <a href="addstudent.html"> <i class="menu-icon fa fa-bar-chart"></i>添加学生 </a>
                 </li>
                 <li>
@@ -79,17 +70,6 @@
                     <li>
                         <a href="classify.html"> <i class="menu-icon fa fa-heart"></i>查看课程分类 </a>
                     </li>
-
-                <h3 class="menu-title">其他</h3><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>操作</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">登录</a></li>
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">注册</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">找回密码</a></li>
-                    </ul>
-                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -159,7 +139,7 @@
                             <div class="row form-group">
                                 <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
                                 <div class="col-12 col-md-9">
-                                    <p class="form-control-static">Username</p>
+                                    <p class="form-control-static">管理员</p>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -207,13 +187,13 @@
                 <div class="modal-body">
                     <div class="card">
                         <div class="card-header">
-                            <strong>视频上传选项</strong>
+                            <strong>PDF上传选项</strong>
                         </div>
                         <div class="card-body card-block">
                             <div class="row form-group">
                                 <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
                                 <div class="col-12 col-md-9">
-                                    <p class="form-control-static">Username</p>
+                                    <p class="form-control-static">管理员</p>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -235,6 +215,135 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="TestModal" tabindex="-1" role="dialog" aria-labelledby="TestModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="TestModalLabel">分类表格</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>题库上传选项</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">上传用户</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">管理员</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <input type="text" id="classifyId3" name="classifyId3"  aria-required="true"
+                                       aria-invalid="false" hidden="hidden">
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="testFileInput" class=" form-control-label">选择上传的文件</label></div>
+                                <div class="col-12 col-md-9"><input type="file" id="testFileInput" name="testFileInput" class="form-control-file"></div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-sm" onclick="submitTest()">
+                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                </button>
+                                <!--<button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addClassifyModal" tabindex="-1" role="dialog" aria-labelledby="addClassifyModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addClassifyModalLabel">添加子分类</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <input type="text" id="classifyId4" name="classifyId4"  aria-required="true"
+                               aria-invalid="false" hidden="hidden">
+                    </div>
+                    <div class="form-group">
+                        <label for="classifyName" class="control-label mb-1">子分类名字</label>
+                        <input id="classifyName" name="cc-payment" type="text" class="form-control" aria-required="true"
+                               aria-invalid="false">
+                    </div>
+                    <div>
+                        <button id="addClassify-button" type="submit" class="btn btn-lg btn-info btn-block"
+                                onclick="submitAddClassify()">
+                            <span id="addClassify-button-amount">确认添加</span>
+                            <span id="addClassify-button-sending" style="display:none;">Sending…</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delClassifyModal" tabindex="-1" role="dialog" aria-labelledby="delClassifyModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delClassifyModalLabel">添加子分类</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <input type="text" id="classifyId5" name="classifyId5"  aria-required="true"
+                               aria-invalid="false" hidden="hidden">
+                    </div>
+                    <div>
+                        <button id="delClassify-button" type="submit" class="btn btn-lg btn-info btn-block"
+                                onclick="submitDelClassify()">
+                            <span id="delClassify-button-amount">确认删除</span>
+                            <span id="delClassify-button-sending" style="display:none;">Sending…</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delTestModal" tabindex="-1" role="dialog" aria-labelledby="delTestModalLabel" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delTestModalLabel">清空题库</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <input type="text" id="classifyId6" name="classifyId6"  aria-required="true"
+                               aria-invalid="false" hidden="hidden">
+                    </div>
+                    <div>
+                        <button id="delTest-button" type="submit" class="btn btn-lg btn-info btn-block"
+                                onclick="submitDelTest()">
+                            <span id="delTest-button-amount">确认删除</span>
+                            <span id="delTest-button-sending" style="display:none;">Sending…</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -285,11 +394,16 @@
         $("#container").empty();
         for (var i = 0; i < allCourse.length; i++) {
             var course = allCourse[i];
-            var dom = "<tr data-cid=" + course.classifyId + ">" +
+            var dom = "<tr data-cid=" + course.classifyId + " >" +
                 "<td ><button type=\"text\" onclick='loadCourse(this)'>" + course.name + "</td>"
-                + "<td><button type=\"button\" class=\"btn btn-primary\" onclick='loadVideo(this)' data-toggle=\"modal\" data-target=\"#largeModal\">上传视频</button>"
+                + "<td>" + "<button type=\"button\" class=\"btn btn-primary\" onclick='addClassify(this)' data-toggle=\"modal\" data-target=\"#addClassifyModal\">添加子分类</button>"
+                + "<button type=\"button\" class=\"btn btn-danger\" onclick='delClassify(this)' data-toggle=\"modal\" data-target=\"#delClassifyModal\">删除此分类</button>"
+                +"<button type=\"button\" class=\"btn btn-primary\" onclick='loadVideo(this)' data-toggle=\"modal\" data-target=\"#largeModal\">上传视频</button>"
                 +"<button type=\"button\" class=\"btn btn-danger\" onclick='loadPDF(this)' data-toggle=\"modal\" data-target=\"#PDFModal\">上传PDF</button>"
-                +"<button type=\"button\" class=\"btn btn-primary\" onclick='selcVideo(this)'>查看视频</button></td>"
+                +"<button type=\"button\" class=\"btn btn-primary\" onclick='selcVideo(this)'>查看视频</button>"
+                +"<button type=\"button\" class=\"btn btn-danger\" onclick='selcPDF(this)'>查看PDF</button>"
+                +"<button type=\"button\" class=\"btn btn-primary\" onclick='loadTest(this)'data-toggle=\"modal\" data-target=\"#TestModal\">题库上传</button>"
+                +"<button type=\"button\" class=\"btn btn-danger\" onclick='loadDelTest(this)' data-toggle=\"modal\" data-target=\"#delTestModal\">清空题库</button></td>"
                 + "</tr>"
             $("#container").append($(dom));
         }
@@ -324,6 +438,19 @@
             var video = allVideo[i];
             var dom = "<tr data-vid=" + video.vCourseId + ">" +
                 "<td >" + video.name + "</td>"
+                +"<td>" + "<button type=\"button\" class=\"btn btn-primary\" onclick='delVideo(this)'>删除</button></td>"
+                + "</tr>"
+            $("#container").append($(dom));
+        }
+    };
+
+    function reloadPDF(allPDF) {
+        $("#container").empty();
+        for (var i = 0; i < allPDF.length; i++) {
+            var pdf = allPDF[i];
+            var dom = "<tr data-tid=" + pdf.tCourseId + ">" +
+                "<td >" + pdf.name + "</td>"
+                +"<td>" + "<button type=\"button\" class=\"btn btn-primary\" onclick='delPDF(this)'>删除</button></td>"
                 + "</tr>"
             $("#container").append($(dom));
         }
@@ -337,6 +464,23 @@
                 if (data != null) {
                     var allVideo = data;
                     reloadVideo(allVideo)
+                } else
+                    alert("获取失败");
+            },
+            error: function () {
+                alert("未能找到下级目录")
+            }
+        });
+    };
+    function selcPDF(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $.ajax({
+            type: "GET",
+            url: URLT + "gettCourseByClassifyId?classifyId=" + cId,
+            success: function (data) {
+                if (data != null) {
+                    var allPDF = data;
+                    reloadPDF(allPDF);
                 } else
                     alert("获取失败");
             },
@@ -372,12 +516,19 @@
             data:formData,
             success: function (data) {
                 if (data != null) {
-                    alert("123456789")
-                } else
-                    alert("获取失败");
+                    alert("提交成功")
+                    $("#largeModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("提交失败");
+                    $("#largeModal").hide();
+                    window.location.reload();
+                }
             },
             error: function () {
                 alert("未能找到下级目录")
+                $("#largeModal").hide();
+                window.location.reload();
             }
         });
     }
@@ -405,17 +556,213 @@
             data: formData,
             success: function (data) {
                 if (data != null) {
-                    alert("123456789")
-                } else
-                    alert("获取失败");
+                    alert("上传成功")
+                    $("#PDFModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("上传失败");
+                    $("#PDFModal").hide();
+                    window.location.reload();
+                }
             },
             error: function () {
                 alert("未能找到下级目录")
+                $("#PDFModal").hide();
+                window.location.reload();
             }
         });
     }
 
+    function loadTest(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId3").val(cId);
+    };
 
+    function submitTest() {
+        var classifyId = $("#classifyId3").val();
+        console.log(classifyId);
+        var formData = new FormData();
+        formData.append("classifyId", classifyId);
+        formData.append("testFileInput", $("#testFileInput")[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: URLT+"/uploadTest",
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+
+            data: formData,
+            success: function (data) {
+                if (data != null) {
+                    alert("上传成功")
+                    $("#TestModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("上传失败");
+                    $("#TestModal").hide();
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("未能找到下级目录")
+                $("#TestModal").hide();
+                window.location.reload();
+            }
+        });
+    }
+
+    function addClassify(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId4").val(cId);
+    };
+
+    function submitAddClassify() {
+        var parentId = $("#classifyId4").val();
+        console.log(classifyId);
+        var classifyName = $("#classifyName").val();
+        console.log(classifyName);
+        var formData = new FormData();
+        $.ajax({
+            type: "Get",
+            url: URLT+"/insertClassify?parentId="+parentId+"&classifyName="+classifyName,
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+            success: function (data) {
+                if (data != null) {
+                    alert("添加成功")
+                    $("#addClassifyModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("添加失败");
+                    $("#addClassifyModal").hide();
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("添加出错");
+                $("#addClassifyModal").hide();
+                window.location.reload();
+            }
+        });
+    }
+
+    function delClassify(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId5").val(cId);
+    };
+
+    function loadDelTest(obj) {
+        var cId =  $(obj).parents("tr").data('cid');
+        $("#classifyId6").val(cId);
+    };
+
+    function submitDelTest() {
+        var classifyId = $("#classifyId6").val();
+        console.log(classifyId);
+        $.ajax({
+            type: "GET",
+            url: URLT+"deleteQuestion?classifyId="+classifyId,
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+            success: function (data) {
+                if (data != 0) {
+                    alert("清空题库成功")
+                    $("#TestModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("清空题库失败");
+                    $("#TestModal").hide();
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("未能清空题库")
+                $("#TestModal").hide();
+                window.location.reload();
+            }
+        });
+    }
+
+    function submitTest() {
+        var classifyId = $("#classifyId2").val();
+        console.log(classifyId);
+        var formData = new FormData();
+        formData.append("classifyId", classifyId);
+        formData.append("fileInput", $("#fileInput")[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: URLT+"uploadText",
+            // header: {
+            //     "Content-Type": "multipart/form-data"
+            // },
+            processData: false, //因为data值是FormData对象，不需要对数据做处理。
+            contentType: false,
+
+            data: formData,
+            success: function (data) {
+                if (data != null) {
+                    alert("上传成功")
+                    $("#PDFModal").hide();
+                    window.location.reload();
+                } else {
+                    alert("上传失败");
+                    $("#PDFModal").hide();
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                alert("未能找到下级目录")
+                $("#PDFModal").hide();
+                window.location.reload();
+            }
+        });
+    }
+
+    function delVideo(obj) {
+        var vCourseId = $(obj).parents("tr").data('vid');
+        $.ajax({
+            type: "GET",
+            url: URLT + "deletevCourse?vCourseId=" + vCourseId,
+            success: function (data) {
+                if (data !=null) {
+                    alert("成功删除视频");
+                    window.location.reload();
+                } else
+                    alert("未能成功删除视频");
+            },
+            error: function () {
+                alert("删除视频出错了")
+            }
+        });
+
+    };
+
+    function delPDF(obj) {
+        var tCourseId = $(obj).parents("tr").data('tid');
+        $.ajax({
+            type: "GET",
+            url: URLT + "deletetCourse?tCourseId=" + tCourseId,
+            success: function (data) {
+                if (data!=null) {
+                    alert("成功删除PDF");
+                    window.location.reload();
+                } else
+                    alert("未能成功删除PDF");
+            },
+            error: function () {
+                alert("删除视频出错了")
+            }
+        });
+
+    };
 
 </script>
 

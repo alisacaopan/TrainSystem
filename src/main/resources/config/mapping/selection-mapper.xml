@@ -14,6 +14,9 @@
 		VALUES (#{selectionContent}, #{isRight}, #{quesId})
 	</insert>
 
+    <delete id="delete" parameterType="Long">
+		delete from selection where quesId=#{quesId}
+	</delete>
 
     <select id="getSelectionByquesId" parameterType="long" resultMap="selectionResultMap">
 		SELECT * FROM selection WHERE quesId=#{quesId}

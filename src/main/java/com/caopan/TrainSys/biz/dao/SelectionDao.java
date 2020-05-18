@@ -10,6 +10,8 @@ public interface SelectionDao {
 
     Integer insert(Selection selection);
 
+    Integer delete(Long quesId);
+
     //根据题目号找所有选项
     List<Selection> getSelectionByquesId(long quesId);
 

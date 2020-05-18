@@ -1,7 +1,10 @@
 package com.caopan.TrainSys.controller;
 
 import com.caopan.TrainSys.biz.service.CourseClassifyService;
+import com.caopan.TrainSys.biz.service.TextCourseService;
+import com.caopan.TrainSys.biz.service.VideoCourseService;
 import com.caopan.TrainSys.model.CourseClassify;
+import com.caopan.TrainSys.model.VideoCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +16,20 @@ import java.util.List;
 public class CourseClassifyController {
     @Autowired
     private CourseClassifyService courseclassifyService;
+    @Autowired
+    private VideoCourseController videoCourseController;
+    @Autowired
+    private TextCoursesController textCourseController;
 
-    @PostMapping("/insertClassify")
-    public Integer insert(@RequestBody CourseClassify classify) {
+    @GetMapping("/insertClassify")
+    public Integer insert(@RequestParam ("parentId") Integer parentId,
+                          @RequestParam("classifyName") String classifyName) {
+        CourseClassify cc = new CourseClassify();
+        cc.setParentId(parentId);
+        cc.setName(classifyName);
         int index = 0;
         try {
-            if(courseclassifyService.add(classify) == 1){
+            if(courseclassifyService.add(cc) == 1){
                 index = 1;
             } else {
                 index = 0;
@@ -46,6 +57,13 @@ public class CourseClassifyController {
     @GetMapping(value = "/deleteClassify")
     public Integer delete(@RequestParam ("classifyId") Integer classifyId) {
         int index = 0;
+        if (courseclassifyService.getCourClassify(classifyId).getParentId()==0)
+        {
+            return 3;
+        }
+        if (courseclassifyService.getClassNumByParentId(classifyId) != 0){
+            return 2;
+        }
         try {
             if(courseclassifyService.delete(classifyId) == 1){
                 index = 1;
@@ -54,6 +72,8 @@ public class CourseClassifyController {
             }
         }catch (Exception e){
         }finally {
+            videoCourseController.deleteByClassifyId(classifyId);
+            textCourseController.deleteByClassifyId(classifyId);
             return index;
         }
     }

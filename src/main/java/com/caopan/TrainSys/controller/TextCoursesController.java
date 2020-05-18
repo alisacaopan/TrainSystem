@@ -34,6 +34,58 @@ public class TextCoursesController {
     private  String root=System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+
             File.separator+"resources"+File.separator+"static"+File.separator;
 
+    @GetMapping(value = "/deletetCourse")
+    public Integer delete(@RequestParam("tCourseId") Long tCourseId) {
+        int index = 0;
+        try {
+            if (textCourseService.delete(tCourseId) == 1) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            return index;
+        }
+    }
+
+    public Integer deleteByClassifyId(Integer classifyId) {
+        List<TextCourse> textCourses = textCourseService.getTextCourseByClassifyId(classifyId);
+        int index = 1;
+        try {
+            for (int i = 0; i<textCourses.size(); i++){
+                textCourseService.delete(textCourses.get(i).gettCourseId());
+                index++;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(index == textCourses.size()){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+    }
+
+    @GetMapping(value = "/gettCourseByClassifyId")
+    public List<TextCourse> gettCourseByClassifyId(@RequestParam("classifyId") Integer classifyId) {
+        int index = 0;
+        try {
+            if (textCourseService.getTextCourseByClassifyId(classifyId).size() > 0) {
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if (index == 1) {
+                return textCourseService.getTextCourseByClassifyId(classifyId);
+            } else {
+                return null;
+            }
+        }
+    }
+
     @GetMapping("/getAllTextCourses")
     public List<TextCourse> getAllTestCourses() {
         return textCourseService.getTextCourses();

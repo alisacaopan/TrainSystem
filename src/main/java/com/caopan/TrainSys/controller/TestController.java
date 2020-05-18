@@ -53,6 +53,20 @@ public class TestController {
         }
     }
 
+    @GetMapping("/deleteQuestion")
+    public Integer deleteQuestion(@RequestParam("classifyId")Integer classifyId){
+        int index = 0;
+        try {
+            if (questionService.deleteByClassifyId(classifyId)!=0){
+                index = 1;
+            } else {
+                index = 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            return index;
+        }
+    }
     @PostMapping("/getAnwser")
     public Integer getAnwser(@RequestParam("quesId") Long quesId, @RequestParam("anwser") Long[] anwser) {
         int index = 0;

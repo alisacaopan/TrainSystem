@@ -17,6 +17,8 @@ public class SignInService {
     @Autowired
     private UserService userService;
 
+    public Integer SignInSetZero(String signStatus){return signInDao.SignInSetZero(signStatus);}
+
     public List<UserSign> getRecored() {
         List<SignIn> signIns = signInDao.getAllRecored();
         return getresult(signIns);

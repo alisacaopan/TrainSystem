@@ -33,6 +33,15 @@ public class TextCourseService {
 
     public Integer insert(TextCourse tCourse){return textCourseDao.insert(tCourse);};
 
+    public Integer delete(Long tCourseId) {
+        String path = textCourseDao.getOnetCourse(tCourseId).getAddress();
+        File file = new File(path);
+        if (file!=null){
+            file.delete();
+        }
+        return textCourseDao.delete(tCourseId);
+    }
+
     public List<TextCourse> getTextCourses() {
         return textCourseDao.getTextCourse();
     }

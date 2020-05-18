@@ -13,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/TrainSys?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 082566cP
+    password: 123456
   servlet:
     multipart:
       max-file-size: 100MB
@@ -28,5 +28,5 @@ mybatis:
 
 
 logging:
-  config: /Users/caopan1/IdeaProjects/TrainSysemo/src/main/resources/config/log4j2.xml
+  config: E:\IDEAWorkSpace\TrainSystem\src\main\resources\config\log4j2.xml
 

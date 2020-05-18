@@ -71,6 +71,24 @@ public class VideoCourseController {
         }
     }
 
+    public Integer deleteByClassifyId(Integer classifyId) {
+        List<VideoCourse> videoCourses = vCourseService.getvCourseByClassifyId(classifyId);
+        int index = 1;
+        try {
+            for (int i = 0; i<videoCourses.size(); i++){
+                vCourseService.delete(videoCourses.get(i).getvCourseId());
+                index++;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(index == videoCourses.size()){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+    }
+
     @GetMapping(value = "/getCourseByClassifyId")
     public List<VideoCourse> getvCourseByClassifyId(@RequestParam("classifyId") Integer classifyId) {
         int index = 0;

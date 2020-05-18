@@ -10,6 +10,8 @@ public interface SignInDao {
 
     int insert(SignIn signIn);
 
+    Integer SignInSetZero(String signStatus);
+
     List<SignIn> getAllRecored();
 
     List<SignIn> getAllSigIn();

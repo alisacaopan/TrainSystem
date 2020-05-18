@@ -108,9 +108,9 @@ public class UserService {
 
 
     public int insert(User user) {
-        long userId= userDao.update(user);
+        userDao.add(user);
         SignIn signIn=new SignIn();
-        signIn.setUserId(userId);
+        signIn.setUserId(user.getId());
         signIn.setSignStatus("0");
         return signInDao.insert(signIn);
     }

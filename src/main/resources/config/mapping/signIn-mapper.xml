@@ -13,6 +13,11 @@
 		INSERT INTO SignIn (signInId, signInTime, signStatus, userId)
 		VALUES (#{signInId}, #{signInTime}, #{signStatus}, #{userId});
 	</insert>
+
+    <update id="SignInSetZero" parameterType="String">
+        UPDATE signin SET signin.signstatus = #{signStatus}
+    </update>
+
     <select id="getAllRecored" parameterType="map" resultMap="signInrResultMap">
 		SELECT * FROM SignIn;
 	</select>
@@ -29,5 +34,9 @@
     </set>
         where userId=#{userId}
     </update>
+
+    <delete id="deleteByUserId" parameterType="long">
+		delete from signin where userid=#{userId}
+	</delete>
 
 </mapper>

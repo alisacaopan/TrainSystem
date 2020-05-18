@@ -43,6 +43,11 @@ public class VideoCourseService {
     }
 
     public Integer delete(Long vCourseId) {
+        String path = vcourseDao.getOneCourse(vCourseId).getAddress();
+        File file = new File(path);
+        if (file!=null){
+            file.delete();
+        }
         return vcourseDao.delete(vCourseId);
     }
 

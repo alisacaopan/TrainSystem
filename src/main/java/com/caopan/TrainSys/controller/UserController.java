@@ -10,18 +10,20 @@ import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.pkcs11.wrapper.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 @RestController
 public class UserController {
@@ -48,7 +50,7 @@ public class UserController {
 
         int index = 0;
         try {
-            if (userService.add(user) == 1) {
+            if (userService.insert(user) == 1) {
                 index = 1;
             } else {
                 index = 0;
@@ -112,7 +114,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/updateByWeChat")
+    @PostMapping("/updateByWeChat")
     public Integer updateByWeChat(@RequestBody User user) {
         int index = 0;
         try {
@@ -127,8 +129,8 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/delete")
-    public long delete(@RequestParam(value = "id") long id) {
+    @GetMapping("/delete")
+    public long delete(@RequestParam("id") long id) {
         int index = 0;
         try {
             if (userService.delete(id) == 1) {
@@ -243,7 +245,7 @@ public class UserController {
 
         System.out.println("进入addstudent控制层");
         upLoadResult upLoadResult = new upLoadResult();
-        String path = root + FilePath.STUDENT_FOLDER;
+        String path = root + FilePath.STUDENT_FOLDER + File.separator;
         // 获取上传时候的文件名
         String filename = file.getOriginalFilename();
 
@@ -353,7 +355,8 @@ public class UserController {
     @PostMapping("/managerLogin")
     public String loginUser(@RequestParam("mobile") String mobile,
                             @RequestParam("idCard") String idCard,
-                            @RequestParam("password") String password) {
+                            @RequestParam("password") String password,
+                            HttpServletRequest request) {
 
 
         User user = userService.getUserByMobile(mobile);
@@ -368,7 +371,8 @@ public class UserController {
                 }
             }
         }
-
+        HttpSession session = request.getSession(true);
+        session.setAttribute("USER_PASSWORD",password);
         return "1";
     }
 
