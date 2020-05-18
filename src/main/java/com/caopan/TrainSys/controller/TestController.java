@@ -9,6 +9,7 @@ import com.caopan.TrainSys.model.Question;
 import com.caopan.TrainSys.model.Selection;
 import com.caopan.TrainSys.model.Test;
 import com.caopan.TrainSys.model.upLoadResult;
+import com.caopan.TrainSys.utils.FileUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,6 +184,7 @@ public class TestController {
         System.out.println("进入addtests控制层");
 upLoadResult upLoadResult=new upLoadResult();
         String path = root+FilePath.TEST_FOLDER+File.separator;
+        FileUtil.fileIsEx(path);
         // 获取上传时候的文件名
         String filename = file.getOriginalFilename();
 

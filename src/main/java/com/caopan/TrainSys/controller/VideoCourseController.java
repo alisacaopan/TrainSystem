@@ -3,6 +3,7 @@ package com.caopan.TrainSys.controller;
 import com.caopan.TrainSys.biz.service.VideoCourseService;
 import com.caopan.TrainSys.constant.AuthResponseCode;
 import com.caopan.TrainSys.constant.FilePath;
+import com.caopan.TrainSys.constant.URL;
 import com.caopan.TrainSys.model.VideoCourse;
 import com.caopan.TrainSys.model.upLoadResult;
 import com.caopan.TrainSys.utils.FFMPEG;
@@ -229,7 +230,7 @@ public class VideoCourseController {
     @GetMapping(value = "/getOnevCoursesURL")
     public String getvCoursePath(@RequestParam("vCourseId") Long vCourseId){
 
-        String ip = "http://172.20.52.104:8443/TrainSys/";
+        String ip = URL.URL;
         ip = ip.replace("\\","/");
         String filePath = vCourseService.getOneCourse(vCourseId).getAddress();
         String relativePath = filePath.replace(root,"");

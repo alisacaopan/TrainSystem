@@ -373,7 +373,7 @@
 <script src="assets/js/init-scripts/data-table/datatables-init.js"></script>
 <script>
 
-    URLT="http://localhost:8443/TrainSys/"
+    URLT="http://172.20.52.129:8443/TrainSys/"
     //获取学生信息
     jQuery(document).ready(function () {
         $.ajax({
@@ -408,7 +408,7 @@
             $("#container").append($(dom));
         }
     };
-    
+
     function loadCourse(obj) {
         var parentId =  $(obj).parents("tr").data('cid');
         $.ajax({
