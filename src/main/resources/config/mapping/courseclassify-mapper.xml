@@ -24,6 +24,10 @@
 		delete from courseclassify where classifyId=#{id}
 	</delete>
 
+	<select id="getAllClassify" resultMap="classifyResultMap">
+		SELECT * FROM courseclassify
+	</select>
+
 	<select id="getCourClassify" parameterType="Integer" resultMap="classifyResultMap">
 		SELECT * FROM courseclassify WHERE classifyId=#{classifyId}
 	</select>

@@ -1,6 +1,7 @@
 package com.caopan.TrainSys.controller;
 import com.caopan.TrainSys.biz.service.TextCourseService;
 import com.caopan.TrainSys.constant.FilePath;
+import com.caopan.TrainSys.constant.URL;
 import com.caopan.TrainSys.model.TextCourse;
 import com.caopan.TrainSys.model.VideoCourse;
 import com.caopan.TrainSys.model.upLoadResult;
@@ -158,7 +159,7 @@ public class TextCoursesController {
     @GetMapping(value = "/getOnetCoursesURL")
     public String getvCoursePath(@RequestParam("tCourseId") Long tCourseId){
 
-        String ip = "http://172.20.52.104:8443/TrainSys/";
+        String ip = URL.URL;
         ip = ip.replace("\\","/");
         String filePath = textCourseService.getOnetCourse(tCourseId).getAddress();
         String relativePath = filePath.replace(root,"");
